@@ -1,0 +1,22 @@
+Titelfolie:
+	bessere Einleitung
+	Reverse Engineering -> warum genau der Speicher und warum fange ich mit dem Speicherschema an?
+	Warum ist der Speicher so interessant? Was sind die Zusammenhänge?
+		Anz. Kaffee's bis zur nächsten Reinigung
+
+serielle Schnittstelle -> uart Verbindung
+
+gegen Redundanz der Infomationen: Folie 2 Kaffe <-> Arduino und Folie 3 dann rüber zum PC
+
+Folie 7
+Der Speicher kann auf 2 Arten erreicht werden:
+- direkt: aber Strom während des Betriebs schlecht möglich
+- seriell: mein Weg um aktive Vorgänge untersuchen zu können
+Reverse Engineering: Verständnis, was passiert wo?
+
+Folie 8: was sind elementare veränderungen?
+
+Folie 9: aktueller Stand?
+
+Folie 10: Abschluss folie, jetzt zu Ende (Danke fürs Zuören) und Möglichkeit Fragen zu stellen und zu diskutieren
+

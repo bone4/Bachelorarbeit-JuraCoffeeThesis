@@ -1,0 +1,55 @@
+\tikzstyle{vertex} = [circle, minimum size=10pt, circular drop shadow, text=black, very thick, draw=black!55, top color=white,bottom color=black!20]
+
+% \tikzstyle{edge} = [line to]
+% \tikzstyle{comm edge} = [edge,draw=black!30,dotted,very thick]
+% \tikzstyle{tree edge} = [edge,very thick]
+% \tikzstyle{active tree edge} = [edge,draw=red!40,opacity=.6,line width=5pt]
+
+
+% \pgfdeclarelayer{comm}
+% \pgfdeclarelayer{tree}
+% \pgfsetlayers{comm,tree,main}
+
+\begin{tikzpicture}[scale=0.9,level distance=1cm,level 1/.style={sibling distance=1.5cm}, level 2/.style={sibling distance=.5cm},edge from parent/.style={draw,thick}]
+  \useasboundingbox (-2.23,-2.23) rectangle (2.23,0.2);
+  \node[vertex] {}
+    child {node[vertex] {}
+      child {node[vertex] {}}
+      child {node[vertex] {}}
+      child {node[vertex] {}}
+    }
+    child {node[vertex] {}
+      child {node[vertex] {}}
+      child {node[vertex] {}}
+    }
+    child {node[vertex] {}
+    }
+  ;
+% 
+%   \foreach \pos/\name/\label in {
+%         {(0.9,2.3)/v0/$v_{0}$},
+%         {(2.5,4.7)/v1/$v_{1}$},
+%         {(0.5,6.8)/v2/$v_{2}$},
+%         {(4.9,6.5)/v3/$v_{3}$},
+%         {(5.4,4.3)/v4/$v_{4}$},
+%         {(7.6,5.4)/v5/$v_{5}$},
+%         {(7.8,2.8)/v6/$v_{6}$},
+%         {(5.9,.6)/v7/$v_{7}$},
+%         {(10.4,1.5)/v8/$v_{8}$},
+%         {(11.2,4.2)/v9/$v_{9}$},
+%         {(10.2,6.5)/v10/$v_{10}$},
+%         {(12.7,6.2)/v11/$v_{11}$},
+%         {(13.0,2.5)/v12/$v_{12}$},
+%         {(14.2,0.7)/v13/$v_{13}$}}
+%      \node[vertex] (\name) at \pos {\label};
+% 
+%   \begin{pgfonlayer}{comm}
+%     \filldraw[fill=gray!40,dashed,opacity=.6] (v5) circle (6.6cm);
+%     \filldraw[fill=gray!80,dashed,opacity=.6] (v5) circle (3.3cm);
+%     \filldraw[fill=gray!80,dashed,opacity=.6] (v13) circle (3.3cm);
+%     \draw[draw=black!70,thick] (v5) -- node [below right] {$R_C$} +(-2.26,-2.40);
+%     \draw[draw=black!70,thick] (v5) -- node [above left] {$R_I$} +(-5.02,-4.29);
+%   \end{pgfonlayer}
+
+\end{tikzpicture}
+

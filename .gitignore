@@ -1,0 +1,17 @@
+*.aux
+*.bak
+*~
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.upa
+*.vrb
+tuhhslides/tuhhslides.zip
+tuhhthesis/tuhhthesis.zip

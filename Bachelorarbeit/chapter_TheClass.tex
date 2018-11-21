@@ -1,0 +1,77 @@
+\chapter{The TUHH Telematics Thesis Class}
+
+In order to free you from reading through all the classes and packages provided with our Thesis Template, we will summarize the main parts for you. The root document of your thesis is the file \file{thesis.tex}. It contains global setup and the inclusion of the different chapters, which are outsourced to individual files, i.e., each chapter is organized in a dedicated file.
+
+\section{Setup}
+
+Before starting your thesis report, adjust all the personal and thesis related data in the root document. We will briefly cover this matter.
+
+
+\subsection{Options}\label{sub:options}
+
+If you have at look at the very first line of the root document, you'll discover the loaded document class along with its options. The most important options are:
+\begin{description}
+  \item[de] German Version (cannot be combined with option \texttt{en})
+  \item[en] English Version, default (cannot be combined with option \texttt{de})
+  \item[gray] Use this option to make a gray-style version of the thesis report
+  \item[print] Use this option for your print version, i.e, switched off hyperref colors (this makes only sense for electronic versions)
+  \item[declaration] Use this option for inclusion of the declaration by candidate
+  \item[abstract] This option enables the automatic inclusion of an abstract, which is expected in the file \file{prelude\_abstract.tex}
+  \item[acknowledgment] This option enables the automatic inclusion of an acknowledgment, which is expected in the file \file{prelude\_acknowledgment.tex}
+  \item[symbollist] If you have a bunch of mathematical symbols, use this option in order to automatically include a list of symbols. The latter has to be provided the file \file{prelude\_symbols.tex}
+  \item[cv] Use this option to include your curriculum vitae at the end of the document. The latter has to be provided the file \file{postlude\_cv.tex}. This is required for PhD theses.
+  \item[ownpub] Use this option to include a list of your own publications. The latter has to be provided the file \file{ownpub.bib}. This is required for PhD theses. Make sure to also run \texttt{bibtex ownpub}, otherwise your own publications will not show up.
+\end{description}
+
+
+\subsection{Thesis Type}
+
+Depending on the actual type of thesis, you have to use the correct parameter for the command \cmd{\textbackslash{}setthesistype}: \emph{bachelorthesis}, \emph{projectwork}, \emph{masterthesis}, \emph{diplomathesis}, and \emph{phdthesis}.
+
+
+\subsection{Author, Title, and Date}
+
+Next, you must specify your name, your matriculation number and course of studies, along with the title of the thesis, and the date of submission with the corresponding commands \cmd{\textbackslash{}author}, \cmd{\textbackslash{}matrnumber} \cmd{\textbackslash{}course}, \cmd{\textbackslash{}title}, and \cmd{\textbackslash{}date}. The latter of these takes two arguments: the actual, complete date of submission and a short version for the title page with month and year only.
+
+A PhD thesis also requires the following values: 
+\cmd{\textbackslash{}submitdate}, \cmd{\textbackslash{}setBirthplace} and \cmd{\textbackslash{}setPhDType}. The latter must be one of the values \emph{ing}, \emph{nat}, or \emph{pol}.
+
+\subsection{Institute, Supervisor, and Examiner}
+
+You can set up one or two examiners for your thesis, depending on the examination regulations for your thesis. This is done via the commands
+\cmd{\textbackslash{}examinerFirst} and \cmd{\textbackslash{}examinerSecond}. Each of these takes two parameters: the name of the examiner and his or her affiliation, i.e., the institute and university (the latter two should be separated by \cmd{\textbackslash{}newline}).
+You may also provide up to two supervisors (tutors) of your thesis. This is done via the commands \cmd{\textbackslash{}supervisorFirst} and \cmd{\textbackslash{}supervisorSecond}. The command requires the same two parameters as the examiner commands. However, the affiliation should make up a single line, i.e., separate institute and university by commas.
+Finally, you have to specify the institute explicitly using the command \cmd{\textbackslash{}institute}. Available parameters are defined in the file \file{tuhhlangnames.def}. Most likely, you will need \emph{InstTelematics}.
+
+
+\section{Building Blocks}
+
+Your report consists of a couple of building blocks, which we will discover and explain in this section.
+
+
+\subsection{Mathematical Symbols}
+
+At the moment, there is one major hint for you: If there are going to be any mathematical symbols in your report, define a command for each of them in the file \file{setup\_math.tex}. First of all, this makes your sourcecode---and equations in particular---more readable. Secondly, symbols can be replaced or altered quickly and elegantly.
+
+After the table of contents and before the first chapter of your report, show a table of all (mathematical) symbols used in your report with a brief explanation. An example is found in this document. Inclusion of such a list is explained in Sect.~\ref{sub:options}.
+
+
+\subsection{Chapters}
+
+Each chapter of your thesis should reside in a dedicated file. These files are linked into the thesis report via the \cmd{\textbackslash{}input} command. We do not discuss this matter in detail, but refer to the source code of this guide.
+
+
+\subsection{Bibliography}
+
+Since you're using \LaTeX, it's most suitable to employ BibTeX for your bibliography. By default, the bibliography is expected in the file \file{thesis.bib}. The specified style is a sincere recommendation. Information on required fields for the most important types of bibliography entries is provided in Sect.~\ref{sec:bib}.
+
+
+\subsection{Appendix}
+
+The appendix is organized as are the chapters: in separate files. In general, there should rarely be any need for a vast appendix. We only require you to have one appendix chapter for an attached CD/DVD with all your material, source code and the final versions (PDF) of your report and talk. If there are a few things that are related to your work, but do not suit into the main part, then these may go to the appendix. However, ask your supervisor before creating an appendix.
+
+
+\subsection{Graphics and Plots}
+
+If possible, try to draw your graphics with TikZ and the plots with Gnuplot with the TikZ terminal. TikZ is flexible, neat, and capable of using just the same fonts and symbols as used in and throughout your report. In general, create individual PDFs for each plot or graphic and insert it into your report using \cmd{\textbackslash{}includegraphics}. Doing so will speed up the compilation process. Ask your supervisor in case of any questions.
+

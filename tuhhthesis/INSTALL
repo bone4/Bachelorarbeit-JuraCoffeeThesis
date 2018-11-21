@@ -1,0 +1,44 @@
+Install tuhhthesis template
+===========================
+
+== Ubuntu =================
+
+1. install texlive-full
+
+2. extract folder "texmf" from tuhhthesis.zip to your home directory
+
+3. extract remaining files to your desired working directory
+
+5. compilation
+   a) use an IDE of your choice
+
+   OR
+
+   b) - change to directory with thesis.tex
+      - execute twice: pdflatex thesis
+      - open thesis.pdf
+
+
+
+== MikTex on Windows ======
+
+1. install MikTex -> http://miktex.org/
+
+2. extract folder "texmf" from tuhhthesis.zip
+
+3. launch MikTex's "Settings" tool.
+   - tab: Roots. Add just extracted "texmf" folder
+   - tab: General. Hit "Refresh FNDB" and "Update Formats". OK
+
+4. extract remaining files from tuhhthesis.zip to your desired working directory
+
+5. compilation
+   a) - open thesis.tex with TeXworks
+      - make sure pdfLatex is chosen (top left, next to green arrow)
+      - hit green arrow, wait for completion, hit green arrow again
+
+   OR
+
+   b) - change to directory with thesis.tex
+      - execute twice: pdflatex thesis
+      - open thesis.pdf

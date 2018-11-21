@@ -1,0 +1,211 @@
+\documentclass[
+  en, % or de
+  inputenc=utf8,
+  %aspectratio=169,
+]{tuhhslides}
+
+% use flat boxes
+\setbeamertemplate{blocks}[flat]
+
+
+% setup title, author and institute
+\title{This is a Simple Test Presentation for the New and Fancy TUHH Beamer Class}
+\author[Christian Renner]{\speaker{Christian Renner} and Someone Else}
+%%% as Student do not use any Institute tag or use the following
+%\institute{InstSchoolOfEEIT}
+%%%
+%%% as Staff you can use your Institute see tuhhlangnames.def
+%\institute{InstTelematics}
+%\institute{InstSmartPort}
+%%%
+\subject{Example Conference 2010}
+\date{20.01.2010}
+
+%%% enable when you want a vcard at the last slide
+\contactName{Christian Renner}
+\contactPic{./renner.jpg}
+\contactPosition{Research Assistant}
+%\contactPosition{Wissenschaftlicher Mitarbeiter}
+\contactPhone{+49 / (0)40 428 78 3448}
+\contactEmail{christian.renner@tu-harburg.de}
+\contactWeb{http://www.ti5.tu-harburg.de/staff/renner}
+
+%%
+\usepackage{listings}
+
+%% enable section page
+\AtBeginSection{%
+  \frame[plain,noframenumbering]{\sectionpage}
+}
+
+\begin{document}
+
+%% title page
+\begin{frame}[plain,noframenumbering]
+    \titlepage
+\end{frame}
+
+
+%% table of content
+\begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents
+\end{frame}
+
+
+\section{Section 1}
+
+\begin{frame}
+  \frametitle{Test Slide $\alpha$}
+
+  \begin{itemize}
+    \item Test itemize list $\beta$
+    \item Test itemize list
+    \begin{itemize}
+      \item<2-> Test itemize list
+      \item Test itemize list
+      \begin{itemize}
+        \item<3-> Test itemize list
+        \item Test itemize list
+      \end{itemize}
+      \item Test itemize list
+    \end{itemize}
+    \item Test itemize list
+    \begin{itemize}
+      \item Test itemize list
+      \item Test itemize list
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\section{Maths, Boxs and Listings}
+
+\begin{frame}{Test Slide number 2}
+
+  \begin{definition}
+    \[ \sum_{i=1}^{n} = \frac{n (n+1)}{2} \]
+  \end{definition}
+ 
+\end{frame}
+
+\begin{frame}{Test Slide number 3}
+  \begin{example}
+    An example of an example box
+  \end{example}
+
+  \tuhhannotation[note]{If v.state= IN when v received REQUEST from w then w must have sent PERMISSION to v before it send REQUEST to v. Thus, w' REQUEST has higher clock value than w's REQUEST}[-2cm]
+\end{frame}
+
+
+\subsection{A subsection}
+\frame[plain,noframenumbering]{\subsectionpage}
+
+\begin{frame}{Test Slide number 4}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Listings}
+  \begin{itemize}
+    \item Yes, it's different in ``beamer'' documents:
+    \begin{enumerate}
+      \item Use package {\tt \{listings\}} 
+      \item Add settings (i.e. {\tt $\backslash$lstset\{\}}) in preamble or frame
+      \item And use parameter $\left[ \texttt{fragile} \right]$ for the
+      \texttt{frame} environment
+      \item Add your listing as usual
+    \end{enumerate}
+  \end{itemize}
+  
+  % lst settings
+  % You may even place it in the preamble!
+  \lstset{% general command to set parameter(s)
+    frame=single,       % put a frame around the listing
+    language=Java,      % the default language is Java
+    basicstyle=\tiny,   % print whole listing tiny
+    tabsize=2,
+    showlines=true,    % do not omit empty lines at the end of the listing
+    backgroundcolor=,
+    numbers=left,       % print line numbers on the left side
+    numberstyle=\tiny,  % use small font for line numbers
+    stepnumber=1,       % show only every second line number
+    numbersep=5pt       % use 5pt to seperate line number
+}
+  
+  \begin{lstlisting}
+      // l33t h4cz0r s4mpl3
+      new Connection("127.0.0.1").phrack();
+  \end{lstlisting}
+
+  \hyperref[sec:end]{The End}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Last Slide}
+
+  \alert<2->{Oh my gosh, we made it ...}
+  \only<3>{almost}
+
+\end{frame}
+  
+
+\section{The End}
+\label{sec:end}
+
+\begin{frame}
+  \frametitle{The Really Last Slide}
+  \begin{alertblock}{Alert}
+    That's it ... really
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}
+%\frametitle{Speicherverwaltung}
+\begin{tuhhdefinitionbox}{Speicherverwaltung}
+Teil des Betriebssystems, welcher den Arbeitsspeicher verwaltet.
+\end{tuhhdefinitionbox}
+\begin{itemize}
+        \item Aufgaben:
+        \begin{itemize}
+                \item Verwaltung von freien und belegten Speicherbereichen
+                \item Zuweisung von Speicherbereichen an parallel ablaufende Prozesse zur Laufzeit (Allokation)
+                \item Freigabe nach Benutzung oder bei Prozessende
+                \item Auslagerungen von Prozessen zwischen Arbeitsspeicher und Swap-Bereich im persistenten Speicher (Swapping)
+        \end{itemize}
+\end{itemize}
+\tuhhannotation[note]{Bei Mehrprogrammbetrieb gibt es normalerweise nicht genügend Hauptspeicher, um alle Prozesse aufzunehmen.  Swapping beinhaltet das Verschieben von Prozessen vom Hauptspeicher auf externen Speicher (Auslagern) und umgekehrt (Einlagern).  Im Hauptspeicher wird also zu jedem Zeitpunkt nur eine Teilmenge der Prozesse gehalten, diese sind aber vollständig repräsentiert.  Die restlichen (möglicherweise auch rechenwilligen) Prozesse werden in einem Bereich im Sekundärspeicher abgelegt.}
+\end{frame}
+
+
+\begin{frame}[plain,noframenumbering]
+  %%% use simple end page
+  %\endpage
+  %%% or fancy vcard page
+  \vcardpage
+\end{frame}
+
+
+%%
+\backup
+
+\begin{frame}
+  \frametitle{Appendix}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{For Further Reading}
+%  \begin{thebibliography}{Dijkstra, 1982}
+%    \bibitem[Solomaa, 1973]{Solomaa1973}
+%      A.~Salomaa.
+%      \newblock {\em Formal Languages}.
+%      \newblock Academic Press, 1973.
+%    \bibitem[Dijkstra, 1982]{Dijkstra1982}
+%      E.~Dijkstra.
+%      \newblock Smoothsort, an alternative for sorting in situ.
+%      \newblock {\em Science of Computer Programming}, 1(3):223--233, 1982.
+%  \end{thebibliography}
+\end{frame}
+
+\end{document}

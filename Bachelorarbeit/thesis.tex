@@ -1,0 +1,122 @@
+%%
+%% DOCUMENT TYPE
+%%
+
+% general options:
+% - inputenc        file encoding (should be "utf8" in most cases)
+% - de/en           language of your work (influence pre-defined tokens)
+% - declaration     adds the mandatory statutory declaration for theses
+% - abstract        adds the abstract (from file "prelude_abstract.tex")
+% - acknowledgment  adds an acknowledgment (from file "prelude_acknowledgment.tex")
+%                   it is a nice gesture to personally thank people who
+%                   supported you during your work.
+% - symbollist      adds a list of symbols (from file "prelude_symbols.tex")
+% - figurelist      adds and automatically creates a list of figures 
+% - tablelist       adds and automatically creates a list of tables
+% - index           generates an index based on the package "makeidx", please
+%                   refer to its documentation for usage on index markup
+% - bibbacklinks    adds backlinks from bibliography to the pages, where the
+%                   corresponding entry is used (cited)
+% - gray            make a gray-style version of the thesis report
+%
+% PhD thesis specific options
+% - cv              adds your cv
+% - publishsize     changes the page size from A4 to A5 for print publishing
+%                   (please change the font size to 9pt, if you use this option)
+% - approved        use this option, after your thesis has been formally approved
+%                   (this will change the front page to meet formal/legal requirements)
+% - ownpub          adds a second bibliography (from file "ownpub.bib") for your own
+%                   publications related to the PhD thesis. According to the latest
+%                   examination regulations, own work should be part of the regular
+%                   bibliography (this option is hence obsolete)
+
+\documentclass[de,acknowledgment,declaration,abstract,symbollist,inputenc=utf8]{tuhhthesis}
+
+
+%%
+%% SETUP BLOCK
+%%
+
+% thesis type, must be one of the following
+% - projectwork
+% - bachelorthesis
+% - masterthesis
+% - diplomathesis
+% - phdthesis
+\setthesistype{bachelorthesis}
+
+% your full name as printed on any official document (e.g., passport)
+\author{Niklas Joachim Eberhard Krüger}
+
+% the official title of your work (*must* match the filed title)
+\title{Reverse Engineering of a Jura Coffee Machine}
+
+% the institution of the first examiner (refer to tuhhlangnames.def)
+\institute{InstTelematics}
+
+% date of submission as DD.MM.YYYY
+\submitdate{28.02.2019}
+
+% your matriculation number (for anything but PhD thesis)
+\matrnumber{21491319}
+
+% your course of studies
+\course{Informatik-Ingenieurwesen}
+
+% full name and affiliation of first and second examiner
+\examinerFirst{Prof. Dr. Volker Turau}{Institute of Telematics\newline Technische Universität Hamburg}
+\examinerSecond{Prof. Dr. Volker Turau}{Institute of Telematics\newline Technische Universität Hamburg}
+
+\supervisorFirst{Florian Meyer}{Institute für Telematik, Technische Universität Hamburg}
+%\supervisorSecond{Volker Turau}{Institute of Telematics, Hamburg University of Technology}
+
+% optional: print the TUB document number on title page
+% this only applies, if the document is formally publish under
+% a TUB document number
+%\tubdoknumber{4711}
+
+
+% Curriculum Vitae
+% only needed for thesis type PhD
+%\usepackage[]{currvita}
+%\setlength{\cvlabelwidth}{50mm}
+%\renewcommand*{\cvlistheadingfont}{\normalfont\sffamily\large\color{tuhh_blue}}
+%\renewcommand*{\cvlabelfont}{\normalfont\rmfamily\normalsize\color{tuhh_darkgray}}
+
+
+
+%%
+%% CONTENT AREA
+%%
+
+% mathematical symbols
+\input{setup_math}
+
+
+\begin{document}
+
+% The Chapters
+\input{chapter_Introduction}
+\input{chapter_Structure}
+\input{chapter_TheClass}
+\input{chapter_Figures}
+\input{chapter_Style}
+
+
+% Bibliography
+% if you have cited papers that are not referenced, but important for your work,
+% uncommented the following line; however, this should generally by unnecessary
+% and hints at improper citing.
+%\nocite{*}
+\tuhhbibliography{thesis}
+
+
+% Appendix
+% Feel free to add additional appendix chapters (e.g., measurement setups, etc.)
+\begin{tuhhappendix}
+  \input{appendix_CD-Content}
+\end{tuhhappendix}
+
+
+% The End
+\end{document}

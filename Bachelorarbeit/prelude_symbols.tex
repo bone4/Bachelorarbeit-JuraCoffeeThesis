@@ -1,0 +1,42 @@
+\begin{center}
+\footnotesize
+\begin{supertabular}{p{.4\textwidth}p{0.54\textwidth}}
+\abovebodyrule
+	$\setN, \setZ, \setQ, \setR, \setC$
+	& Regular sets of numbers
+\\\TRc
+	$\classNP, \classP$
+	& Complexity classes
+\\
+	$\setNodes = \{ \node_0,\ldots,\node_{\numNodes-1} \}$%
+	& Set of $\numNodes$ nodes $\node_i$ belonging to a network with sink $\sink$
+\\\TRc
+	$\nodeDensity$%
+	& Node density, i.e., the average number of nodes within another node's communication range
+\\
+	$(\node_i,\node_j) \in \setLinks$%
+	& Set of bidirectional communication links in the network
+\\\TRc
+	$\Network = \left( \setNodes, \setLinks \right)$%
+	& Graph representation of a wireless sensor network
+\\
+	$\setNeighbors{i} = \{ \node_j \in\setNodes \mid i\!\!\ne\!\!j \wedge (\node_i,\node_j) \in \setLinks \}$%
+	& The set of bidirectional communication partners of node~$\node_i$
+\\\TRc
+	$\setTree \subseteq \setLinks, \quad \abs{\setTree} = \numNodes\!-\!1$%
+	& Routing tree rooted in the sink
+\\
+	$\setTree_i$%
+	& Subtree rooted in (and including) node $\node_i$
+\\\TRc
+	$\setChildren_i, \quad \numChildren_i=\abs{\setChildren_i}$%
+	& The set and number of children of node $\node_i$ in $\setTree$
+\\
+	$\setLeafs=\{\node_i\in\setNodes\mid\setChildren_i=\emptyset\}$%
+	& Set of leafs in $\setTree$ and the number of leafs
+\\\TRc
+	$\setLeafs_{i}$%
+	& Set of leafs in the subtree $\setTree_i$ of $\setTree$
+\\\belowbodyrule
+\end{supertabular}
+\end{center}

@@ -1,0 +1,101 @@
+\chapter{Style Guide}\label{cha:styleGuide}
+
+Finally, we want to give some advices and recommendations on styling. This does not relate to writing skills, which is gracefully embraced by the \emph{Chicago Writer's Manual}.
+
+
+\section{Fonts}\label{sec:fonts}
+
+Font setup etc. has been done for you by means of this very template. We hence expect you to follow the given style; meaning that we discourage you from changing font sizes, faces, families, colors, as well as line and paragraph spacing or any spacing in general.
+
+
+\section{Citing and Referencing}\label{sec:citeAndRef}
+
+Citing other sources and referencing parts of your work is quite easy using the commands \cmd{\textbackslash{}cite} and \cmd{\textbackslash{}ref}. Yet, let us mention some aspects. Firstly, when citing, you should make clear, somehow, which part is from the cited work and which is not. Secondly, you most likely want to place a tilde ($\sim$) between the word just in front of the \cmd{\textbackslash{}cite} or \cmd{\textbackslash{}ref} commands to avoid ugly looking line breaks. Thirdly, note that citations and references are proper parts of a sentence: Do not simply put them at the end of a sentence; use them as nouns!
+
+More importantly, obey the following rules. Always capitalize when referencing, e.g., say Fig.~17 instead of fig.~17. You can abbreviate Figure with Fig., Section with Sect., and Listing with Lst. When referencing equations, simply place the number in parentheses---e.g., say (3.2) instead of Eq.~3.2---that's all. While you can certainly do this by hand, we encourage you to use the \emph{cleveref} package, which already does this for you. By using \cmd{\textbackslash{}cref} or \cmd{\textbackslash{}Cref} (at the beginning of a sentence) as a replacement for \cmd{\textbackslash{}ref}, the type of reference is automatically added. Please check the manual of the package for further details.
+
+For your own sake, use a pattern for labels. We recommend to use prefixes for each type of label: chapters (\cmd{cha:}), sections (\cmd{sec:}), subsections and below (\cmd{sub:}), figures (\cmd{fig:}), tables (\cmd{tbl:}), listings (\cmd{lst:}), and equations (\cmd{eqn:}).
+
+
+\section{Physical Units}\label{sec:siunits}
+
+If you plan on using physical units, particularly SI-units, in your report, we encourage you to use the \emph{siunitx} package for \LaTeX. In all cases, separate numbers from their units with a small space, i.e., with a \cmd{\textbackslash{},}. Well, there is an exception: No space for~\%!
+
+
+\section{Mathematical Stuff}
+
+When using mathematical functions or sub-/superscripts that are text and not variables, please typeset these appropriately: In the case of functions, use the command version, e.g., \cmd{\textbackslash{}log} (prints $\log$) instead of plainly \cmd{log} (which prints $log$). For subscripts or the like, use the command \cmd{\textbackslash{}textnormal}. Compare $T_{sleep}$ with $T_\textnormal{sleep}$. The reasons for this is twofold. Firstly, the produced italic text looks ugly, and secondly, italics are used for variables (only).
+
+The usage of the environment \cmd{equation} is disouraged and may cause display errors. In the future, please use the \cmd{align} environment for equations:
+
+\begin{align*}
+	|x|= 
+	\begin{cases} 
+			x 	& \text{if $x > 0 $,} \\
+			-x 	& \text{if $x \leq 0$.}
+	\end{cases}
+\end{align*}
+
+\begin{lstlisting}[language=TeX]
+\begin{align*}
+	|x|= 
+	\begin{cases} 
+			x 	& \text{if $x > 0 $,} \\
+			-x 	& \text{if $x \leq 0$.}
+	\end{cases}
+\end{align*}
+\end{lstlisting}
+
+
+
+\section{Bibliography}\label{sec:bib}
+
+When it comes to writing your bibfile, i.e., your bibliography, please follow the next few advices. Firstly, be consistent (if possible): Regarding authors' names, either abbreviate first names always or write them out always! For US addresses, write down the name of the city, the two-character abbreviation for the state plus the term USA! For all other countries, the name of the city and the country are sufficient. Capitalize titles correctly (there are multiple rules on this, please pick one and stick to it)! If possible, write down the full name of a conference and repeat its abbreviation with the year in parentheses afterwards. We give a few examples in the following listings.
+
+Beside this, please have a look at the required fields for the main types of citations:
+\begin{description}
+  \item[Journal Articles] Use the type \cmd{@article} and include the fields \cmd{author}, \cmd{title}, \cmd{journal}, \cmd{volume}, \cmd{number}, \cmd{year}, \cmd{publisher}, and \cmd{address}.
+  \item[Conference Papers] Use the type \cmd{@inproceedings} and provide the fields \cmd{author}, \cmd{title}, \cmd{booktitle}, \cmd{month}, \cmd{year}, and \cmd{address}.
+  \item[Technical Reports] Use the type \cmd{@techreport} and provide the fields \cmd{author}, \cmd{title}, \cmd{month}, \cmd{year}, and \cmd{institution}.
+  \item[Websites] Use the type \cmd{@misc} and provide the fields \cmd{author}, \cmd{title}, \cmd{year}, \cmd{note} and \cmd{howpublished}. The last two fields hold a note on your last visiting date of the site and its web address.
+\end{description}
+
+We have put together a couple of examples for you in Lst.~\ref{lst:sampleBibtex}.
+
+\begin{lstlisting}[label=lst:sampleBibtex,language=TeX,caption={BibTeX examples},{morekeywords={@article,@inproceedings,@techreport,@misc}},{morestring=[b]"}]
+@article{ ECPS:2002:ConnectingThePhysicalWorld,
+	author       = "D. Estrin and D. Culler and K. Pister and G. Sukhatme",
+	title        = "{Connecting the Physical World with Pervasive Networks}",
+	journal      = "IEEE Pervasive Computing",
+	volume       = "1",
+	number       = "1",
+	year         = "2002",
+	publisher    = "IEEE Educational Activities Department",
+	address      = "Piscataway, NJ, USA"
+}
+
+@inproceedings{ KPC:2006:StructuralMonitoring,
+	author       = "S. Kim and S. Pakzad and D. Culler and J. Demmel and G. Fenves and S. Glaser and M. Turon",
+	title        = "{Wireless Sensor Networks for Structural Health Monitoring}",
+	booktitle    = "Proceedings of the 4th International Conference on Embedded Networked Sensor Systems (SenSys~'06)",
+	month        = oct,
+	year         = "2006",
+	address      = "Boulder, CO, USA"
+}
+
+@techreport{ EV:2005:TDMAScheduling,
+	author       = "S. Coleri Ergen and P. Varaiya",
+	title        = "{TDMA Scheduling Algorithms for Sensor Networks}",
+	year         = "2005",
+	month        = jul,
+	institution  = "Department of Electrical Engineering and Computer Science, University of California, Berkeley, CA, USA"
+}
+
+@misc{ TI5:WIKI,
+	author       = "S. Untersch{\"u}tz",
+	title        = "{Network Simulator (NS-2), Institute of Telematics, Hamburg University of Technology, Germany}",
+	howpublished = "http://wiki.ti5.tu-harburg.de/wsn/ns2/intro",
+	year         = 2008,
+	note         = "Last visited: 05/06/2008"
+}
+\end{lstlisting}

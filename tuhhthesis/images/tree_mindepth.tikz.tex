@@ -1,0 +1,29 @@
+\tikzstyle{vertex} = [circle, minimum size=10pt, circular drop shadow, text=black, very thick, draw=black!55, top color=white,bottom color=black!20]
+
+% \tikzstyle{edge} = [line to]
+% \tikzstyle{comm edge} = [edge,draw=black!30,dotted,very thick]
+% \tikzstyle{tree edge} = [edge,very thick]
+% \tikzstyle{active tree edge} = [edge,draw=red!40,opacity=.6,line width=5pt]
+
+
+% \pgfdeclarelayer{comm}
+% \pgfdeclarelayer{tree}
+% \pgfsetlayers{comm,tree,main}
+
+\begin{tikzpicture}[scale=0.9,level distance=1cm,level 1/.style={sibling distance=1.5cm}, level 2/.style={sibling distance=.5cm},edge from parent/.style={draw,thick}]
+  \useasboundingbox (-2.23,-2.23) rectangle (2.23,0.2);
+  \node[vertex] {}
+    child {node[vertex] {}
+      child {node[vertex] {}}
+      child {node[vertex] {}}
+    }
+    child {node[vertex] {}
+      child {node[vertex] {}}
+    }
+    child {node[vertex] {}
+      child {node[vertex] {}}
+      child {node[vertex] {}}
+    }
+  ;
+\end{tikzpicture}
+
