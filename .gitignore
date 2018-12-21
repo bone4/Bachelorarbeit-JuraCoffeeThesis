@@ -1,10 +1,13 @@
 *.aux
 *.bak
-*~
 *.bbl
 *.blg
+*.brf
+*.dvi
 *.fdb_latexmk
 *.fls
+*.ilg
+*.ind
 *.log
 *.nav
 *.out
@@ -13,5 +16,6 @@
 *.toc
 *.upa
 *.vrb
+*~
 tuhhslides/tuhhslides.zip
 tuhhthesis/tuhhthesis.zip
