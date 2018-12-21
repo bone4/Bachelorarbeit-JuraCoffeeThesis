@@ -30,7 +30,19 @@
 %                   examination regulations, own work should be part of the regular
 %                   bibliography (this option is hence obsolete)
 
-\documentclass[de,acknowledgment,declaration,abstract,symbollist,inputenc=utf8]{tuhhthesis}
+\documentclass[de,acronymlist,declaration,bibbacklinks,inputenc=utf8]{tuhhthesis}
+%\documentclass[de,acknowledgment,declaration,abstract,symbollist,inputenc=utf8]{tuhhthesis}
+
+
+% for the acronyms
+% - footnote        die Langform als Fußnote ausgeben
+% - nohyperlinks    wenn hyperref geladen ist, wird die Verlinkung unterbunden
+% - printonlyused   nur Abkürzungen auflisten, die tatsächlich verwendet werden.
+%    Im printonlyused-Modus kann zusätzlich noch die Option withpage verwendet werden. Hierdurch wird im Abkürzungsverzeichnis zusätzlich die Seitenzahl, auf welcher die Abkürzung als erstes verwendet wurde, ausgegeben.
+% - smaller         Text soll kleiner erscheinen, das Paket relsize wird vorausgesetzt
+% - dua             es wird immer die Langform ausgegeben
+% - nolist          es wird keine Liste mit allen Abkürzungen ausgegeben
+\usepackage[printonlyused, withpage]{acronym}
 
 
 %%
@@ -92,16 +104,28 @@
 % mathematical symbols
 \input{setup_math}
 
+\newcommand{\todo}{\fcolorbox{black}{yellow}{\textcolor{red}{!!!ToDo!!!}}}
 
 \begin{document}
 
-% The Chapters
-\input{chapter_Introduction}
-\input{chapter_Structure}
-\input{chapter_TheClass}
-\input{chapter_Figures}
-\input{chapter_Style}
+%\phantomsection%prevents "Warning: No destination for bookmark of \addcontentsline"
+%\addchap{\tuhh@printTag{ListOfSymbols}}\label{Test}
+%\input{prelude_symbols}
+%\cleardoublepage
 
+%\renewcommand\contentsname{\tuhh@printTag{LotName}}
+%\listoftables
+%\addcontentsline{toc}{chapter}{\tuhh@printTag{LotName}}
+%\cleardoublepage
+
+% The Chapters
+\input{chapter_1} % Einführung
+\input{chapter_2} % Grundlagen
+% meine Arbeit deutlich vom gegebenen abgrenzen: Hard-&Software vs. meine Implementierung
+\input{chapter_3} % Hardware und Software
+\input{chapter_4} % Methodik und Implementierung
+\input{chapter_5} % Speicher                     % Analyse / Zusammenfassung / Ergebnisse
+\input{chapter_6} % Diskussion und Ausblick
 
 % Bibliography
 % if you have cited papers that are not referenced, but important for your work,

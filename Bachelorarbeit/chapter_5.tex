@@ -1,0 +1,29 @@
+\chapter{Ergebnisse}
+
+\section{Bedeutung der Speicherstellen}
+
+
+
+
+Um den Speicher zu verstehen, klären wir vorab das Rückgabeformat der Speicherauszugs Befehle, sowie den Aufbau des Speichers der Jura Impressa S9.
+Dieser Kaffevollautomat besitzt einen \ac{RAM} für die Status, Messwerte und Zwischenberechnungen im Betrieb und einen \ac{EEPROM} für Einstellungen und Zählstände, die auch nach einer Stromunterbrechung erhalten bleiben.
+
+\subsection{EEPROM}
+Der \acf{EEPROM} umfasst 512 Bytes.
+Über den Befehl \texttt{RT:<address>}, siehe Tabelle~\ref{tbl:kommandos}, lässt sich eine Zeile \ac{EEPROM} Speicher abfragen.
+Die Adresse reicht von 0x00 bis 0xF0 in sechzehner Sprüngen.
+Als Antwort erhält man hinter dem kleingeschriebenen Kommando eine Zeichenkette bestehend aus 64 Hexadezimalzeichen.
+Da immer zwei Hexadezimalzahlen eine Byte (8 Bit mit Werten von 0-255) repräsentieren umfasst eine \ac{EEPROM} Zeile 32 Bytes.
+Über den Befehl \texttt{RE:<address>} können direkt Wörter im \ac{EEPROM} abgefragt werden. Die Adresse reicht von 0x00 bis 0xFF. Die kleinste adressierbare Einheit, das Wort, besteht daher aus zwei Bytes, also vier Hexadezimalzeichen.
+
+\todo Abbildung aus dem Antrittsvortrag: Seite 8/13
+
+\subsection{RAM}
+Der \acf{RAM} hingegen umfasst 256 Bytes.
+Der Lesebefehl für eine \ac{RAM} Zeile lautet: \texttt{RR:<address>}. Die Adresse reicht hier von 0x00 bis 0xFF, sodass hier die kleinste Einheit ein Byte, bestehend aus zwei Hexadezimalzeichen, ist.
+
+\todo Abbildung aus dem Antrittsvortrag: Seite 9/13
+
+
+\section{Aktionsauswirkungen}
+Reinigung setzt etliche Zähler zurück; Entnahme der Schale setzt min. 2 Trester zähler zurück; Bits im RAM variieren auch im ausgeschalteten Betriebszustand, einige Informationen nur im eingeschalteten Zustand auslesbar, ander aber auch immer (solange Maschine mit Strom versongt wird)
