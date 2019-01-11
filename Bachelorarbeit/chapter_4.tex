@@ -1,7 +1,11 @@
 \chapter{Methodik und Implementierung}
 
 \section{Vorgehen}
-Die Speicher der Kaffeemaschine, der \ac{EEPROM} und der \ac{RAM}, werden Zeilenweise von einem Skript ausgelesen. Dieses Skript setzt die einzelnen Informationen zu einem Speicherauszug zusammen. Aufeinander folgende Speicherauszüge können auf Veränderungen verglichen werden. Die von Hand angestoßenen Veränderungen sollten möglichst elementar sein, um gezielte Aktionen den Wertänderungen bestimmter Speicherzellen zuprdnen zu können.
-Der dafür nötige Zugriff kann auf zwei Arten erfolgen: direkt am Speicherstein auf der Hauptplanine oder seriell über die vorhandene \ac{UART} Schnittstelle, siehe \ref{subsec:zugangSeriellDirekt}. Im Folgenden erfolgt die Kommunikation über die \ac{UART} Schnittstelle und mithilfe der \textit{libserial}-Library, siehe \ref{subsec:kommunikationGeraetedateiLibserialLibrary}.
+Die Speicher der Kaffeemaschine, der \ac{EEPROM} und der \ac{RAM}, werden Zeilenweise von einem Skript ausgelesen.
+Dieses Skript setzt die einzelnen Informationen zu einem Speicherauszug zusammen.
+Aufeinander folgende Speicherauszüge können auf Veränderungen verglichen werden.
+Die von Hand angestoßenen Veränderungen sollten möglichst elementar sein, um gezielte Aktionen den Wertänderungen bestimmter Speicherzellen zuprdnen zu können.
+Der dafür nötige Zugriff kann auf zwei Arten erfolgen: direkt am Speicherstein auf der Hauptplanine oder seriell über die vorhandene \ac{UART} Schnittstelle, siehe \ref{subsec:zugangSeriellDirekt}.
+Im Folgenden erfolgt die Kommunikation über die \ac{UART} Schnittstelle und mithilfe der \textit{libserial}-Library, siehe \ref{subsec:kommunikationGeraetedateiLibserialLibrary}.
 
 \section{...}

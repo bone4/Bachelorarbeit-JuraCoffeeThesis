@@ -3,19 +3,29 @@
 \section{Probleme}
 
 \subsection{Kommunikation mit der Kaffeemaschine} \label{subsec:zugangSeriellDirekt}
-Der direkte Zugang ist wahrscheinlich am schnellsten, im laufenden Betrieb aber schlecht möglich, da die Speicheradressen aktiv abgefragt werden müssten und damit Kurzschlüsse in der Elektronik produziert werden. Die serielle Schnittstelle ermöglicht das Abfragen im laufenden Betrieb, also auch im \ac{RAM}. Jedoch benötigt das Auslesen seine Zeit (7-9 Sekunden für den \ac{RAM} und 10-15 Sekunden für den \ac{EEPROM}). Gerade im \ac{RAM} gibt es viele Veränderungen im Ruhezustand, sodass man auf diesem Weg nie einen zusammenhängenden Speicherauszug zu einem festen Zeitpunkt auslesen kann.
+Der direkte Zugang ist wahrscheinlich am schnellsten, im laufenden Betrieb aber schlecht möglich, da die Speicheradressen aktiv abgefragt werden müssten und damit Kurzschlüsse in der Elektronik produziert werden.
+Die serielle Schnittstelle ermöglicht das Abfragen im laufenden Betrieb, also auch im \ac{RAM}.
+Jedoch benötigt das Auslesen seine Zeit (7-9 Sekunden für den \ac{RAM} und 10-15 Sekunden für den \ac{EEPROM}).
+Gerade im \ac{RAM} gibt es viele Veränderungen im Ruhezustand, sodass man auf diesem Weg nie einen zusammenhängenden Speicherauszug zu einem festen Zeitpunkt auslesen kann.
 
 \subsection{Serielle Kommunikation} \label{subsec:kommunikationGeraetedateiLibserialLibrary}
 \paragraph{Gerätedatei direkt ansprechen}
-Um aufbauend Skripte ausführen zu können war der erste Versuch den Dateideskriptor \texttt{/dev/ttyACM0} sowohl lesend als auch schreibend zu nutzen. Zunächst funktionierte dies sehr gut, bis nach wenigen Tagen kaum reduzierbares Fehlverhalten auftrat. Gerade Antworten der Kaffeemaschine kamen nur noch in Bruchstücken an. Dies wurde bei der Einrichtung bereits im CoffeeMachine-Projekt (Fußnote \ref{GitlabProject_CoffeeMachine}) in der Readme.md für die Ausführung auf einem Raspberry Pi beschrieben.
+Um aufbauend Skripte ausführen zu können war der erste Versuch den Dateideskriptor \texttt{/dev/ttyACM0} sowohl lesend als auch schreibend zu nutzen.
+Zunächst funktionierte dies sehr gut, bis nach wenigen Tagen kaum reduzierbares Fehlverhalten auftrat.
+Gerade Antworten der Kaffeemaschine kamen nur noch in Bruchstücken an.
+Dies wurde bei der Einrichtung bereits im CoffeeMachine-Projekt (Fußnote \ref{GitlabProject_CoffeeMachine}) in der Readme.md für die Ausführung auf einem Raspberry Pi beschrieben.
 
 Versuche dies direkt zu lösen, in dem ein funktionierende Umgebung nachgebaut wurde, schlugen fehl.
 \todo Unternommene Befehle und Versuche aufzeigen
 
 \paragraph{C++ und die \textit{libserial}-Library}
-Für eine sichere Verbindung wird in dem C++ Programm auf die im Linux Repository erhältliche Library \textit{libserial} zurückgegriffen. Beim Verbindungsaufbau über die \textit{connect()} Methode der \textit{SerialConnection} Klasse wird die Schnittstelle initialisiert. Hier werden der Gerätepfad, die Baudrate und eine erwartete Mindestlänge festgelegt.
+Für eine sichere Verbindung wird in dem C++ Programm auf die im Linux Repository erhältliche Library \textit{libserial} zurückgegriffen.
+Beim Verbindungsaufbau über die \textit{connect()} Methode der \textit{SerialConnection} Klasse wird die Schnittstelle initialisiert.
+Hier werden der Gerätepfad, die Baudrate und eine erwartete Mindestlänge festgelegt.
 
-Kommandos gehen zuverlässig an den Arduino raus und ausgelesene Antworten kommen nun im Ganzen an. Der \textit{read} Befehl ist ein blockierender Aufruf, der das Programm anhält bis eine Antwort vorliegt. Dies stellt für die Speicherauslesung keine Problem da, da die ordnungsgemäßen Befehle immer ein \texttt{ok:} oder \texttt{xx:0-F} Speicherauszug zurück geben.
+Kommandos gehen zuverlässig an den Arduino raus und ausgelesene Antworten kommen nun im Ganzen an.
+Der \textit{read} Befehl ist ein blockierender Aufruf, der das Programm anhält bis eine Antwort vorliegt.
+Dies stellt für die Speicherauslesung keine Problem da, da die ordnungsgemäßen Befehle immer ein \texttt{ok:} oder \texttt{xx:0-F} Speicherauszug zurück geben.
 
 \subsection{Unbekannte Speicherorte}
 Unbekannter Speicherort des Einstellungsmenü-Zählerstands (überlebt Stromtrennung?!) und des Standarddisplaytextes (im RAM?!); dafür Blick auf den Mikrocontroller in der Hardware \cite{JuraMicrocontroller} und externes Auslesen ggf. erforderlich!
@@ -29,17 +39,32 @@ Es fehlen (wichtige?!), im Benutzerhandbuch dokumentierte, Meldungen wie:\label{
 Gerät verkalkt, Störung 2, Störung 8, sowie etliche Menümeldungen während der internen Programmabläufe.
 
 \section{Einordnung zur Terminologie des Reverse Engineerings}\label{sec:DiskussionBegriffReverseEngineering}
-Diese Arbeit besteht im wesentlichen aus den zwei Teilen, den Speicher zu analysieren und zu verstehen, bzw. das Wissen darüber in einer neuen Oberfläche einfach zur Verfügung zu stellen. Ein kurzer Rückblick in Abschnitt \ref{sec:Begrifflichkeiten} erinnert an die Begriffe \textit{Forward Engineering}, \textit{Reverse Engineering}, \textit{Redocumentation}, \textit{Design Recovery}, \textit{Restructuring}, und \textit{Reengineering}.
+Diese Arbeit besteht im wesentlichen aus den zwei Teilen, den Speicher zu analysieren und zu verstehen, bzw. das Wissen darüber in einer neuen Oberfläche einfach zur Verfügung zu stellen.
+Ein kurzer Rückblick in Abschnitt \ref{sec:Begrifflichkeiten} erinnert an die Begriffe \textit{Forward Engineering}, \textit{Reverse Engineering}, \textit{Redocumentation}, \textit{Design Recovery}, \textit{Restructuring}, und \textit{Reengineering}.
 
-Für den ersten Teil wurden eine gegebene serielle Schnittstelle, sowie bereits implementierte Befehle ausgenutzt, um den Speicher auszulesen. Viele Aufnahmen, mit kleinen Veränderungen zwischendurch, ließen Rückschlüsse auf die Bedeutung der Werte an bestimmten Speicherstellen zu. Gerade mit den Überlegungen, was während einer Aktion am Kaffeevollautomaten alles im Speicher passiert, lässt sich diese Tätigkeit dem Begriff \textit{Reverse Engineering} zuordnen. Aus dem fertig implementierten und gegebenen System werden Rückschlüsse auf das Design der Maschine gezogen. \textit{Redocumentation} trifft aufgrund fehlender Spezifikationen und Quellcodeauszügen wenig zu. Betrachtet man aber das Benutzerhandbuch und Interneteinträge über Erfahrungen mit der Maschine als externe Informationen, sowie Schlussfolgerungen und Unschärfelogik über den \ac{RAM}, kann dieser Part auch als \textit{Design Recovery} über den Speicher angesehen werden.
+Für den ersten Teil wurden eine gegebene serielle Schnittstelle, sowie bereits implementierte Befehle ausgenutzt, um den Speicher auszulesen.
+Viele Aufnahmen, mit kleinen Veränderungen zwischendurch, ließen Rückschlüsse auf die Bedeutung der Werte an bestimmten Speicherstellen zu.
+Gerade mit den Überlegungen, was während einer Aktion am Kaffeevollautomaten alles im Speicher passiert, lässt sich diese Tätigkeit dem Begriff \textit{Reverse Engineering} zuordnen.
+Aus dem fertig implementierten und gegebenen System werden Rückschlüsse auf das Design der Maschine gezogen.
+\textit{Redocumentation} trifft aufgrund fehlender Spezifikationen und Quellcodeauszügen wenig zu.
+Betrachtet man aber das Benutzerhandbuch und Interneteinträge über Erfahrungen mit der Maschine als externe Informationen, sowie Schlussfolgerungen und Unschärfelogik über den \ac{RAM}, kann dieser Part auch als \textit{Design Recovery} über den Speicher angesehen werden.
 
-Mit diesem Wissen des ersten Teils wurde dann im zweiten Teil etwas Neues geschaffen. Das Abfragen der aktuellen Einstellungen und Zustände bietet eine neue Oberfläche, die als \textit{Redocumentation} oder \textit{Restructuring} angesehen werden kann. Für die \textit{Redocumentation} spricht das neue Ausgabeformat auf der Ebene der Implementierung. Ein eigenes Gerät ist zur Alternative (Ausnahmen siehe \ref{FehlendeMeldungen}) für das kleine Display des Geräts geworden und gibt den aktuellen Zustand in ausführlicherer Weise aus. Ohne eine präventive Instandhaltung beabsichtigt zu haben ist \textit{Restructuring} aber auch zutreffend, da Wissen aus dem ersten Teil hier eingeflossen ist. Wenn die Bedeutung bestimmter Speicherstellen nicht bekannt gewesen wäre, hätten die eingestellten Werte keine Bedeutung gehabt, was für den Begriff \textit{Restructuring} spricht.
+Mit diesem Wissen des ersten Teils wurde dann im zweiten Teil etwas Neues geschaffen.
+Das Abfragen der aktuellen Einstellungen und Zustände bietet eine neue Oberfläche, die als \textit{Redocumentation} oder \textit{Restructuring} angesehen werden kann.
+Für die \textit{Redocumentation} spricht das neue Ausgabeformat auf der Ebene der Implementierung.
+Ein eigenes Gerät ist zur Alternative (Ausnahmen siehe \ref{FehlendeMeldungen}) für das kleine Display des Geräts geworden und gibt den aktuellen Zustand in ausführlicherer Weise aus.
+Ohne eine präventive Instandhaltung beabsichtigt zu haben ist \textit{Restructuring} aber auch zutreffend, da Wissen aus dem ersten Teil hier eingeflossen ist.
+Wenn die Bedeutung bestimmter Speicherstellen nicht bekannt gewesen wäre, hätten die eingestellten Werte keine Bedeutung gehabt, was für den Begriff \textit{Restructuring} spricht.
 
-Für eine individuelle Zubereitung, wird nur die Datengrundlage kurz zuvor mit einem Impuls von außen verändert, der Kaffee wird dabei nach wie vor von den Standard Abläufen der Kaffeemaschine zubereitet. Die neue Oberfläche kann man als \textit{Restructuring} oder dem allgemeineren \textit{Reengineering} angesehen werden. Da die neue Oberfläche, über die serielle Schnittstelle in Verbindung mit einem eigenen Endgerät, aber sehr von den Bordmitteln der Maschine abweicht passt vielleicht das \textit{Reengineering} etwas besser. Die Funktionalitäten der Maschine sind aber immer noch die Gleichen, das Programmmenü muss nun jedoch nicht mehr betreten werden, um die allgemeinen Geräte Einstellungen für den eigenen Kaffee anzupassen.
+Für eine individuelle Zubereitung, wird nur die Datengrundlage kurz zuvor mit einem Impuls von außen verändert, der Kaffee wird dabei nach wie vor von den Standard Abläufen der Kaffeemaschine zubereitet.
+Die neue Oberfläche kann man als \textit{Restructuring} oder dem allgemeineren \textit{Reengineering} angesehen werden.
+Da die neue Oberfläche, über die serielle Schnittstelle in Verbindung mit einem eigenen Endgerät, aber sehr von den Bordmitteln der Maschine abweicht passt vielleicht das \textit{Reengineering} etwas besser.
+Die Funktionalitäten der Maschine sind aber immer noch die Gleichen, das Programmmenü muss nun jedoch nicht mehr betreten werden, um die allgemeinen Geräte Einstellungen für den eigenen Kaffee anzupassen.
 
 Im Detail ist die genau Zuordnung der Begrifflichkeiten immer eine persönliche Auslegung dieser Begriffe.
 Sehr zutreffend ist das Zitat aus Abschnitt \ref{sec:Begrifflichkeiten}, denn diese Arbeit hat den Speicher intensiv betrachtet und mittels der Ergebnisse aus dem zweiten Teil um neue Perspektiven bereichert, ohne das Ziel verfolgt zu haben die Maschine zu klonen oder umzubauen.
 
 \section{Ausblick}
-Mit unendlicher Zeit und unendlich vielem Geld wäre folgendes noch möglich: evtl. Firmware aus ROM auslesen und disassemblieren -> Vorgänge wirklich verstehen
+Mit unendlicher Zeit und unendlich vielem Geld wäre folgendes noch möglich: evtl.
+Firmware aus ROM auslesen und disassemblieren -> Vorgänge wirklich verstehen
 Für folgendes hat die Zeit gefehlt / der Schwerpunkt ging nicht in diese Richtung: Display Texte und Menü-Zählerstand wurden im RAM nicht wiedergefunden, ...
