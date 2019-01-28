@@ -10,8 +10,10 @@ mymat/.style={
   text height=2.5ex,
   text depth=0.75ex,
   text width=3.25ex,
+  inner xsep=0ex,
   align=center,
-  column sep=-\pgflinewidth
+  column sep=-\pgflinewidth,
+  nodes={minimum width=4ex}
   }
 }
 
@@ -26,7 +28,7 @@ mymat/.style={
   \node[text width=3.5cm] at (-1, 1) {\Large ASCII Byte:};
   \node[text width=3.5cm] at (-1,-1) {\Large UART Byte:};
 
-  \matrix[mymat,anchor=west,draw=blue,very thick] at (15.5,3) 
+  \matrix[mymat,anchor=west,draw=blue,very thick] at (9.75,3) 
   (pc) {
     |(pos1)| A &
     |(pos2)| N &
@@ -37,34 +39,34 @@ mymat/.style={
     |(pos7)| \textbackslash n\\
   };
 
-  \matrix[mymat,anchor=west,style={nodes=draw}] at (12,1) 
+  \matrix[mymat,anchor=west,style={nodes=draw}] at (7.5,1) 
   (ASCII-a) {
           |(bit7)| 0 &
           |(bit6)| 1 &
           |(bit5)| 0 &
           |(bit4)| 0 &
-    [1mm] |(bit3)| 0 &
+    [2mm] |(bit3)| 0 &
           |(bit2)| 0 &
           |(bit1)| 0 &
           |(bit0)| 1 \\
   };
 
-  \draw[-latex] (pos1.south) .. controls (16,1.8) and (8,1.2) .. (ASCII-a.west);
-  \draw (pos2.south) .. controls (17,1.5) .. (33,1.3);
-  \draw (pos3.south) .. controls (18,1.6) .. (33,1.4);
-  \draw (pos4.south) .. controls (19,1.7) .. (33,1.5);
-  \draw (pos5.south) .. controls (20,1.8) .. (33,1.6);
-  \draw (pos6.south) .. controls (21,1.9) .. (33,1.7);
-  \draw (pos7.south) .. controls (22,2.0) .. (33,1.8);
+  \draw[-latex] (pos1.south) .. controls (10,1.8) and (4,1.2) .. (ASCII-a.west);
+  \draw (pos2.south) .. controls (10.75,1.5) .. (20,1.3);
+  \draw (pos3.south) .. controls (11.3,1.6) .. (20,1.4);
+  \draw (pos4.south) .. controls (11.9,1.7) .. (20,1.5);
+  \draw (pos5.south) .. controls (12.5,1.8) .. (20,1.6);
+  \draw (pos6.south) .. controls (13,1.9) .. (20,1.7);
+  \draw (pos7.south) .. controls (13.5,2.0) .. (20,1.8);
   
   
   
   \matrix[mymat,anchor=west,style={nodes=draw}] at (0,-1)
   (UART-coffee) {
           -- & -- & |(bit7uart)| 0 & -- & -- & |(bit6uart)| 1 & -- & -- &
-    [1mm] -- & -- & |(bit5uart)| 0 & -- & -- & |(bit4uart)| 0 & -- & -- &
-    [1mm] -- & -- & |(bit3uart)| 0 & -- & -- & |(bit2uart)| 0 & -- & -- &
-    [1mm] -- & -- & |(bit1uart)| 0 & -- & -- & |(bit0uart)| 1 & -- & -- \\
+    [2mm] -- & -- & |(bit5uart)| 0 & -- & -- & |(bit4uart)| 0 & -- & -- &
+    [2mm] -- & -- & |(bit3uart)| 0 & -- & -- & |(bit2uart)| 0 & -- & -- &
+    [2mm] -- & -- & |(bit1uart)| 0 & -- & -- & |(bit0uart)| 1 & -- & -- \\
   };
 
   \draw[-latex] (bit7.south) .. controls ($(bit7.south)+(0,-0.5)$) and ($(bit7uart.north)+(0,1.5)$) .. (bit7uart.north);

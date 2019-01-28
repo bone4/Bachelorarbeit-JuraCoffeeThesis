@@ -1,11 +1,33 @@
 \chapter{Methodik und Implementierung}
 
 \section{Vorgehen}
-Die Speicher der Kaffeemaschine, der \ac{EEPROM} und der \ac{RAM}, werden Zeilenweise von einem Skript ausgelesen.
-Dieses Skript setzt die einzelnen Informationen zu einem Speicherauszug zusammen.
-Aufeinander folgende Speicherauszüge können auf Veränderungen verglichen werden.
-Die von Hand angestoßenen Veränderungen sollten möglichst elementar sein, um gezielte Aktionen den Wertänderungen bestimmter Speicherzellen zuprdnen zu können.
+Die Speicher der Kaffeemaschine, der \ac{EEPROM} und der \ac{RAM}, werden Zeilenweise von einem Programm ausgelesen.
+Dieses Programm setzt die einzelnen Informationen zu einem gesamten Speicherauszug zusammen.
+Aufeinander folgende Speicherauszüge können dann auf Veränderungen verglichen werden.
+
+
+Von Hand werden nun Veränderungen angestoßenen, die möglichst elementar sein sollten, um gezielte Aktionen den Wertänderungen bestimmter Speicherzellen zuordnen zu können.
 Der dafür nötige Zugriff kann auf zwei Arten erfolgen: direkt am Speicherstein auf der Hauptplanine oder seriell über die vorhandene \ac{UART} Schnittstelle, siehe \ref{subsec:zugangSeriellDirekt}.
 Im Folgenden erfolgt die Kommunikation über die \ac{UART} Schnittstelle und mithilfe der \textit{libserial}-Library, siehe \ref{subsec:kommunikationGeraetedateiLibserialLibrary}.
 
 \section{...}
+
+Display: Speicherort unbekannt, über die Befehle (?D0, ?D1xxx, ?D2xxx) systematisch alle ASCII Zeichen gesandt.
+Ab dez 128 Darstellung einer Zahl in mehr als einem Kästchen => Speicherüberlauf, nur das normale (nicht erweitere) ASCII alphabet. (war dem wirklich so?, noch einmal testen!)
+(Für Kapitel 5: 0-3x und 9x-127 ggf. verpixeltes kanji, aber keine lateinischen Buchstaben oder arabische Zahlen sowie ASCII bekannte Sonderzeichen mehr! Mittelteil ist in der Tabelle dargestellt )
+
+EEPROM: Handbuch einmal durch gegangen und alle Menüoptionen einmal eingestellt, bzw. Schale (Hardware) bewegt.
+Bei Skalen immer Minimum, Maximum, Anzahl der Schritte, sowie den Standardwert [N]
+Aktionen in vielen Einzelschritten aufgenommen: eine Reinigung => welche Zähler werden zurückgesetzt
+Speicher zu einem späten Zeitpunkt gezielt beschrieben
+  => Bezugszähler im Menü entschlüsselt: nicht das eine Wort mit dem gleichen Wert, sondern die Summe aus 5+1 Zählern
+  => 2 Trester Zähler entdeckt, werden beim Entnehmen der Schale tatsächlich zurückgesetzt
+  => Filterwechsel: 500 = 50l => 0,1l Zähleinheiten
+  => Reinigung
+
+RAM: mehrere Speicherauszüge in der eingeschalteten Ruheposition (Kaffee bereit) erstellt und regelmäßige Unregelmäßigkeiten festgestellt. Diese Bytes im Kommenden ausgeblendet.
+Aktionen ausgelöst, min. 3 Speicherauszüge erstellt und auf Gemeinsamkeiten verglichen.
+  Dafür auch Herdare gebaut (s. nkH2 Planinen Foto für Schale)
+
+Für den Schluss
+ACHTUNG: während einer Übertragung ist das intere Bus System gehemmt (Display vollzieht keine Änderung), aber auch Gegenrichtung: wechselnde Displaytexte sorgen für Verzögerungen bei der Übertragung
