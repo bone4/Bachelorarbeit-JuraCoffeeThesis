@@ -1,0 +1,12 @@
+Chapter 1 "Basic Concepts in Reverse Engineering"
+"The Problem"
+The aim of reverse engineering is to increase productivity through improved documentation.
+
+"What Is Reverse Engineering"
+Reverse Engineering is a four-stage process [where the stages] consist of data evaluation, data generation, design verification, and design implementation.
+
+Stage 1: evaluation and verification
+Stage 2: technical data generation
+Stage 3: design verification
+Stage 4: project implementation
+
