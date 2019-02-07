@@ -2,13 +2,13 @@
 Dieses Kapitel führt die gegebenen und verwendeten Hard- und Software Komponenten in dieser Arbeit auf.
 
 \section{Der Kaffeevollautomat}
-Der "`Jura Impressa S9"', siehe Abbildung \ref{subfig:Kaffeevollautomat}, ist ein Kaffeevollautomat mit fünf Kaffeebezugstasten: Spezialkaffee, 1 große Tasse Kaffee, 2 große Tassen Kaffee, 1 kleine Tasse Kaffee und 2 kleine Tassen Kaffee.
+Der "`Jura Impressa S9"', siehe Abbildung~\ref{subfig:Kaffeevollautomat}, ist ein Kaffeevollautomat mit fünf Kaffeebezugstasten: Spezialkaffee, 1 große Tasse Kaffee, 2 große Tassen Kaffee, 1 kleine Tasse Kaffee und 2 kleine Tassen Kaffee.
 Auf der rechten Seite befinden sich Bedienelemente für heißes (Tee-)Wasser und Wasserdampf zum Milch Aufschäumen.
 Der Kaffeevollautomat wird für seinen Betrieb direkt mit der Netzspannung versorgt.
 
 % \begin{figure}
 %   \begin{center}
-%     \includegraphics[scale=0.2]{images/Jura-Impressa-S9-small}
+%     \includegraphics[scale=0.2]{images/chapter_3/Jura-Impressa-S9-small}
 %     \caption{Jura Impressa S9 -- Kaffeevollautomat}
 %     \label{fig:Kaffeevollautomat}
 %   \end{center}
@@ -17,29 +17,29 @@ Der Kaffeevollautomat wird für seinen Betrieb direkt mit der Netzspannung verso
 % \begin{figure}
 %   \begin{subfigure}{.45\textwidth}
 %     \centering
-%     \includegraphics[scale=0.2]{images/Jura-Impressa-S9-small}
+%     \includegraphics[scale=0.2]{images/chapter_3/Jura-Impressa-S9-small}
 %     \caption{Jura Impressa S9 -- Kaffeevollautomat}
 %     \label{fig:Kaffeevollautomat-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}
 %   \end{subfigure}
 %   \hfill
 %   \begin{subfigure}{.45\textwidth}
 %     \centering
-%     \includegraphics[scale=0.3]{images/Jura-Arduino-Pins-beschriftet-small}
+%     \includegraphics[scale=0.3]{images/chapter_3/Jura-Arduino-Pins-beschriftet-small}
 %     \caption{Pinbelegung: Jura Impressa S9 -- Arduino Uno}
 %     \label{fig:KaffeevollautomatPins-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}
 %   \end{subfigure}
 % \end{figure}
 
 \subfigbox{
-  \subfigure[Der ganze Kaffeevollautomat]{\label{subfig:Kaffeevollautomat}\includegraphics[scale=0.2]{images/Jura-Impressa-S9-small}}\hfill%
-  \subfigure[Pinbelegung zum Arduino Uno]{\label{subfig:KaffeevollautomatPins}\includegraphics[scale=0.3]{images/Jura-Arduino-Pins-beschriftet-small}}%
+  \subfigure[Der ganze Kaffeevollautomat]{\label{subfig:Kaffeevollautomat}\includegraphics[scale=0.2]{images/chapter_3/Jura-Impressa-S9-small}}\hfill%
+  \subfigure[Pinbelegung zum Arduino Uno]{\label{subfig:KaffeevollautomatPins}\includegraphics[scale=0.3]{images/chapter_3/Jura-Arduino-Pins-beschriftet-small}}%
 }{Jura Impressa S9}{fig:Kaffeevollautomat}
 
 \subsection{Aufbau und Verkabelung}
-Hinter der linken Wartungsklappe an der Vorderseite des Kaffeevollautomaten befindet sich neben mehreren Menü-Tasten auch eine serielle Schnittstelle.
+Hinter der linken Wartungsklappe an der Vorderseite des Kaffeevollautomaten befindet sich neben mehreren Menü-Tasten eine serielle Schnittstelle.
 Über ein eigenes \ac{UART} Protokoll kann hierüber mit der Maschine kommuniziert werden.
 
-Abbildung \ref{subfig:KaffeevollautomatPins} illustriert die Pinbelegung.
+Abbildung~\ref{subfig:KaffeevollautomatPins} illustriert die Pinbelegung.
 Die 5 Volt Leitung kann für ein autark laufendes Projekt genutzt werden.
 In dieser Arbeit bezieht der Arduino seine Versorgungsspannung über den am USB Kabel befindlichen Computer.
 Von \texttt{TX} nach \texttt{RxD} werden Befehle an den Kaffeevollautomaten verschickt.
@@ -49,34 +49,60 @@ Auf der Abbildung kreuzen sich die Leitungen \texttt{RxD} und \texttt{GND} am St
 \texttt{GND} ist über eine schwarze Markierung gekennzeichnet.
 
 Ein Arduino Uno übersetzt als "`Man in the middle"' die bekannten Kommandos in das Format der Kaffeemaschine.
-Sie serielle Kommunikation läuft über die Pins Nummer 12 und 13.
+Die serielle Kommunikation läuft über die Pins Nummer 12 und 13.
 Über eine weitere serielle Verbindung per USB lässt sich der Arduino ansteuern.
 
 Aus Sicht des Computers ist der Arduino ein Gerätelaufwerk unter \texttt{/dev/ttyACM0} mit einer Baudrate von 9600.
-Diese Zahl findet sich zu Beginn des Arduino Uno Skripts aus dem Projekt "`CoffeeMachine"'\cite{GitCoffeeMachine} wieder.
+Diese Zahl findet sich zu Beginn des Arduino Uno Skripts wieder.
 
 % \begin{figure}
 %   \begin{center}
-%     \includegraphics[scale=0.3]{images/Jura-Arduino-Pins-beschriftet-small}
+%     \includegraphics[scale=0.3]{images/chapter_3/Jura-Arduino-Pins-beschriftet-small}
 %     \caption{Pinbelegung: Jura Impressa S9 -- Arduino Uno}
 %     \label{fig:KaffeevollautomatPins}
 %   \end{center}
 % \end{figure}
 
+\subsection{Serielle Kommunikation}
+Diese Arbeit baut auf das "`CoffeeMachine"' Projekt~\cite{GitCoffeeMachine} auf und nutzt das Arduino Skript als Grundlage der Kommunikation weiter, ebenso werden Kommandos und erste Speicherstellen aus der Weboberfläche aufgegriffen.
+Das Arduino Skript kodiert die \ac{UART} Kommandos von und zu dem Kaffeevollautomaten.
+
+Die Kommandos werden zeichenweise ASCII-Zeichen für Zeichen übertragen.
+Dafür wird ein an den Kaffeevollautomaten adressiertes Byte (ein ASCII-Zeichen), bestehend aus acht Bits, in je vier Bytes aufgeteilt.
+Die dritte und sechste Stelle der neuen Bytes repräsentieren je zwei Bits des ursprünglichen Bytes.
+Bei der Übertragung an den Kaffeevollautomaten werden die restlichen Bits mit Nullen aufgefüllt.
+Abbildung~\ref{fig:uart} veranschaulicht dies an dem ersten Byte des Einschaltbefehls, die entsprechende ASCII-Kodierung ist in Abbildung~\ref{tbl:Displaysymbole} der zweiten und dritten Spalte zu entnehmen.
+Die Kodierung der, von dem Kaffeevollautomaten kommenden, Bytes erfolgt analog.
+Laut "`Protocoljura"'\footnote{\url{http://protocoljura.wiki-site.com/index.php/Protocol_to_coffeemaker}} bestehen die irrelevanten Bits der ankommenden Bytes aus einer Null und weiteren fünf Einsen pro Byte.
+
+Vier Bytes kodieren auf diese Weise ein ASCII Zeichen und werden fortan als Gruppe bezeichnet.
+Zwischen jeder Gruppe gibt es eine Verzögerung von 8ms.
+Diese Verzögerung begrenzt hauptsächlich die Übertragungsgeschwindigkeit, was in Abschnitt~\ref{subsec:zugangSeriellDirekt} diskutiert wird.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.6]{images/chapter_3/UART-Bytes}
+    \caption{Umrechnung }
+    \label{fig:uart}
+  \end{center}
+\end{figure}
+
 \subsection{Kommandos}\label{subsec:Kommandos}
 Die Tabelle~\ref{tbl:kommandos} zeigt die Befehlsgruppen, sowie ausgewählte Befehle, die der Kaffeevollautomat versteht.
-Diese Befehle stammen aus dem Git Repository \cite{GitCoffeeMachine}, worauf diese Arbeit aufbaut.
+Diese Befehle stammen aus dem "`CoffeeMachine"' Projekt~\cite{GitCoffeeMachine}.
 
 Befehle beginnen entweder mit zwei Großbuchstaben gefolgt von einem Doppelpunkt und i.d.R. einer zweistelligen Hexadezimalzahl, oder sie beginnen mit einem Fragezeichen gefolgt von i.d.R. zwei ASCII Zeichen.
 Positionsnummern, egal ob Speicherposition, \mbox{Betriebszustands-,} Bezugstasten- oder Steuerungskomponenten-Nummer, werden durch zweistellige Hexadezimalzahlen repräsentiert und reichen von $0_{16}=0_{10}$ bis FF$_{16}=255_{10}$.
 
 Zwei Ausnahmen des ersten Typs sind z.B. \texttt{TY:} zum Abfragen des Maschinen Typs und \texttt{WE:00,01FF} zum Schreiben des Wertes $01$FF$_{16} = 511_{10}$ an die Position $00$.
 Eine Ausnahme des zweiten Typs ist z.B. \texttt{?D1DISPLAY}\textvisiblespace\ und \texttt{?D2}\textvisiblespace\textvisiblespace\texttt{TEST}\textvisiblespace\textvisiblespace.
-Der volle Umfang möglicher Displayzeichen, sowie deren Benutzung wird in Abschnitt \ref{sec:Display} ausgeführt.
+Der volle Umfang möglicher Displayzeichen, sowie deren Benutzung wird in Abschnitt~\ref{sec:Display} ausgeführt.
 
 Einige Befehle, die aus weiteren Projekten mit Maschinen der S-Reihe bekannt sind, sind in dieser "`Jura Impressa S9"' leider nicht implementiert.
 Dazu zählen \texttt{IC:} zum Auslesen aller Eingaben, \texttt{FA:0A} eine unbelegte Bezugstaste, \texttt{CM:} für weitere Status Informationen, \texttt{CS:} für Sensor Informationen und \texttt{PM:} ein Befehl um Musik abzuspielen.
 Weitere Befehlsgruppen werden in der \texttt{README.rst} eines Github Repositories aufgeführt\footnote{\url{https://github.com/PromyLOPh/juramote}}.
+
+Die jetzt vorhandene Umgebung kann bereits über den seriellen Monitor der Arduino IDE genutzt werden.
 
 \begin{tuhhtable}
   \footnotesize\centering
@@ -147,38 +173,12 @@ Weitere Befehlsgruppen werden in der \texttt{README.rst} eines Github Repositori
            & 1 Tasse Tee      (Produkt 8)       & ?PAK         \\
   \belowbodyrule
 %
-  \TRx{3}{l}{* leider nicht alles in der Jura Impressa S9 implementiert, siehe weitere Geräte der S-Reihe}\\
+  \TRx{3}{l}{* Nicht alle Befehle sind in der Jura Impressa S9 implementiert, siehe weitere Geräte der S-Reihe}\\
 %
   \end{tabular}
   \caption{Befehlsübersicht der Jura Kaffeevollautomaten (S-Reihe)}
   \label{tbl:kommandos}
 \end{tuhhtable}
-
-\subsection{Serielle Kommunikation}
-Das Arduino Skript aus dem Projekt "`CoffeeMachine"'\cite{GitCoffeeMachine} wird als Grundlage der Kommunikation in dieser Arbeit weiter verwendet.
-Es kodiert die \ac{UART} Kommandos von und zu dem Kaffeevollautomaten.
-
-Die Befehle aus der Kommando Tabelle~\ref{tbl:kommandos} werden zeichenweise ASCII-Zeichen für Zeichen übertragen.
-Dafür wird ein an den Kaffeevollautomaten adressiertes Byte (ein ASCII-Zeichen), bestehend aus acht Bits, in je vier Bytes aufgeteilt.
-Die dritte und sechste Stelle der neuen Bytes repräsentieren je zwei Bits des ursprünglichen Bytes.
-Bei der Übertragung an den Kaffeevollautomaten werden die restlichen Bits mit Nullen aufgefüllt.
-Abbildung \ref{fig:uart} veranschaulicht dies an dem ersten Byte des Einschaltbefehls, die entsprechende ASCII-Kodierung ist in Abbildung \ref{tbl:Displaysymbole} der zweiten und dritten Spalte zu entnehmen.
-Die Kodierung der, von dem Kaffeevollautomaten kommenden, Bytes erfolgt analog.
-Laut "`Protocoljura"'\footnote{\url{http://protocoljura.wiki-site.com/index.php/Protocol_to_coffeemaker}} bestehen die irrelevanten Bits der ankommenden Bytes aus einer Null und weiteren fünf Einsen pro Byte.
-
-Vier Bytes kodieren auf diese Weise ein ASCII Zeichen und werden fortan als Gruppe bezeichnet.
-Zwischen jeder Gruppe gibt es eine Verzögerung von 8ms.
-Diese Verzögerung begrenzt hauptsächlich die Übertragungsgeschwindigkeit, was in Abschnitt \ref{subsec:zugangSeriellDirekt} diskutiert wird.
-
-Die jetzt vorhandene Umgebung kann bereits über den seriellen Monitor der Arduino IDE genutzt werden.
-
-\begin{figure}
-  \begin{center}
-    \includegraphics[scale=0.6]{images/UART-Bytes}
-    \caption{Umrechnung }
-    \label{fig:uart}
-  \end{center}
-\end{figure}
 
 
 
