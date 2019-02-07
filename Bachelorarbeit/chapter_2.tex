@@ -2,11 +2,11 @@
 
 % Sektion {Literatur: was gibt es schon}
 \section{Begrifflichkeiten}\label{sec:Begrifflichkeiten}
-Der Titel dieser Arbeit lautet \texttt{Reverse Engineering eines Kaffeevollautomaten}, aber hinter der Terminologie des Begriffs \textit{Reverse Engineering} steckt ein ganzes Spektrum an Bedeutungen.
-E. J. Chikofsky und J. H. Cross differenzieren in ihrem Paper \cite{43044} die Begriffe \textit{Forward Engineering}, \textit{Reverse Engineering}, \textit{Redocumentation}, \textit{Design Recovery}, \textit{Restructuring}, und \textit{Reengineering}.
+Der Titel dieser Arbeit lautet \texttt{Reverse Engineering eines Kaffeevoll-\\automaten}, aber hinter der Terminologie des Begriffs \textit{Reverse Engineering} steckt ein ganzes Spektrum an Bedeutungen.
+E. J. Chikofsky und J. H. Cross differenzieren in ihrem Paper~\cite{43044} die Begriffe \textit{Forward Engineering}, \textit{Reverse Engineering}, \textit{Redocumentation}, \textit{Design Recovery}, \textit{Restructuring}, und \textit{Reengineering}.
 
 Zugrunde liegt ein Produkt, welches während seiner Entwicklung mehrere Lebenszyklen durchlaufen hat.
-Kassem A. Saleh beschreibt in seinem Buch \cite{Solr-599853700} ausführlicher Entwicklungsaktivitäten, wie die Anforderungsanalyse, das Design, die Implementation, die Tests, die Installation und den Einsatz.
+Kassem A. Saleh beschreibt in seinem Buch~\cite{Solr-599853700} ausführlicher Entwicklungsaktivitäten, wie die Anforderungsanalyse, das Design, die Implementation, die Tests, die Installation und den Einsatz.
 Während der Implementation nennt er Vorgehensmodelle der Softwareentwicklung, wie das Wasserfallmodell, den Prototypenbau, das Spiralmodell, den Objektorientierten Ansatz, das inkrementelle und iterative Modell, sowie das agile Modell.
 Jede (Hardware- und) Softwareentwicklung durchläuft dabei, unabhängig vom Modell, die verschiedenen Entwicklungsaktivitäten.
 Das voranschreiten zur nächsten Stufe, bis zur Fertigstellung des Produkts, stellt das \textit{Forward Engineering} dar.
@@ -14,7 +14,7 @@ Das voranschreiten zur nächsten Stufe, bis zur Fertigstellung des Produkts, ste
 Der zweite Begriff des \textit{Reverse Engineering} führt in die Gegenrichtung.
 Aus dem implementierten Produkt wird auf das Design, bzw. aus dem Design auf die Spezifikationen geschlossen.
 Dabei werden zum einen die Komponenten und ihr Zusammenspiel identifiziert, zum anderen wird aber immer eine höhere Abstraktionsebene, eine vorherige Stufe, rekonstruiert.
-Ein wichtiges Zitat, welches in Abschnitt \ref{sec:DiskussionBegriffReverseEngineering}  aufgegriffen wird, lautet: "`Reverse engineering in and of itself does not involve changing the subject system or creating a new system based on the reverse-engineered subject system.
+Ein wichtiges Zitat, welches in Abschnitt~\ref{sec:DiskussionBegriffReverseEngineering}  aufgegriffen wird, lautet: "`Reverse engineering in and of itself does not involve changing the subject system or creating a new system based on the reverse-engineered subject system.
 It is a process of examination, not a process of change or replication."'\cite{43044}
 
 \textit{Redocumentation} arbeitet auf einer Ebene und bringt primär eine andere Darstellung.
@@ -40,6 +40,23 @@ Damit ist der Begriff \textit{Reengineering} allgemeiner gefasst als das \textit
 Aber \textit{Reengineering} ist kein Überbegriff für \textit{Reverse Engineering} und \textit{Forward Engineering}, nur weil es beides beinhaltet.
 Beide Disziplinen entwickeln sich unabhängig vom \textit{Reengineering} weiter.
 
+Auch K. A. Ingle~\cite{Solr-153077417} grenzt das Reverse Engineering von anderen Konzepten ab.
+Das \textit{Reengineering} wird, im Gegensatz zu dem \textit{Reverse Engineering}, beschrieben als Neustrukturierung des Programmcodes ohne funktionale Änderungen am System.
+Diese Beschreibung passt zum dem Begriff des \textit{Restructuring} aus dem Paper von E. J. Chikofsky und J. H. Cross~\cite{43044}.
+
+Beim \textit{Simultaneous Engineering} greifen während einer Produktentwicklung mehrere Arbeitsabläufe frühzeitig verzahnt ineinander, um einen Zeitgewinn gegenüber eines traditionellen Projektablaufs zu erzielen.
+Die schnelle und einfache Reproduzierbarkeit sei beispielsweise nicht das direkte Ziel des \textit{Reverse Engineering}, sondern ein Ziel des \textit{Simultaneous Engineering}, schreibt K. A. Ingle.
+Nichts desto trotz könne aber die Idee des \textit{Simultaneous Engineering} in das \textit{Reverse Engineering} aufgenommen werden.
+
+Eine weitere Differenzierung findet zwischen dem \textit{Hardware-} und dem \textit{Software Reverse Engineering} statt.
+\textit{Software Reverse Engineeging} verfolge das Ziel aus dem Programm Code ein übergeordnetes Design oder Spezifikationsangaben zu extrahieren.
+\textit{Hardware Reverse Engineeging} hingegen befasst sich mit dem Fertigungs- oder Produktionssystem.
+Das Buch von 1994 sah aber schon ein Zusammenwachsen beider Bereiche durch den Einsatz und die Einbettung von immer mehr Software in Hardwaresystemen kommen.
+Die Relevanz des Reverse Engineering würde hoffentlich weiter steigen um keine vorhandenen Softwaresysteme neu bauen zu müssen.
+K. A. Ingle schreibt: "`The aim of reverse engineering is to increase productivity through improved documentation."'\cite{Solr-153077417}
+
+Diese Arbeit greift den Gedanken auf und versucht den Einfluss und die Bedeutung einzelner Speicherstellen für weitere Arbeiten zu dokumentieren.
+
 \section{Stand der Technik}
 % Sektion (related work)
 Eine Bachelorarbeit der Universität Magdeburg zum Thema "`Reverse-engineering a De'Longhi Coffee Maker to precisely bill Coffee Consumption"'\cite{BachelorarbeitDeLonghi} behandelt eine De'Longhi Caffee Maschine.
@@ -48,12 +65,9 @@ Dafür wird eine \ac{MCU} über das \ac{SPI} zwischen Master und Slave Einheiten
 Das Ergebnis der Arbeit ist unter anderem ein Verständnis über das interne Bus Protokoll der Maschine.
 % ?! \todo https://www.cl.cam.ac.uk/coffee/qsf/coffee.html ?!
 
-Diese Arbeit hingegen nutzt als Ansatz eine gegebene serielle Schnittstelle des Jura Kaffeevollautomaten mit einem ebenfalls propritären \ac{UART} Protokoll.
+Ein Buch von Eldad Eilam~\cite{Solr-480966761} stellt den Begriff des Reverse Engineering ähnlich wie zu Beginn in Abschnitt~\ref{sec:Begrifflichkeiten} dar, geht aber im Folgenden tiefer auf das Reverse Engineering von Low-Level Software ein.
+Ein Hauptaugenmerk des Buches liegt auf auf der sicherheitsrelevanten Seite, sowie die Vorgänge und Lücken im Low-Level Bereich.
 
-\todo\\
-Aprilscherz: Hyper Text Coffee Pot Control Protocol (HTCPCP), RFC2324 -> RFC7168 ???\\
-\href{http://www.rfc-editor.org/info/rfc2324}{http://www.rfc-editor.org/info/rfc2324}\\
-\href{https://www.rfc-editor.org/rfc/rfc2324.txt}{https://www.rfc-editor.org/rfc/rfc2324.txt}\\
-\href{https://www.ietf.org/rfc/rfc2324.txt}{https://www.ietf.org/rfc/rfc2324.txt}\\
-\href{https://de.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol}{https://de.wikipedia.org/wiki/Hyper\_Text\_Coffee\_Pot\_Control\_Protocol}\\
-\href{https://tools.ietf.org/html/rfc7168}{https://tools.ietf.org/html/rfc7168}\\
+Diese Arbeit hingegen nutzt als Ansatz eine gegebene serielle Schnittstelle des Jura Kaffeevollautomaten mit einem ebenfalls propritären \ac{UART} Protokoll. Dabei wird nicht die Hardware geöffnet und beispielsweise die Firmware disassembliert und analysiert.
+
+\todo Erweitern um smart appliances (s. 3x Paper)
