@@ -149,6 +149,30 @@ Die jetzt vorhandene Umgebung kann bereits über den seriellen Monitor der Ardui
   \label{tbl:kommandos}
 \end{tuhhtable}
 
+\subsection{Speicher}
+Über die Befehle \texttt{RE:<address>}, \texttt{RT:<address>} und \texttt{RR:<address>} sind Lesebefehle zu zwei Speichereinheiten des Kaffeevollautomaten bekannt: dem \acf{EEPROM} und dem \acf{RAM}.
+
+\subsubsection{EEPROM}\label{subsubsec:SpeicherDesKaffeevollautomatenEEPROM}
+Über den Befehl \texttt{RT:<address>}, siehe Tabelle~\ref{tbl:kommandos}, lässt sich eine Zeile \ac{EEPROM} Speicher abfragen.
+Die Adresse reicht von \texttt{0x00} bis \texttt{0xF0} in sechzehner Sprüngen.\footnote{Man ist daran aber nicht gebunden und kann wie im Folgenden beim \ac{RAM} erklärt die Adressen von \texttt{0x00} bis \texttt{0xFF} nutzen. Dies wird in dieser Arbeit auf den \ac{EEPROM} aber \underline{nicht angewendet}.}
+Als Antwort erhält man hinter dem kleingeschriebenen Kommando eine Zeichenkette bestehend aus 64 Hexadezimalzahlen.
+Da immer zwei Hexadezimalzahlen ein Byte\footnote{Ein Byte besteht aus 8 Bits mit einem Wertebereich von $0_{10}-255_{10} = 00_{16}-\text{FF}_{16} = $ 0x00 -- 0xFF.} repräsentieren umfasst eine \ac{EEPROM} Zeile \textbf{32} Bytes.
+Der gesamte \ac{EEPROM} umfasst damit insgesamt \textbf{512} Bytes.
+
+Über den Befehl \texttt{RE:<address>} können direkt Einheiten im \ac{EEPROM} abgefragt werden. Die Adresse reicht von \texttt{0x00} bis \texttt{0xFF}.
+Die kleinste adressierbare Einheit, \underline{das Wort}, besteht daher aus vier Hexadezimalzahlen, also \textbf{zwei} Bytes.\\
+Abbildung~\ref{subfig:EEPROM} zeigt das Speicherschema des \ac{EEPROM}.
+
+\subsubsection{RAM}\label{subsubsec:SpeicherDesKaffeevollautomatenRAM}
+Der Lesebefehl für eine \ac{RAM} Zeile lautet: \texttt{RR:<address>}.
+Man ist aber nicht gezwungen am Zeilenanfang zu starten.
+Die Adresse reicht hier von \texttt{0x00} bis \texttt{0xFF}.
+Als Antwort erhält man hinter dem kleingeschriebenen Kommando eine Zeichenkette bestehend aus 32 Hexadezimalzahlen, also \textbf{16} Bytes.
+Bei einer Adresse größer als \texttt{0xF0} gibt es einen Zählerüberlauf und es werden wieder die ersten Bytes zurück gegeben.
+Der gesamte \ac{RAM} Speicher verfügt, ähnlich zu \texttt{RT} im \ac{EEPROM}, über sechzehn Zeilen mit je 16 Bytes, also insgesamt \textbf{256} Bytes.
+Daraus ergibt sich, dass die kleinste Einheit, ein Byte, aus zwei Hexadezimalzahlen besteht.\\
+Abbildung~\ref{subfig:RAM} zeigt das Speicherschema des \ac{RAM}.
+
 
 
 \section{Libraries und Frameworks}
@@ -189,10 +213,10 @@ Daraus ist aber ein ganzes System an Design Elementen geworden, welches heute se
 \ac{HTML}, \ac{CSS} und \ac{JS} werden zusammen eingesetzt und bieten Entwicklern eine Gitteranordnung für eine Mobile- und die Desktop-Ansicht, Inhaltselemente wie Tabellen und Abbildungen oder auch einzelne Komponenten wie Steckkarten, Prozentanzeigen und Knöpfe.
 
 \subsubsection{jQuery}
-jQuery\footnote{\url{https://jquery.com/}} ist eine freie \acl{JS}-Bibliothek, die in der "`slim"'-Variante bereits über Bootstrap eingebunden ist.
-Um später wirklich mit dem Kaffeevollautomaten interagieren zu können, wird unter anderem \acs{AJAX} aus dem vollständigen jQuery Paket benötigt (auch wenn daraus später ein synchrones JavaScript mit \acs{JSON} wird).
+jQuery\footnote{\url{https://jquery.com/}} ist eine freie \ac{JS}-Bibliothek, die in der "`slim"'-Variante bereits über Bootstrap eingebunden ist.
+Um später wirklich mit dem Kaffeevollautomaten interagieren zu können, wird unter anderem \ac{AJAX} aus dem vollständigen jQuery Paket benötigt (auch wenn daraus später ein synchrones JavaScript mit \acs{JSON} wird).
 
-Über das \acs{CDN} eingebundene Packet stehen ab jetzt einfache \aclp{API} zum modifizieren der \acs{HTML} Elemente, ein erweitertes Event-System, sowie \acs{AJAX}-Funktionalitäten bereit.
+Über das \ac{CDN} eingebundene Packet stehen ab jetzt einfache \aclp{API} zum modifizieren der \acs{HTML} Elemente, ein erweitertes Event-System, sowie \acs{AJAX}-Funktionalitäten bereit.
 
 \subsubsection{JavaScript Cookie}
 JavaScript Cookie\footnote{\url{https://github.com/js-cookie/js-cookie/}} ist eine kleine \acl{JS}-\ac{API}.

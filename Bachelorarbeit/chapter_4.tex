@@ -3,6 +3,8 @@ Dieses Kapitel führt das Vorgehen und die Implementierung eines C++ Programms a
 Immer wiederkehrende Arbeitsabläufe werden von diesem Programm übernommen und auf den unteren Ebenen automatisiert.
 
 \section{Vorgehen}
+\todo Ähnlich zum Blackbox Testing in \cite{Solr-599853700} wird mit Ein- und Ausgabe des Kaffeevollautomaten gearbeitet, ohne sein Programm zu kennen (Blackbox Modell)\todo
+
 Die Speicher des Kaffeevollautomaten, der \ac{EEPROM} und der \ac{RAM}, können Zeilenweise ausgelesen werden.
 Der nötige Zugriff zum Auslesen kann auf zwei Arten erfolgen: direkt am Speicherstein auf der Hauptplatine oder seriell über die vorhandene \ac{UART} Schnittstelle, siehe Abschnitt~\ref{subsec:zugangSeriellDirekt}.
 Im Folgenden erfolgt die Kommunikation über die \ac{UART} Schnittstelle und mithilfe der \textit{libserial}-Library.

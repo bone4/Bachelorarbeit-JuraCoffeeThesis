@@ -6,7 +6,7 @@ ACHTUNG: während einer Übertragung ist das interne Bus System gehemmt (Display
 
 \section{Probleme}
 
-\subsection{Kommunikation mit der Kaffeemaschine} \label{subsec:zugangSeriellDirekt}
+\subsection{Kommunikation mit dem Kaffeevollautomaten} \label{subsec:zugangSeriellDirekt}
 Der direkte Zugang ist wahrscheinlich am schnellsten, im laufenden Betrieb aber schlecht möglich, da die Speicheradressen aktiv abgefragt werden müssten und damit Kurzschlüsse in der Elektronik produziert werden.
 Die serielle \ac{UART} Schnittstelle ermöglicht das Abfragen im laufenden Betrieb, also auch im \ac{RAM}.
 Jedoch benötigt das Auslesen seine Zeit (7-9 Sekunden für den \ac{RAM} und 10-15 Sekunden für den \ac{EEPROM}).
@@ -46,6 +46,8 @@ Selbst unter der Annahme, dass die Maschine vielleicht nur die halbe \ac{ASCII}-
 
 Um dies weiter zu ergründen muss künftig ein Blick in die Maschine erfolgen um die vorhandenen Speicher und deren Größen zu bestimmen.
 Nach dem Datenblatt des Mikrocontrollers \cite{JuraMicrocontroller} gibt es vier Ausführungen, von der aber keine den 256 Byte \ac{RAM} und 512 Byte (256 Wörter) \ac{EEPROM}, die über die seriellen Befehle adressierbar sind, entspricht.
+
+\todo unerreichbare Bereiche und ungenutzte Bytes durch Standardgrößen?!
 
 \section{Aussagekraft der Ergebnisse}\label{sec:AussagekraftDerErgebnisse}
 EEPROM Menüeinstellungen recht sicher, einige partielle Zubereitungszähler aber weniger (Firmware unbekannt)
@@ -103,3 +105,5 @@ Siehe Abschnitt~\ref{subsec:UnbekannteSpeicherorte}
 
 C++ Autobahn (crossbar.io) für Mehrbenutzer Betrieb der Webseite, wo sich die Statusinformationen bei einer Abfrage bei allen Nutzern automatisch aktualisieren.
 Webseite (2): Einheiten, wie Sprachen zu den Werten bei den Spracheinstellungen; zum Teil aber auch gar nicht bekannt, wie beim Trester Zähler (xxx Gramm?)
+
+Ghidra (NSA) -> heise online Artikel
