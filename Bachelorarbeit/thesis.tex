@@ -106,6 +106,20 @@
 
 \newcommand{\todo}{\fcolorbox{black}{yellow}{\textcolor{red}{!!!ToDo!!!}}}
 
+% ~/texmf/tex/latex/tuhh/tuhhcolor.sty
+\newcommand{\wort}[1]{\textcolor{tuhh_darkturquoise}{#1$_{16}$}} % EEPROM
+\newcommand{\bitTrue}[1]{#1: \wert{$0 \rightarrow 1$}}
+\newcommand{\bitFalse}[1]{#1: \wert{$1 \rightarrow 0$}}
+\newcommand{\immer}[1]{\TDc\underline{#1}} % RAM Status auch im ausgeschalteten Zustand
+\newcommand{\geteilt}[1]{(#1)} % RAM Status Bit mit mehreren Bedeutungen
+\newcommand{\bytebit}[2]{Byte \wort{#1} an Bit \textcolor{tuhh_darkturquoise}{#2}} % \bytebit{}{}
+\newcommand{\bytebits}[3]{Byte \wort{#1} an den Bits \textcolor{tuhh_darkturquoise}{#2} und \textcolor{tuhh_darkturquoise}{#3}} % \bytebits{}{}{}
+\newcommand{\bytebitss}[3]{Byte \wort{#1} an den Bits \textcolor{tuhh_darkturquoise}{#2} bis \textcolor{tuhh_darkturquoise}{#3}} % \bytebitss{}{}{}
+\newcommand{\wert}[1]{\textcolor{tuhh_darkred}{#1}}
+\newcommand{\bezeichnung}[1]{\underline{#1}}
+
+\renewcommand{\TRhc}[3]{\multicolumn{#1}{#2}{\cellcolor{tuhh_gray}{#3}}} % Row Header for colored rows
+
 \begin{document}
 
 %\phantomsection%prevents "Warning: No destination for bookmark of \addcontentsline"

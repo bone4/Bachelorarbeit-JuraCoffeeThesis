@@ -1,22 +1,34 @@
 \chapter{Diskussion und Ausblick}
+\todo
+Für den Schluss
+ACHTUNG: während einer Übertragung ist das interne Bus System gehemmt (Display vollzieht keine Änderung), aber auch Gegenrichtung: wechselnde Displaytexte sorgen für Verzögerungen bei der Übertragung
+\todo
 
 \section{Probleme}
 
 \subsection{Kommunikation mit der Kaffeemaschine} \label{subsec:zugangSeriellDirekt}
 Der direkte Zugang ist wahrscheinlich am schnellsten, im laufenden Betrieb aber schlecht möglich, da die Speicheradressen aktiv abgefragt werden müssten und damit Kurzschlüsse in der Elektronik produziert werden.
-Die serielle Schnittstelle ermöglicht das Abfragen im laufenden Betrieb, also auch im \ac{RAM}.
+Die serielle \ac{UART} Schnittstelle ermöglicht das Abfragen im laufenden Betrieb, also auch im \ac{RAM}.
 Jedoch benötigt das Auslesen seine Zeit (7-9 Sekunden für den \ac{RAM} und 10-15 Sekunden für den \ac{EEPROM}).
 Gerade im \ac{RAM} gibt es viele Veränderungen im Ruhezustand, sodass man auf diesem Weg nie einen zusammenhängenden Speicherauszug zu einem festen Zeitpunkt auslesen kann.
 
 \subsection{Serielle Kommunikation} \label{subsec:kommunikationGeraetedateiLibserialLibrary}
 \paragraph{Gerätedatei direkt ansprechen}
 Um aufbauend Skripte ausführen zu können war der erste Versuch den Dateideskriptor \texttt{/dev/ttyACM0} sowohl lesend als auch schreibend zu nutzen.
-Zunächst funktionierte dies sehr gut, bis nach wenigen Tagen kaum reduzierbares Fehlverhalten auftrat.
+Zunächst funktionierte dies sehr gut, bis nach wenigen Tagen kaum reproduzierbares Fehlverhalten auftrat.
 Gerade Antworten der Kaffeemaschine kamen nur noch in Bruchstücken an.
-Dies wurde bei der Einrichtung bereits im Projekt "`CoffeeMachine"'\cite{GitCoffeeMachine} in der Readme.md für die Ausführung auf einem Raspberry Pi beschrieben.
+Dies wurde bei der Einrichtung bereits im Projekt "`CoffeeMachine"'\cite{GitCoffeeMachine} in der \texttt{Readme.md} für die Ausführung auf einem Raspberry Pi beschrieben.
 
-Versuche dies direkt zu lösen, in dem ein funktionierende Umgebung nachgebaut wurde, schlugen fehl.
-\todo Unternommene Befehle und Versuche aufzeigen
+Versuche dies direkt zu lösen, in dem eine funktionierende Umgebung nachgebaut wurde, schlugen fehl.
+Dabei konnte über \texttt{screen /dev/ttyACM0 9600} und \texttt{exit} die serielle Verbindung initiiert werden.
+Die Einstellungen können dann über \texttt{stty -F /dev/ttyACM0} eingesehen werden, jedoch war es nicht das selbe nur diese Einstellungen über den Befehl
+\begin{lstlisting}[label=lst:stty,caption={stty zum setzen der Verbindungseinstellungen}]
+stty -F /dev/ttyACM0 9600 raw \
+ignbrk -brkint -icrnl -imaxbel \
+-opost -onlcr \
+-isig -icanon -iexten -echo -echoe -echok -echoctl -echoke
+\end{lstlisting}
+nachzubauen.
 
 \paragraph{C++ und die \textit{libserial}-Library}
 Für eine sichere Verbindung wird in dem C++ Programm auf die im Linux Repository erhältliche Library \textit{libserial} zurückgegriffen.
@@ -25,22 +37,29 @@ Hier werden der Gerätepfad, die Baudrate und eine erwartete Mindestlänge festg
 
 Kommandos gehen zuverlässig an den Arduino raus und ausgelesene Antworten kommen nun im Ganzen an.
 Der \textit{read} Befehl ist ein blockierender Aufruf, der das Programm anhält bis eine Antwort vorliegt.
-Dies stellt für die Speicherauslesung keine Problem da, da die ordnungsgemäßen Befehle immer ein \texttt{ok:} oder \texttt{xx:0-F} Speicherauszug zurück geben.
+Dies stellt für die Speicherauslesung kein Problem da, da die ordnungsgemäßen Befehle immer ein \texttt{ok:} oder \texttt{xx:0-F} Speicherauszug zurück geben.
 
-\subsection{Unbekannte Speicherorte}
-Unbekannter Speicherort des Einstellungsmenü-Zählerstands (überlebt Stromtrennung?!) und des Standarddisplaytextes (im RAM?!); dafür Blick auf den Mikrocontroller in der Hardware \cite{JuraMicrocontroller} und externes Auslesen ggf. erforderlich!
+\subsection{Unbekannte Speicherorte}\label{subsec:UnbekannteSpeicherorte}
+Bis auf den Speicherort des veränderbaren Standardtextes konnten alle Einstellungen und Grenzwerte sowie ein paar Funktionsabläufe festen Speicherstellen zugeordnet werden.
+Da der Standardtext eine Stromunterbrechung nicht übersteht, liegt er sehr wahrscheinlich im \ac{RAM} oder einem weiteren flüchtigen Speicher der Maschine.
+Selbst unter der Annahme, dass die Maschine vielleicht nur die halbe \ac{ASCII}-Tabelle pro Zeichen benutzt und dadurch zwei Displayzeichen pro Byte kodiert, konnten einfache und monotone Texte wie \texttt{AAAAAAAA} nicht in einem Speicherauszug wiedergefunden werden.
 
-\section{Aussagekraft der Ergebnisse}
+Um dies weiter zu ergründen muss künftig ein Blick in die Maschine erfolgen um die vorhandenen Speicher und deren Größen zu bestimmen.
+Nach dem Datenblatt des Mikrocontrollers \cite{JuraMicrocontroller} gibt es vier Ausführungen, von der aber keine den 256 Byte \ac{RAM} und 512 Byte (256 Wörter) \ac{EEPROM}, die über die seriellen Befehle adressierbar sind, entspricht.
+
+\section{Aussagekraft der Ergebnisse}\label{sec:AussagekraftDerErgebnisse}
 EEPROM Menüeinstellungen recht sicher, einige partielle Zubereitungszähler aber weniger (Firmware unbekannt)
 
 RAM mehrere Status Bits einigermaßen sicher (vor allem die im ausgeschalteten Betriebszustand); durch viele unregelmäßige Veränderungen wurden aber mehrere Bytes außer acht gelassen, die an bestimmten Bit Positionen wichtige Flags enthalten könnten!
+
+Unsicherheit durch mehrere Speicherpositionen für ein und die selbe Funktion: ggf. verbirgt sich hinter einzelnen Positionen noch eine andere Bedeutung oder eine bisher unbekannte Abhängigkeit für weitere Funktionen
 
 Es fehlen (wichtige?!), im Benutzerhandbuch dokumentierte, Meldungen wie:\label{FehlendeMeldungen}
 Gerät verkalkt, Störung 2, Störung 8, sowie etliche Menümeldungen während der internen Programmabläufe.
 
 \section{Einordnung zur Terminologie des Reverse Engineerings}\label{sec:DiskussionBegriffReverseEngineering}
 Diese Arbeit besteht im wesentlichen aus den zwei Teilen, den Speicher zu analysieren und zu verstehen, bzw. das Wissen darüber in einer neuen Oberfläche einfach zur Verfügung zu stellen.
-Ein kurzer Rückblick in Abschnitt \ref{sec:Begrifflichkeiten} erinnert an die Begriffe \textit{Forward Engineering}, \textit{Reverse Engineering}, \textit{Redocumentation}, \textit{Design Recovery}, \textit{Restructuring}, und \textit{Reengineering}.
+Ein kurzer Rückblick in Abschnitt~\ref{sec:Begrifflichkeiten} erinnert an die Begriffe \textit{Forward Engineering}, \textit{Reverse Engineering}, \textit{Redocumentation}, \textit{Design Recovery}, \textit{Restructuring}, und \textit{Reengineering}.
 
 Für den ersten Teil wurden eine gegebene serielle Schnittstelle, sowie bereits implementierte Befehle ausgenutzt, um den Speicher auszulesen.
 Viele Aufnahmen, mit kleinen Veränderungen zwischendurch, ließen Rückschlüsse auf die Bedeutung der Werte an bestimmten Speicherstellen zu.
@@ -52,7 +71,7 @@ Betrachtet man aber das Benutzerhandbuch und Interneteinträge über Erfahrungen
 Mit diesem Wissen des ersten Teils wurde dann im zweiten Teil etwas Neues geschaffen.
 Das Abfragen der aktuellen Einstellungen und Zustände bietet eine neue Oberfläche, die als \textit{Redocumentation} oder \textit{Restructuring} angesehen werden kann.
 Für die \textit{Redocumentation} spricht das neue Ausgabeformat auf der Ebene der Implementierung.
-Ein eigenes Gerät ist zur Alternative (Ausnahmen siehe \ref{FehlendeMeldungen}) für das kleine Display des Geräts geworden und gibt den aktuellen Zustand in ausführlicherer Weise aus.
+Ein eigenes Gerät ist zur Alternative (Ausnahmen siehe~\ref{FehlendeMeldungen}) für das kleine Display des Geräts geworden und gibt den aktuellen Zustand in ausführlicherer Weise aus.
 Ohne eine präventive Instandhaltung beabsichtigt zu haben ist \textit{Restructuring} aber auch zutreffend, da Wissen aus dem ersten Teil hier eingeflossen ist.
 Wenn die Bedeutung bestimmter Speicherstellen nicht bekannt gewesen wäre, hätten die eingestellten Werte keine Bedeutung gehabt, was für den Begriff \textit{Restructuring} spricht.
 
@@ -62,12 +81,25 @@ Da die neue Oberfläche, über die serielle Schnittstelle in Verbindung mit eine
 Die Funktionalitäten der Maschine sind aber immer noch die Gleichen, das Programmmenü muss nun jedoch nicht mehr betreten werden, um die allgemeinen Geräte Einstellungen für den eigenen Kaffee anzupassen.
 
 Im Detail ist die genau Zuordnung der Begrifflichkeiten immer eine persönliche Auslegung dieser Begriffe.
-Sehr zutreffend ist das Zitat aus Abschnitt \ref{sec:Begrifflichkeiten}, denn diese Arbeit hat den Speicher intensiv betrachtet und mittels der Ergebnisse aus dem zweiten Teil um neue Perspektiven bereichert, ohne das Ziel verfolgt zu haben die Maschine zu klonen oder umzubauen.
+Sehr zutreffend ist das Zitat aus Abschnitt~\ref{sec:Begrifflichkeiten}, denn diese Arbeit hat den Speicher intensiv betrachtet und mittels der Ergebnisse aus dem zweiten Teil um neue Perspektiven bereichert, ohne das Ziel verfolgt zu haben die Maschine zu klonen oder umzubauen.
 
-\section{Zusammenfassung}
-Conclusion
+\section{Zusammenfassung}\todo
+Conclusion \todo
+An einer großen Aufgabe, wie der Zubereitung eines Kaffees, sieht man wie \ac{EEPROM} und \ac{RAM} zusammen arbeiten.
+Eine feste Programmroutine startet und der \ac{RAM} speichert alle Zustände.
+Freiheiten werden durch eingestellte Werte im \ac{EEPROM} gefüllt.
+Zählstände und Statusinformationen sämtlicher Komponenten kommen im \ac{RAM} zusammen.
+Die in Abschnitt \ref{subsec:RAM:Zubereitung} genannten Schritte werden durchlaufen.
+Und abschließend werden Zählstände im \ac{EEPROM} inkrementiert und dokumentiert.
 
-\section{Ausblick}
-Mit unendlicher Zeit und unendlich vielem Geld wäre folgendes noch möglich: evtl.
+Ebenso hat auch das Reinigungsprogramm einen festen Ablauf, in dem \ac{EEPROM} und \ac{RAM} zusammen arbeiten, und wo am Ende noch ein weiteres Programm, das der Spülung, angestoßen wird.
+
+\section{Ausblick}\todo
+Mit unendlicher Zeit und unendlich vielem Geld wäre folgendes noch möglich: evtl. \todo
 Firmware aus ROM auslesen und disassemblieren -> Vorgänge wirklich verstehen
 Für folgendes hat die Zeit gefehlt / der Schwerpunkt ging nicht in diese Richtung: Display Texte und Menü-Zählerstand wurden im RAM nicht wiedergefunden, ...
+
+Siehe Abschnitt~\ref{subsec:UnbekannteSpeicherorte}
+
+C++ Autobahn (crossbar.io) für Mehrbenutzer Betrieb der Webseite, wo sich die Statusinformationen bei einer Abfrage bei allen Nutzern automatisch aktualisieren.
+Webseite (2): Einheiten, wie Sprachen zu den Werten bei den Spracheinstellungen; zum Teil aber auch gar nicht bekannt, wie beim Trester Zähler (xxx Gramm?)

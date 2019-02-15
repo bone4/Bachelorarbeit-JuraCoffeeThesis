@@ -1,0 +1,13 @@
+digraph G {
+	rankdir=LR;
+
+	read1 -> change -> read2 -> compare;
+	read1 -> compare;
+
+	compare:s -> read1:s [style=dotted,labeldistance=10.0,label="n Mal"];
+
+	read1 [label="Speicher\nAuslesen (1)"];
+	change [label="Änderung\nvornehmen"];
+	read2 [label="Speicher\nAuslesen (2)"];
+	compare [label="Auf Unterschiede\nprüfen"];
+}

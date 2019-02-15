@@ -1,0 +1,2 @@
+dot -Tpdf -o workflow.pdf workflow.dot
+# dot graphviz
