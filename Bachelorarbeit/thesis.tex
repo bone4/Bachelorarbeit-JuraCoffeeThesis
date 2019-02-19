@@ -1,6 +1,7 @@
 %%
 %% DOCUMENT TYPE
 %%
+\PassOptionsToPackage{figuresright}{rotating} % rotating all sidewaysfigures and -tables to the right (mainly two sided objects on the even left page)
 
 % general options:
 % - inputenc        file encoding (should be "utf8" in most cases)
@@ -30,8 +31,8 @@
 %                   examination regulations, own work should be part of the regular
 %                   bibliography (this option is hence obsolete)
 
-\documentclass[de,acronymlist,declaration,bibbacklinks,inputenc=utf8]{tuhhthesis}
-%\documentclass[de,acknowledgment,declaration,abstract,symbollist,inputenc=utf8]{tuhhthesis}
+%\documentclass[de,acronymlist,declaration,bibbacklinks,inputenc=utf8]{tuhhthesis}
+\documentclass[de,acronymlist,declaration,figurelist,tablelist,bibbacklinks,inputenc=utf8]{tuhhthesis}
 
 
 % for the acronyms
@@ -44,6 +45,7 @@
 % - nolist          es wird keine Liste mit allen Abkürzungen ausgegeben
 \usepackage[printonlyused, withpage]{acronym}
 
+\usepackage{emptypage} % empty backside page on the left at \cleardoublepage
 
 %%
 %% SETUP BLOCK
@@ -116,7 +118,7 @@
 \newcommand{\bytebits}[3]{Byte \wort{#1} an den Bits \textcolor{tuhh_darkturquoise}{#2} und \textcolor{tuhh_darkturquoise}{#3}} % \bytebits{}{}{}
 \newcommand{\bytebitss}[3]{Byte \wort{#1} an den Bits \textcolor{tuhh_darkturquoise}{#2} bis \textcolor{tuhh_darkturquoise}{#3}} % \bytebitss{}{}{}
 \newcommand{\wert}[1]{\textcolor{tuhh_darkred}{#1}}
-\newcommand{\bezeichnung}[1]{\underline{#1}}
+\newcommand{\bezeichnung}[1]{\textit{#1}}
 
 \renewcommand{\TRhc}[3]{\multicolumn{#1}{#2}{\cellcolor{tuhh_gray}{#3}}} % Row Header for colored rows
 
@@ -139,7 +141,8 @@
 \input{chapter_3} % Hardware und Software
 \input{chapter_4} % Methodik und Implementierung
 \input{chapter_5} % Speicher                     % Analyse / Zusammenfassung / Ergebnisse
-\input{chapter_6} % Diskussion und Ausblick
+\input{chapter_6} % Diskussion
+\input{chapter_7} % Zusammenfassung und Ausblick
 
 % Bibliography
 % if you have cited papers that are not referenced, but important for your work,

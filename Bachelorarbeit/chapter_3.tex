@@ -1,4 +1,4 @@
-\chapter{Hardware und Software}
+\chapter{Hardware und Software}\label{ch:HardwareUndSoftware}
 Dieses Kapitel führt die gegebenen und verwendeten Hard- und Software Komponenten in dieser Arbeit auf und schafft die Grundlage für die eigene Implementierung.
 Am Ende dieses Kapitels kann der Kaffeevollautomat bereits angesteuert werden.
 
@@ -10,7 +10,7 @@ Der Kaffeevollautomat wird für seinen Betrieb direkt mit der Netzspannung verso
 \subfigbox{
   \subfigure[Der ganze Kaffeevollautomat]{\label{subfig:Kaffeevollautomat}\includegraphics[scale=0.2]{images/chapter_3/Jura-Impressa-S9-small}}\hfill%
   \subfigure[Pinbelegung zum Arduino Uno]{\label{subfig:KaffeevollautomatPins}\includegraphics[scale=0.3]{images/chapter_3/Jura-Arduino-Pins-beschriftet-small}}%
-}{Jura Impressa S9}{fig:Kaffeevollautomat}
+}{Der "`Jura Impressa S9"' Kaffeevollautomat}{fig:Kaffeevollautomat}
 
 \subsection{Aufbau und Verkabelung}\label{subsec:AufbauUndVerkabelung}
 Hinter der linken Wartungsklappe an der Vorderseite des Kaffeevollautomaten befindet sich neben mehreren Menü-Tasten eine serielle Schnittstelle.
@@ -73,94 +73,18 @@ Weitere Befehlsgruppen werden in der \texttt{README.rst} eines Github Repositori
 
 Die jetzt vorhandene Umgebung kann bereits über den seriellen Monitor der Arduino \ac{IDE} genutzt werden.
 
-\begin{tuhhtable}
-  \footnotesize\centering
-  \begin{tabular}[tp]{L{.22\textwidth}L{.48\textwidth}L{.18\textwidth}}
-%
-  \THc{1}{c}{Kommando} & \THc{1}{c}{Beschreibung} & \THc{1}{c}{Rückgabewert} \\
-%
-  \TRx{3}{l}{Betriebszustand (AN:<id>)}\\
-  \abovebodyrule
-  AN:01    & Einschalten        & ok:    \\\TRc
-  AN:02    & Ausschalten        & ok:    \\
-  AN:03    & Display Test       & ok:    \\\TRc
-  AN:<id>  & u.v.m.             & ok:    \\
-  \belowbodyrule
-%
-  \TRx{3}{l}{Bezugstaste (FA:<id>)}\\
-  \abovebodyrule
-  FA:02    & Gerät spülen       & ok:    \\\TRc
-  FA:0C    & Spezialkaffee      & ok:    \\
-  FA:<id>  & u.v.m.             & ok:    \\\TRc
-  \belowbodyrule
-%
-  \TRx{3}{l}{Steuerungskomponenten (FN:<id>)}\\
-  \abovebodyrule
-  FN:<id>  & Pumpen, Heizung, u.v.m & ok:    \\\TRc
-  \belowbodyrule
-%
-  \TRx{3}{l}{Eingabestatus*}\\
-  \abovebodyrule
-  IC:      & Eingaben auslesen* &        \\\TRc
-  \belowbodyrule
-%
-  \TRx{3}{l}{Spiele Musik (easter egg)*}\\
-  \abovebodyrule
-  PM:      & Play music*        &        \\\TRc
-  \belowbodyrule
-%
-  \TRx{3}{l}{Speicherzugriff}\\
-  \abovebodyrule
-  RE:<address> & Liest 2 Byte EEPROM Speicher   & re:[0000-FFFF] \\\TRc
-  WE:<address>,<value> & Schreibt 2 Byte in EEPROM & ok:         \\
-  RT:<address> & Liest eine Zeile EEPROM        & rt:[0-F 64x]   \\\TRc
-  RR:<address> & Liest eine Zeile RAM           & rr:[0-F 32x]   \\
-  \belowbodyrule
-%
-  \TRx{3}{l}{Sperrung}\\
-  \abovebodyrule
-  ?M3      & Aktiviert den Inkassomodus         & ?ok            \\\TRc
-  ?M1      & Deaktiviert den Inkassomodus       & ?ok            \\
-  \belowbodyrule
-%
-  \TRx{3}{l}{Display}\\
-  \abovebodyrule
-  ?D0      & Standard Displaytext zurück setzen & ?ok            \\\TRc
-  ?D1[A-Z 8-11x] & Displaytext Zeile 1          & ?ok            \\
-  ?D2[A-Z 8-11x] & Displaytext Zeile 2          & ?ok            \\\TRc
-  \belowbodyrule
-%
-  \TRx{3}{l}{Aktion an der Kaffeemaschine}\\
-  \abovebodyrule
-           & 1 kleiner Kaffee (Produkt 1)       & ?PAE         \\\TRc
-           & 2 kleine Kaffees (Produkt 2)       & ?PAF         \\
-           & 1 großer Kaffee  (Produkt 3)       & ?PAA         \\\TRc
-           & 2 große Kaffees  (Produkt 4)       & ?PAB         \\
-           & Spezialkaffe     (Produkt 7)       & ?PAG         \\\TRc
-           & Dampf            (Produkt 6)       & ?PAI         \\
-           & 1 Dampfportion   (Produkt 5)       & ?PAJ         \\\TRc
-           & 1 Tasse Tee      (Produkt 8)       & ?PAK         \\
-  \belowbodyrule
-%
-  \TRx{3}{l}{* Nicht alle Befehle sind in der Jura Impressa S9 implementiert, siehe weitere Geräte der S-Reihe}\\
-%
-  \end{tabular}
-  \caption{Befehlsübersicht der Jura Kaffeevollautomaten (S-Reihe)}
-  \label{tbl:kommandos}
-\end{tuhhtable}
-
 \subsection{Speicher}
 Über die Befehle \texttt{RE:<address>}, \texttt{RT:<address>} und \texttt{RR:<address>} sind Lesebefehle zu zwei Speichereinheiten des Kaffeevollautomaten bekannt: dem \acf{EEPROM} und dem \acf{RAM}.
 
 \subsubsection{EEPROM}\label{subsubsec:SpeicherDesKaffeevollautomatenEEPROM}
 Über den Befehl \texttt{RT:<address>}, siehe Tabelle~\ref{tbl:kommandos}, lässt sich eine Zeile \ac{EEPROM} Speicher abfragen.
-Die Adresse reicht von \texttt{0x00} bis \texttt{0xF0} in sechzehner Sprüngen.\footnote{Man ist daran aber nicht gebunden und kann wie im Folgenden beim \ac{RAM} erklärt die Adressen von \texttt{0x00} bis \texttt{0xFF} nutzen. Dies wird in dieser Arbeit auf den \ac{EEPROM} aber \underline{nicht angewendet}.}
+Die Adresse reicht von \texttt{0x00} bis \texttt{0xF0} in sechzehner Sprüngen.\footnote{Man ist daran aber nicht gebunden und kann wie im Folgenden beim \ac{RAM} erklärt die Adressen von \texttt{0x00} bis \texttt{0xFF} nutzen. Dies wird in dieser Arbeit auf den \ac{EEPROM} aber \textbf{nicht angewendet}.}
 Als Antwort erhält man hinter dem kleingeschriebenen Kommando eine Zeichenkette bestehend aus 64 Hexadezimalzahlen.
 Da immer zwei Hexadezimalzahlen ein Byte\footnote{Ein Byte besteht aus 8 Bits mit einem Wertebereich von $0_{10}-255_{10} = 00_{16}-\text{FF}_{16} = $ 0x00 -- 0xFF.} repräsentieren umfasst eine \ac{EEPROM} Zeile \textbf{32} Bytes.
 Der gesamte \ac{EEPROM} umfasst damit insgesamt \textbf{512} Bytes.
 
 Über den Befehl \texttt{RE:<address>} können direkt Einheiten im \ac{EEPROM} abgefragt werden. Die Adresse reicht von \texttt{0x00} bis \texttt{0xFF}.
-Die kleinste adressierbare Einheit, \underline{das Wort}, besteht daher aus vier Hexadezimalzahlen, also \textbf{zwei} Bytes.\\
+Die kleinste adressierbare Einheit, \underline{das Wort}, besteht daher aus vier Hexadezimalzahlen, also \textbf{2} Bytes\footnote{Zwei Bytes bestehen aus 16 Bits mit einem Wertebereich von $0_{10}-65\:535_{10} = 00_{16}-\text{FFFF}_{16}$.}.\\
 Abbildung~\ref{subfig:EEPROM} zeigt das Speicherschema des \ac{EEPROM}.
 
 \subsubsection{RAM}\label{subsubsec:SpeicherDesKaffeevollautomatenRAM}
@@ -192,11 +116,12 @@ Diese Bibliothek bietet eine objektorientierte Schnittstelle für alle \ac{POSIX
 
 \subsection{Speicher- und Austauschformat}
 Sowohl bei der Untersuchung des Speichers, als auch am Ende für das aufbereitete Ergebnis, werden Informationen gesammelt, verglichen und öffentlich zugänglich gemacht.
-Als beliebtes und flexibles Speicherformat wird \ac{JSON} verwendet.
+Als beliebtes und flexibles Speicherformat wird in dieser Arbeit \ac{JSON} verwendet.
 Es bietet viele Datenformate und ist unbegrenzt verschachtelbar.
 In dieser Arbeit werden hauptsächlich Zeichenketten, Zahlen, Unter-Objekte und -Arrays verwendet.
-
 Darüber hinaus kann es leicht vom C++ Programm, der Webseite, oder auch für viele weitere Projekte genutzt werden.
+
+Kamilaris, Pitsillides und Trifa nennen in ihrem Paper \cite{Kamilaris2011} alternativ noch \ac{XML} als oft verwendetes, aber recht langatmiges maschinenlesbares Dateiformat.
 
 \subsubsection{libjsoncpp}
 Die "`libjsoncpp"'\footnote{\url{https://en.wikibooks.org/wiki/JsonCpp}} bietet dem C++ Programm eine Lese- und Syntaxanalyse-Funktion zum Aufnehmen eines \ac{JSON} Ausdrucks, sowie eine Möglichkeit ein \ac{JSON} Objekt kompakt zusammengefasst oder leserfreundlich aufgefächert in einen Ausgabestrom zu schreiben.

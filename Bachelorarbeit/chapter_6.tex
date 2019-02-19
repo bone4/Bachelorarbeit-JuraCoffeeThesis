@@ -1,20 +1,25 @@
-\chapter{Diskussion und Ausblick}
-\todo
-Für den Schluss
-ACHTUNG: während einer Übertragung ist das interne Bus System gehemmt (Display vollzieht keine Änderung), aber auch Gegenrichtung: wechselnde Displaytexte sorgen für Verzögerungen bei der Übertragung
-\todo
+\chapter{Diskussion}\label{ch:Diskussion}
+Dieses Kapitel benennt aufgetretene Probleme während der Arbeit und Hinterfragt die Ergebnisse aus dem vorherigen Kapitel.
 
 \section{Probleme}
+Nicht nur die Kommunikation mit dem Kaffeevollautomaten, sondern auch das Verständnis der Vorgänge in der Maschine erfordert Arbeit.
 
 \subsection{Kommunikation mit dem Kaffeevollautomaten} \label{subsec:zugangSeriellDirekt}
 Der direkte Zugang ist wahrscheinlich am schnellsten, im laufenden Betrieb aber schlecht möglich, da die Speicheradressen aktiv abgefragt werden müssten und damit Kurzschlüsse in der Elektronik produziert werden.
 Die serielle \ac{UART} Schnittstelle ermöglicht das Abfragen im laufenden Betrieb, also auch im \ac{RAM}.
-Jedoch benötigt das Auslesen seine Zeit (7-9 Sekunden für den \ac{RAM} und 10-15 Sekunden für den \ac{EEPROM}).
-Gerade im \ac{RAM} gibt es viele Veränderungen im Ruhezustand, sodass man auf diesem Weg nie einen zusammenhängenden Speicherauszug zu einem festen Zeitpunkt auslesen kann.
+Jedoch benötigt das Auslesen seine Zeit, ungefähr 9 Sekunden für den gesamten \ac{RAM} und ungefähr 15 Sekunden für den gesamten \ac{EEPROM}.
+Gerade im \ac{RAM} gibt es viele Veränderungen im Ruhezustand, sodass auf diesem Weg nie ein zusammenhängender Speicherauszug zu einem festen Zeitpunkt auslesen werden kann.
+
+Ein weiterer Nachteil ist, dass während einer Übertragung das interne Bus System gehemmt ist.
+Eingaben an der Maschine, wie die Navigation durch das Menü, werden während der Erstellung eines Speicherauszugs verzögert umgesetzt.
+Aber auch in der Gegenrichtung sorgen wechselnde Displaytexte für Verzögerungen während der seriellen Übertragung.
+
+Durch die Optimierung für die \ac{API} benötigt das Auslesen nur noch ungefähr 3 Sekunden für den \ac{RAM} und ungefähr 5 Sekunden für den \ac{EEPROM}.
+Abbildung~\ref{fig:API-EEPROM} und Abbildung~\ref{fig:API-RAM} zeigen die dabei abgefragten Speicherstellen.
 
 \subsection{Serielle Kommunikation} \label{subsec:kommunikationGeraetedateiLibserialLibrary}
 \paragraph{Gerätedatei direkt ansprechen}
-Um aufbauend Skripte ausführen zu können war der erste Versuch den Dateideskriptor \texttt{/dev/ttyACM0} sowohl lesend als auch schreibend zu nutzen.
+Um mit dem Arduino und letztlich dem Kaffeevollautomaten zu kommunizieren war der erste Versuch den Dateideskriptor \texttt{/dev/ttyACM0} sowohl lesend als auch schreibend zu nutzen.
 Zunächst funktionierte dies sehr gut, bis nach wenigen Tagen kaum reproduzierbares Fehlverhalten auftrat.
 Gerade Antworten der Kaffeemaschine kamen nur noch in Bruchstücken an.
 Dies wurde bei der Einrichtung bereits im Projekt "`CoffeeMachine"'\cite{GitCoffeeMachine} in der \texttt{Readme.md} für die Ausführung auf einem Raspberry Pi beschrieben.
@@ -28,7 +33,7 @@ ignbrk -brkint -icrnl -imaxbel \
 -opost -onlcr \
 -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke
 \end{lstlisting}
-nachzubauen.
+zu setzen.
 
 \paragraph{C++ und die \textit{libserial}-Library}
 Für eine sichere Verbindung wird in dem C++ Programm auf die im Linux Repository erhältliche Library \textit{libserial} zurückgegriffen.
@@ -47,17 +52,37 @@ Selbst unter der Annahme, dass die Maschine vielleicht nur die halbe \ac{ASCII}-
 Um dies weiter zu ergründen muss künftig ein Blick in die Maschine erfolgen um die vorhandenen Speicher und deren Größen zu bestimmen.
 Nach dem Datenblatt des Mikrocontrollers \cite{JuraMicrocontroller} gibt es vier Ausführungen, von der aber keine den 256 Byte \ac{RAM} und 512 Byte (256 Wörter) \ac{EEPROM}, die über die seriellen Befehle adressierbar sind, entspricht.
 
-\todo unerreichbare Bereiche und ungenutzte Bytes durch Standardgrößen?!
+Es wäre vorstellbar, dass die gegebenen Befehle aus Tabelle~\ref{tbl:kommandos} nicht den insgesamt zur Verfügung stehenden Speicher adressieren und nach außen kommunizieren.
+Andererseits ist es ebenfalls möglich dass viele unbekannte Speicherstellen gar keine Funktion besitzen;
+der vorhandene Speicher dieses Standard Mikrocontrollers würde von dem Programm dann nicht voll ausgenutzt werden.
+
+\subsection{Weitere Automatisierung durch das C++ Programm}
+Für den \ac{EEPROM} ist es ein vertretbarer Aufwand Einstellungen am Gerät vorzunehmen, das Skript anzustoßen und einen Kommentar zu hinterlegen.
+Die Ergebnisse können aus der \ac{JSON} Datei abgelesen werden.
+
+Die wechselhaften Sprünge im \ac{RAM} erforderten ein wiederholtes Anwenden des Skripts, wie in Abschnitt~\ref{sec:Vorgehen} beschrieben.
+Hier könnte das C++ Programm dahingehend ausgebaut werden $n=3$ Durchläufe mit dem selben Kommentar zu versehen.
+Die Auswertung sollte aber von Hand erfolgen und es sollten Ergebnisse aus variierenden Umgebungsbedingungen einbezogen werden.
+Zum Beispiel den Wasserfilter einmal aktivieren und einmal deaktivieren.
+Es bedürfte einer sehr guten künstlichen Intelligenz diese Umgebungen vorzuschlagen und die Ergebnisse zusammenzuführen.
+
+Mit dem in Abschnitt~\ref{sec:Vorgehen} beschrieben ersten Vorgehen lassen sich Statusinformationen und Einstellmöglichkeiten sehr gut auslesen.
+Bedingte Abhängigkeiten, wie die Zusammensetzung eines Bezüge-Zählers aus mehreren Zählern, oder Abläufe, wie die zwei Schritte einer Kaffeezubereitung, wären durch ein starr hochgezogenes Computerprogramm unentdeckt geblieben.
+
+Ausbaufähig ist die wieder bessere Trennung des \ac{EEPROM}s und des \ac{RAM}s.
+In den gefundenen Unterschieden des Skripts können weniger relevante Spalten ausgeblendet werden und es könnten die \ac{JSON} Dateien mit einem Merker versehen werden, um der nachträglichen \textit{Aufschlüsselung der Veränderungen} im C++ Programm eine bessere Differenzierung zu ermöglichen.
 
 \section{Aussagekraft der Ergebnisse}\label{sec:AussagekraftDerErgebnisse}
-EEPROM Menüeinstellungen recht sicher, einige partielle Zubereitungszähler aber weniger (Firmware unbekannt)
+Die \ac{EEPROM} Einstellmöglichkeiten können recht sicher festen Speicherstellen zugeordnet werden.
+Bei einige partiellen Zubereitungszählern ist aber nicht bekannt, wann sie zählen und wofür.
+Die Firmware fehlt an dieser Stelle.
 
-RAM mehrere Status Bits einigermaßen sicher (vor allem die im ausgeschalteten Betriebszustand); durch viele unregelmäßige Veränderungen wurden aber mehrere Bytes außer acht gelassen, die an bestimmten Bit Positionen wichtige Flags enthalten könnten!
+Im \ac{RAM} sind mehrere Status Bits einigermaßen aussagekräftig, vor allem aber die im ausgeschalteten Betriebszustand, die auch in Tabelle~\ref{tbl:RAM1} und Tabelle~\ref{tbl:RAM2} hervorgehoben sind.
+Durch viele unregelmäßige Veränderungen wurden aber mehrere Bytes außer acht gelassen, die an bestimmten Bit Positionen wichtige Merker enthalten könnten.
 
-Unsicherheit durch mehrere Speicherpositionen für ein und die selbe Funktion: ggf. verbirgt sich hinter einzelnen Positionen noch eine andere Bedeutung oder eine bisher unbekannte Abhängigkeit für weitere Funktionen
-
-Es fehlen (wichtige?!), im Benutzerhandbuch dokumentierte, Meldungen wie:\label{FehlendeMeldungen}
-Gerät verkalkt, Störung 2, Störung 8, sowie etliche Menümeldungen während der internen Programmabläufe.
+Unsicherheit besteht durch mehrere Speicherpositionen für ein und die selbe Funktion.
+Entweder verbirgt sich hinter einzelnen Positionen noch eine andere Bedeutung oder eine bisher unbekannte Abhängigkeit für weitere Funktionen.
+Zustände könnten im \ac{RAM} tatsächlich mehrfach erfasst werden.
 
 \section{Einordnung zur Terminologie des Reverse Engineerings}\label{sec:DiskussionBegriffReverseEngineering}
 Diese Arbeit besteht im wesentlichen aus den zwei Teilen, den Speicher zu analysieren und zu verstehen, bzw. das Wissen darüber in einer neuen Oberfläche einfach zur Verfügung zu stellen.
@@ -82,28 +107,5 @@ Die neue Oberfläche kann man als \textit{Restructuring} oder dem allgemeineren 
 Da die neue Oberfläche, über die serielle Schnittstelle in Verbindung mit einem eigenen Endgerät, aber sehr von den Bordmitteln der Maschine abweicht passt vielleicht das \textit{Reengineering} etwas besser.
 Die Funktionalitäten der Maschine sind aber immer noch die Gleichen, das Programmmenü muss nun jedoch nicht mehr betreten werden, um die allgemeinen Geräte Einstellungen für den eigenen Kaffee anzupassen.
 
-Im Detail ist die genau Zuordnung der Begrifflichkeiten immer eine persönliche Auslegung dieser Begriffe.
+Im Detail ist die genaue Zuordnung der Begrifflichkeiten immer eine persönliche Auslegung dieser Begriffe.
 Sehr zutreffend ist das Zitat aus Abschnitt~\ref{sec:Begrifflichkeiten}, denn diese Arbeit hat den Speicher intensiv betrachtet und mittels der Ergebnisse aus dem zweiten Teil um neue Perspektiven bereichert, ohne das Ziel verfolgt zu haben die Maschine zu klonen oder umzubauen.
-
-\section{Zusammenfassung}\todo
-Conclusion \todo
-An einer großen Aufgabe, wie der Zubereitung eines Kaffees, sieht man wie \ac{EEPROM} und \ac{RAM} zusammen arbeiten.
-Eine feste Programmroutine startet und der \ac{RAM} speichert alle Zustände.
-Freiheiten werden durch eingestellte Werte im \ac{EEPROM} gefüllt.
-Zählstände und Statusinformationen sämtlicher Komponenten kommen im \ac{RAM} zusammen.
-Die in Abschnitt \ref{subsec:RAM:Zubereitung} genannten Schritte werden durchlaufen.
-Und abschließend werden Zählstände im \ac{EEPROM} inkrementiert und dokumentiert.
-
-Ebenso hat auch das Reinigungsprogramm einen festen Ablauf, in dem \ac{EEPROM} und \ac{RAM} zusammen arbeiten, und wo am Ende noch ein weiteres Programm, das der Spülung, angestoßen wird.
-
-\section{Ausblick}\todo
-Mit unendlicher Zeit und unendlich vielem Geld wäre folgendes noch möglich: evtl. \todo
-Firmware aus ROM auslesen und disassemblieren -> Vorgänge wirklich verstehen
-Für folgendes hat die Zeit gefehlt / der Schwerpunkt ging nicht in diese Richtung: Display Texte und Menü-Zählerstand wurden im RAM nicht wiedergefunden, ...
-
-Siehe Abschnitt~\ref{subsec:UnbekannteSpeicherorte}
-
-C++ Autobahn (crossbar.io) für Mehrbenutzer Betrieb der Webseite, wo sich die Statusinformationen bei einer Abfrage bei allen Nutzern automatisch aktualisieren.
-Webseite (2): Einheiten, wie Sprachen zu den Werten bei den Spracheinstellungen; zum Teil aber auch gar nicht bekannt, wie beim Trester Zähler (xxx Gramm?)
-
-Ghidra (NSA) -> heise online Artikel

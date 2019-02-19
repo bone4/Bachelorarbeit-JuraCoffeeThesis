@@ -1,4 +1,4 @@
-\chapter{Grundlagen}
+\chapter{Grundlagen}\label{ch:Grundlagen}
 Dieses Kapitel differenziert den Begriff des \textit{Reverse Engineering} und zeigt weitere Arbeiten zu Kaffee Maschinen sowie intelligenten Geräten auf.
 
 % Sektion {Literatur: was gibt es schon}
@@ -62,13 +62,17 @@ Diese Arbeit greift den Gedanken auf und versucht den Einfluss und die Bedeutung
 % Sektion (related work)
 Eine Bachelorarbeit der Universität Magdeburg zum Thema "`Reverse-engineering a De'Longhi Coffee Maker to precisely bill Coffee Consumption"'\cite{BachelorarbeitDeLonghi} behandelt eine De'Longhi Caffee Maschine.
 Das Ziel ist es den Verbrauch exakt zu bestimmen und das System damit um ein Abrechnungssystem zu erweitern.
-Dafür wird eine \ac{MCU} über das \ac{SPI} zwischen Master und Slave Einheiten geschaltet und Informationen aus dem proritären De'Longhi Protokoll ausgelesen.
+Dafür wird eine \ac{MCU} über das \ac{SPI} zwischen Master und Slave Einheiten geschaltet und Informationen aus dem prorietären De'Longhi Protokoll ausgelesen.
 Das Ergebnis der Arbeit ist unter anderem ein Verständnis über das interne Bus Protokoll der Maschine.
 % ?! \todo https://www.cl.cam.ac.uk/coffee/qsf/coffee.html ?!
 
 Ein Buch von Eldad Eilam~\cite{Solr-480966761} stellt den Begriff des Reverse Engineering ähnlich wie zu Beginn in Abschnitt~\ref{sec:Begrifflichkeiten} dar, geht aber im Folgenden tiefer auf das Reverse Engineering von Low-Level Software ein.
 Ein Hauptaugenmerk des Buches liegt auf auf der sicherheitsrelevanten Seite, sowie die Vorgänge und Lücken im Low-Level Bereich.
 
-Diese Arbeit hingegen nutzt als Ansatz eine gegebene serielle Schnittstelle des Jura Kaffeevollautomaten mit einem ebenfalls propritären \ac{UART} Protokoll. Dabei wird nicht die Hardware geöffnet und beispielsweise die Firmware disassembliert und analysiert.
+Diese Arbeit hingegen nutzt als Ansatz eine gegebene serielle Schnittstelle des Jura Kaffeevollautomaten mit einem ebenfalls proprietären \ac{UART} Protokoll.
+Dabei wird aber nicht die Hardware geöffnet und beispielsweise die Firmware disassembliert und analysiert.
 
-\todo Erweitern um smart appliances (s. 3x Paper)
+Soucek, Russ und Tamarit haben sich in ihrem Paper \cite{soucek2000smart} mit dem Aufbau eines Feldbusses befasst, um mehrere Küchengeräte zu vernetzen und über ein Gateway in das Internet zu bringen.
+
+Diese Arbeit erstellt auf der Basis der Ergebnisse in Kapitel~\ref{ch:Ergebnisse} eine Schnittstelle für einen Computer, der wiederum als Server mehrere Endgeräte anbinden kann.
+

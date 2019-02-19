@@ -1,0 +1,39 @@
+digraph G {
+	margin=0; // for the pdf output
+	rankdir=TB;
+	compound=true;
+
+	JuraCoffeeMemory;
+
+	subgraph cluster0 { // API
+		EEPROM_Status -> RAM_Status [style=invis]; // top to bottom
+		label = "API";
+		labelloc = "b";
+	}
+
+	JsonFile;
+	subgraph cluster1 { // JSON
+		"*.json" [shape=Mdiamond];
+		label = "JSON files";
+		labelloc = "b";
+	}
+	JsonFile -> "*.json" [lhead=cluster1];
+
+	SerialConnection;
+
+	subgraph cluster2 { // Storage
+		edge [arrowtail=onormal dir=back];
+		Storage -> EEPROM;
+		Storage -> RAM;
+		label = "memory processing";
+		labelloc = "b";
+	}
+
+	JuraCoffeeMemory -> EEPROM_Status [lhead=cluster0];
+	JuraCoffeeMemory -> JsonFile;
+	JuraCoffeeMemory -> SerialConnection;
+	JuraCoffeeMemory -> Storage [lhead=cluster2];
+
+	EEPROM_Status -> SerialConnection [ltail=cluster0];
+	Storage -> SerialConnection [ltail=cluster2];
+}

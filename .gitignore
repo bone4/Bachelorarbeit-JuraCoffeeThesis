@@ -8,7 +8,9 @@
 *.fls
 *.ilg
 *.ind
+*.lof
 *.log
+*.lot
 *.nav
 *.out
 *.snm

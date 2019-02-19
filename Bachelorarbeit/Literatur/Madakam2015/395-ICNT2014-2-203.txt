@@ -1,0 +1,16 @@
+Das Internet ist ein globales kraftvolles Netzwerk aus Computer Netzwerken.
+Damit sind in echtzeit Informationen über geographische, kulturelle, sprachliche und zeitliche Grenzen hinweg zugänglich.
+
+Dinge sind "`Objekte"' in der realen Welt, wie Menschen, Tiere, Pflanzen, Autos oder eben auch
+Kaffeemschinen, die von Madakam unter anderem aufgezählt werden.
+
+Das Internet der Dinge sein definiert als "`Ein offenes und umfassendes Netzwerk von intelligenten
+Objekten, die in der Lage sind, sich automatisch zu organisieren, Informationen, Daten und Ressourcen
+auszutauschen, zu reagieren und zu handeln, wenn es um Situationen und Veränderungen in der Umgebung
+geht."', so Madakam.
+
+Intelligente Dinge (engl. "`Smart Things"') machen unsere Welt smart.
+Sie setzen sich aus einer Gruppe überwachbarer und steuerbarer Dinge mit einigen Sensorfunktionen
+zusammen, die an das Internet angebunden sind.
+Dies ermögliche es jeder Zeit von überall auf reale Dinge zuzugreifen.
+Dabei ist der Begriff "`Smart Things"' ein Schlagwort des \ac{IoT} (Internet der Dinge).

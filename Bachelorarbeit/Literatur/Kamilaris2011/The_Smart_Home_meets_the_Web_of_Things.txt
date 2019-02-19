@@ -1,0 +1,20 @@
+In dem Paper über "`The Smart Home meets the Web of Things"' werden physische Altagsgegenstände
+mithilfe der zentralen Prinzipien der modernen Web Architektur in das intelligente zuhause überführt.
+
+Als Beispiel für die fortschreitende Technik wird unter anderem genannt,
+dass Kaffeemaschinen automatisch einen Kaffee nach Benutzerpräferenzen zubereiten können.
+Das einfache hinzufügen solcher Geräte zum Internet trägt das Schlagwort "`Web of Things"'.
+
+Die Möglichkeit eigene Geräte nun über das Netzwerk verwalten zu können führt zum
+"`Web-enabled Smart Home"'.
+
+Das Paper baut ein Framework auf, indem vielfältige Anwendungen einfach heterogene
+eingebettete Geräte einbinden können.
+Unter den Voraussetzungen werden drei Interaktionsmöglichkeiten aufgezählt: Ad-hoc Interaktion,
+kontinuierliche Überwachung und Ereignis basierte Systeme.
+Die "`Jura Impressa S9"' eignet sich gut Ad-hoc Interaktionen, da sie Sensoren und Aktoren bietet,
+die über die serielle Schnittstellen angesprochen werden können. Eine echtzeit Überwachung, wie
+bei einem Stromzähler ist weniger zutreffend. Aber wenn es serielle Unterbrechungen (Interrupts)
+gäbe wäre auch ein Ereignis basiertes System zutreffend um Fehler oder Warnungen weiter zu geben.
+
+... (letzter Block unter den Anforderungen)

@@ -1,0 +1,6 @@
+Internetverbindung
+Die übertragenen Daten bestehen aus Kontrolldaten und aktuellen Anwendungsdaten.
+Anwendungsdaten können beispielsweise das Nutzungsverhalten einer Kaffeemaschine einschließen.
+
+grün markierter Bereich: Feldbus System an das Internet anbinden.
+

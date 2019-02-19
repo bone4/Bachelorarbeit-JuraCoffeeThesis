@@ -1,16 +1,25 @@
 \chapter{Einführung}
-\todo Einleitungssätze.
-
-\section{Motivation}
 Heutige Geräte versprechen viel Komfort und eine einfache Handhabung. Über das Internet werden die Geräte zunehmend vernetzt und smart.
-Diese Arbeit befasst sich mit einer Kaffeemaschine und in erster Linie mit ihrem Speicher. Dieser merkt sich nicht nur Betriebszustände,
+Dabei seien Dinge erst einmal \textit{Objekte} in der realen Welt, wie Menschen, Tiere, Pflanzen, Autos oder eben auch Kaffeemschinen, die von Madakam \cite{Madakam2015} unter anderem aufgezählt werden.
+Intelligente Dinge (engl. "`Smart Things"') machen unsere Welt smart.
+Sie setzen sich aus einer Gruppe kontrollierbarer und steuerbarer Dinge mit einigen Sensorfunktionen zusammen, die an das Internet angebunden sind.
+Dies ermögliche es jeder Zeit von überall auf reale Dinge zuzugreifen.
+Dabei ist der Begriff "`Smart Things"' ein Schlagwort des \ac{IoT}. \cite{Madakam2015}
+
+Diese Welt benötigt aber nicht nur neue und bessere Dinge, sondern auch wiederverwertbare und reparierbare Dinge.
+Diese Arbeit möchte eine seit Jahren gut arbeitende Maschine smart machen und um eine neue Schnittstelle erweitern.
+
+Daher befasst sich diese Arbeit mit einer Kaffeemaschine und in erster Linie mit ihrem Speicher. Dieser merkt sich nicht nur Betriebszustände,
 sondern auch Einstellungen, Zählstände und evtl. vieles mehr. Diese Informationen können nicht nur gelesen, sondern zum Teil auch verändert werden.
 Moderne Funktionen stecken ohne eine entsprechende graphische Schnittstelle aber bereits in älteren Maschinen, unter der Voraussetzung über das entsprechende Wissen zu verfügen.
 
-\todo Deutlich mehr ausholen: Was ist IoT? Warum braucht man das? Warum ist das relevant für diese Arbeit? Und dann zur Aufgabenstellung überleiten.
+Kamilaris, Pitsillides und Trifa nennen in ihrem Paper von 2011 \cite{Kamilaris2011}, dass in naher Zukunft beispielsweise Kaffeemaschinen automatisch einen Kaffee nach Benutzerpräferenzen zubereiten können.
+Die Möglichkeit eigene Geräte nun über das Netzwerk verwalten zu können führe zum \textit{Web-enabled Smart Home}.
 
 \section{Aufgabenstellung}
-Anhand eines \textit{Jura Impressa S9 Kaffeevollautomaten} soll der Speicher untersucht werden.
+Diese Arbeit reverse engineered ein \textit{Objekte} unseres Alltags.
+Dafür werden die Funktionen und Abläufe eines \textit{Jura Impressa S9 Kaffeevollautomaten} untersucht.
+Der Kaffeevollautomaten wird um eine neue Schnittstelle zur Interaktion mit dem Gerät erweitert, nachdem dessen Speicher untersucht worden ist.
 Welches Wort / Byte / Bit speichert welche Information? Welche Bedeutung haben diese auf den Betrieb?
 Hierfür sollen Skripte erstellt werden und der Speicher systematisch untersucht werden.
 
@@ -19,4 +28,11 @@ Die erhaltenen Rohinformationen werden nach den gewonnen Erkenntnissen aufbereit
 
 Als kleine Demonstrationen entsteht am Ende ein Programm, welches Profile anlegen kann, sodass jeder Nutzer auf Knopfdruck einen Kaffee nach seinen Lieblings Präferenzen zubereitet bekommt.
 
-\todo Aufbau der Arbeit beschreiben: In Kapitel 2 werden grundlegende Begriffe erklärt und ein Einblick in den Stand der Technik gegeben...
+\section{Aufbau der Arbeit}
+Kapitel~\ref{ch:Grundlagen} erörtert den Begriff \textit{Reverse Engineering} und zeigt weitere Arbeiten auf.
+In Kapitel~\ref{ch:HardwareUndSoftware} werden der reale Kaffeevollautomat, dessen Verkabelung und weitere Abhängigkeiten aufgeführt.
+Darauf aufbauend können in Kapitel~\ref{ch:MethodikUndImplementierung} das strategische Vorgehen und die nötigen Skripte entwickelt werden.
+Im Anschluss werden die Ergebnisse in Kapitel~\ref{ch:Ergebnisse} aufbereitet.
+Kapitel~\ref{ch:Diskussion} diskutiert aufgetretene Probleme und zeigt die Grenzen dieser Arbeit auf.
+Ebenso wird die Arbeit in das Feld des \textit{Reverse Engineering} eingegliedert.
+Abschließend fasst Kapitel~\ref{ch:Zusammenfassung} die Arbeit zusammen.

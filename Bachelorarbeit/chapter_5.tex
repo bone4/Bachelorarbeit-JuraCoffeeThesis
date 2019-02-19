@@ -1,7 +1,7 @@
-\chapter{Ergebnisse} % Speicher / Analyse / Zusammenfassung / Ergebnisse
-
-Um den Speicher zu verstehen, klären wir vorab das Rückgabeformat der Speicherauszugs Befehle, sowie den Aufbau des Speichers der "`Jura Impressa S9"'.
-Dieser Kaffeevollautomat besitzt einen \ac{RAM} für die Status, Messwerte und Zwischenberechnungen im Betrieb und einen \ac{EEPROM} für Einstellungen und Zählstände, die auch nach einer Stromunterbrechung erhalten bleiben.
+\chapter{Ergebnisse}\label{ch:Ergebnisse} % Speicher / Analyse / Zusammenfassung / Ergebnisse
+Die "`Jura Impressa S9"' besitzt einen \ac{RAM} für die Status, Messwerte und Zwischenberechnungen im Betrieb und einen \ac{EEPROM} für Einstellungen und Zählstände, die auch nach einer Stromunterbrechung erhalten bleiben.
+Durch die Anwendung des Vorgehens in Abschnitt~\ref{sec:Vorgehen} können Aussagen zu 40 von 255 Wörtern im \ac{EEPROM} und 43 von 255 Bytes im \ac{RAM} getroffen werden.
+Für den \ac{RAM} bedeutet dies 19 Statusinformationen und die Position mehrerer Zähler.
 
 \section{EEPROM}
 In Abschnitt~\ref{subsubsec:SpeicherDesKaffeevollautomatenEEPROM} wurde der vorhandene \acf{EEPROM} Speicher mit seinen 512 Bytes aufgeführt.
@@ -12,7 +12,7 @@ Abbildung~\ref{subfig:EEPROM} zeigt noch einmal das Speicherschema des \ac{EEPRO
 
 \subsection{Kaffeezubereitung}\label{subsec:ErgebnisKaffeezubereitung}
 Der Kaffeevollautomat unterscheidet bei der Zubereitung zwischen einem einmaligen Pulver-Kaffee und der normalen Zubereitung über das Bohnenfach.
-Nur im Falle eines \bezeichnung{Pulver-Kaffees} zählt die Maschine den Zähler in Wort \wort{06} um einen hoch.
+Nur im Falle eines \bezeichnung{Pulver-Kaffees} wird der Zähler in Wort \wort{06} um \wert{einen inkrementiert}.
 \bezeichnung{1 großer Kaffee}, \bezeichnung{2 große Kaffees}, \bezeichnung{1 kleiner Kaffee}, \bezeichnung{2 kleine Kaffees} und ein \bezeichnung{Spezialkaffee} werden bei einer Zubereitung über das Bohnenfach einzeln in den Zählern der Wörter \wort{00} bis \wort{04} in eben dieser Reihenfolge erfasst.
 Der in den Einstellungen des Kaffeevollautomaten angezeigte \bezeichnung{Bezüge Zähler} gibt die Summe der bis hier genannten \wert{sechs Zähler} aus.
 
@@ -50,7 +50,7 @@ In Wort \wort{BB} wird die Größe einer \bezeichnung{Dampfportion} in Sekunden 
 Nach der eingestellten Zeit endet automatisch die Dampfausgabe am Kaffeevollautomaten beim Bezug einer Dampfportion.
 
 In Wort \wort{BC} wird die Größe einer \bezeichnung{Teeportion} abgespeichert.
-Die Einheit ist hier nicht bekannte, es könnte sich aber um die Größenordnung von $0,1$ Sekunden handeln.
+Die Einheit ist hier nicht bekannte, es könnte sich aber um die Größenordnung von $0.1$ Sekunden handeln.
 Wird das Drehrad von der Position "`Kaffeetasse"' auf "`Teeauslass"' gestellt wird eine Teeportion an heißem Wasser ausgegeben und automatisch beendet.
 
 \subsection{Weitere Maschinen Einstellungen}
@@ -149,7 +149,7 @@ Tabelle~\ref{tbl:RAM1} zeigt die regelmäßigen Änderungen beim Einschalten in 
 Der Umschwung der sieben Bits erfolgt sofort nach der Betätigung des "`Ein"'-Schalters, selbst wenn sich der Kaffeevollautomat noch aufwärmt und "`Bitte warten"' anzeigt.
 Eine Änderung nach der Aufwärmphase konnte nicht festgestellt werden.
 
-Beim Ausschaltet geschehen die Änderungen vice versa.
+Beim Ausschaltet geschehen die Änderungen umgekehrt.
 
 \subsection{Schale fehlt}
 Die beiden linken Kontakte, die eine eingesetzte Schale verbindet, sind voneinander getrennt.
@@ -237,7 +237,7 @@ Für eine Kaffeezubereitung werden im \bezeichnung{ersten Schritt} die Bohnen ge
 In \bytebits{03}{7}{4} steht dann je eine \wert{1}.
 In \bytebit{03}{7} steht nur während einer Kaffeezubereitung eine \wert{1} und nicht im Falle des manuellen Starts des Mahlwerks mit dem Befehl \texttt{FN:07} oder \texttt{FN:09}.
 
-Im \bezeichnung{zweiten Schritt} wird er Kaffee Aufgebrüht und Ausgeschenkt.
+Im \bezeichnung{zweiten Schritt} wird der Kaffee Aufgebrüht und Ausgeschenkt.
 Die Änderungen sind in Tabelle~\ref{tbl:RAM2} in der letzten Spalte dargestellt.
 
 Über die \bezeichnung{gesamte Zeit} steht in \bytebit{0A}{6} eine \wert{1}.
@@ -270,15 +270,18 @@ In den Bytes \wort{37} bis \wort{3C}, in Byte \wort{43}, sowie in den Bytes \wor
 In dem Byte \wort{8B} sowie bis in das davor liegende Byte \wort{8A} reicht eine Zähler für primär den Dampfbezug oder eine Wasserdampfportion, aber auch bei einer Kaffeezubereitung oder Spülung bewegt sich der Zähler.
 
 \section{Alleinstellungsmerkmal für die API und die Webseite}
-\todo
-Oben gab es mehrere Überlappungen von verschiedenen Funktionen an den gleichen Speicherpositionen im \ac{RAM}.
-Für die \ac{API} wurde der exklusive Anteil heraus gefiltert und Doppelungen auf die nötigsten Speicherstellen zusammengefasst, um möglichst schnell möglichst wenig Speicher für alle nach außen relevanten Informationen (keine internen Zähler und ungenutzter Speicher etc.) abfragen zu müssen.
+Tabelle~\ref{tbl:RAM1} und Tabelle~\ref{tbl:RAM2} machen deutlich, dass es mehrfach redundante Speicherstellen im \ac{RAM} gibt an potentiell denen die gleiche Information steht.
+Da die serielle Übertragung abgefragter Speicherstellen Zeit benötigt, versucht die \ac{API} nur die wirklich nötigen Speicherstellen abzufragen und dadurch Zeit einzusparen.
 
-\todo
-Abgefragte Speicherstellen für die \ac{API} im \ac{EEPROM}: Abbildung~\ref{fig:API-EEPROM}
+Abbildung~\ref{fig:API-EEPROM} zeigt die abgefragte Speicherstellen für die \ac{API} im \ac{EEPROM}.
+Es werden vier Zeilen und drei einzelne Worte abgefragt.
+Da auch die Anfrage in der Übertragung Zeit benötigt, ist eine Zeile effizienter als sechzehn einzelne Wörter.
 
-Abgefragte Speicherstellen für die \ac{API} im \ac{RAM}: Abbildung~\ref{fig:API-RAM}
-\todo
+Abbildung~\ref{fig:API-RAM} zeigt die abgefragte Speicherstellen für die \ac{API} im \ac{RAM}.
+Hier können nur ganze Zeilen abgefragt werden, aber diese können an beliebiger Stelle beginnen.
+Es reichen für alle Funktionen vier Zeilen aus.
+Viele interne Zähler und Dopplungen können ausgelassen werden.
+Dennoch wird deutlich, dass die Bytes bestimmter Statusinformationen, die an verschiedenen Bits stehen, sehr nahe beieinander liegen und an anderer Stelle einzelner Bytes effizienter als ganze Reihen wären.
 
 \section{Display}\label{sec:Display}
 Das Display der "`Jura Impressa S9"' umfasst zwei Zeilen mit je acht Zeichen, die wiederum mit je $5 \times 5$ Lichtpunkten dargestellt werden.
@@ -287,4 +290,3 @@ Es handelt sich um arabische Zahlen, große lateinische Buchstaben sowie ein paa
 
 $0_{10}$ bis $31_{10}$ und alle \ac{ASCII}-Zeichen über $97_{10}$, auch aus der erweiterten \ac{ASCII}-Tabelle von $128_{10}$ bis $255_{10}$ und darüber, stellt der Kaffeevollautomat nicht mehr als eindeutig bekannte \ac{ASCII}-Zeichen dar.
 Es handelt sich höchstens um verpixeltes Kanji und wurde in der Tabelle ausgelassen.
-

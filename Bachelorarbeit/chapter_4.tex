@@ -1,13 +1,13 @@
-\chapter{Methodik und Implementierung}
-Dieses Kapitel führt das Vorgehen und die Implementierung eines C++ Programms aus, die es ermöglichen Aussagen über den Speicher des Kaffeevollautomaten zu treffen.
+\chapter{Methodik und Implementierung}\label{ch:MethodikUndImplementierung}
+Dieses Kapitel führt das Vorgehen und die Implementierung eines C++ Programms aus.
+Dadurch wird es möglich Aussagen über den Speicher des Kaffeevollautomaten zu treffen.
 Immer wiederkehrende Arbeitsabläufe werden von diesem Programm übernommen und auf den unteren Ebenen automatisiert.
 
-\section{Vorgehen}
-\todo Ähnlich zum Blackbox Testing in \cite{Solr-599853700} wird mit Ein- und Ausgabe des Kaffeevollautomaten gearbeitet, ohne sein Programm zu kennen (Blackbox Modell)\todo
-
+\section{Vorgehen}\label{sec:Vorgehen}
 Die Speicher des Kaffeevollautomaten, der \ac{EEPROM} und der \ac{RAM}, können Zeilenweise ausgelesen werden.
-Der nötige Zugriff zum Auslesen kann auf zwei Arten erfolgen: direkt am Speicherstein auf der Hauptplatine oder seriell über die vorhandene \ac{UART} Schnittstelle, siehe Abschnitt~\ref{subsec:zugangSeriellDirekt}.
-Im Folgenden erfolgt die Kommunikation über die \ac{UART} Schnittstelle und mithilfe der \textit{libserial}-Library.
+Der nötige Zugriff zum Auslesen kann auf zwei Arten erfolgen: direkt am Speicherstein auf der Hauptplatine oder seriell über die vorhandene \ac{UART} Schnittstelle.
+Abschnitt~\ref{subsec:zugangSeriellDirekt} diskutiert die Vor- und Nachteile, die dazu geführt haben im Folgenden die Kommunikation über die \ac{UART} Schnittstelle und mithilfe der \textit{libserial}-Library erfolgen zu lassen.
+Dadurch kann die Speicherabfrage als Blackbox Modell, ähnlich zum Blackbox Testing in \cite{Solr-599853700}, betrachtet werden, wo nur mit Ein- und Ausgaben des Kaffeevollautomaten gearbeitet wird, ohne dessen Programm zu kennen.
 
 Unabhängig voneinander wurden beide Speicher untersucht.
 Ein eigens entwickeltes C++ Programm setzt die sechzehn Zeilen einer Speicherabfrage zu einem gesamten Speicherauszug zusammen.
@@ -16,8 +16,8 @@ Dadurch sind Position und Wert bekannt.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[scale=0.54]{images/chapter_4/workflow}
-    \caption{Arbeitsablauf}
+    \includegraphics[scale=0.6]{images/chapter_4/workflow}
+    \caption{Arbeitsablauf zur systematischen Untersuchung des EEPROMs und RAMs}
     \label{fig:workflow}
   \end{center}
 \end{figure}
@@ -37,21 +37,21 @@ Zu Beginn der Ergebnisse über den \ac{RAM} in Abschnitt~\ref{sec:ErgebnisseRAM}
 Dennoch gab es gelegentliche Unregelmäßigkeiten, sodass das Vorgehen für den \ac{RAM} um eine geschlossene Rückrichtung ergänzt wurde.
 In der Regel wurden pro \ac{RAM} Funktion $n=3$ Durchläufe vorgenommen und die gemeinsame Schnittmenge der Veränderungen bestimmt.
 
-Ganz am Ende gab es noch ein zweites Vorgehen, bei dem gezielt der \ac{EEPROM} an bekannten Speicherstellen beschrieben wurde.
+Bei einem zweiten Vorgehen wurde gezielt der \ac{EEPROM} an bekannten Speicherstellen beschrieben.
 Hintergrund war die unbekannte Position bzw. später die Zusammensetzung des Bezüge-Zählers im Einstellungsmenü des Kaffeevollautomaten.
 Abschnitt~\ref{subsec:Vorgehen2} führt dies im Folgenden aus.
 
 \subsection{Veränderungen zur Bestimmung der Speicherstellen}\label{subsec:AenderungenAnDerMaschine}
 \subfigbox{
-  \subfigure[Fassung im Kaffeevollautomaten]{\label{subfig:fassung}\includegraphics[scale=0.2]{images/chapter_4/Schale-Fassung}}\\%
-  \subfigure[Oberseite des Schalen Ersatzes]{\label{subfig:oberseite}\includegraphics[scale=0.29]{images/chapter_4/Schale-Oberseite}}\\%
-  \subfigure[Unterseite des Schalen Ersatzes]{\label{subfig:unterseite}\includegraphics[scale=0.25]{images/chapter_4/Schale-Unterseite}}%
+  \subfigure[Dargestellt ist die Fassung im Kaffeevollautomaten.]{\label{subfig:fassung}\includegraphics[scale=0.2]{images/chapter_4/Schale-Fassung}}\\%
+  \subfigure[Zu sehen ist die Oberseite des Ersatzes für die Schale.]{\label{subfig:oberseite}\includegraphics[scale=0.29]{images/chapter_4/Schale-Oberseite}}\\%
+  \subfigure[Zu sehen ist die Unterseite des Ersatzes für die Schale.]{\label{subfig:unterseite}\includegraphics[scale=0.25]{images/chapter_4/Schale-Unterseite}}%
 }{Ersatz der Schale des Kaffeevollautomaten}{fig:ersatzschale}
 
-Für den \ac{EEPROM} war es hilfreich einmal das Handbuch der Maschine systematisch durch zugehen und zum Beispiel immer eine Menüoption zu variieren.
+Für den \ac{EEPROM} war es hilfreich einmal systematisch durch das Handbuch der Maschine zugehen und zum Beispiel immer eine Menüoption zu variieren.
 Bei einer Skala (wie z.B. beim Kaffeepulver) hat es ausgereicht den niedrigsten, den höchsten und den Standard-Wert im Speicher zu bestimmen;
-deckte sich die einstellbare Anzahl an Abstufungen mit der Werte Differenz im Speicher, ließ sich auf die verbleibenden Werte schließen.
-Auch im normalen Gebrauch fiel somit u.a. ein Einschaltzähler im \ac{EEPROM} auf.
+deckte sich die einstellbare Anzahl an Abstufungen mit der Differenz der Werte im Speicher, ließ sich auf die verbleibenden Werte schließen.
+Auch im normalen Gebrauch fiel unter anderem ein Einschaltzähler im \ac{EEPROM} auf.
 
 Für den \ac{RAM} ging es mit den gezielt auslösbaren Statusmeldungen los.
 Das Anheben des Wassertanks oder das Abziehen der unteren Schale löste eine Warnmeldung auf dem Display aus und wurde auch im \ac{RAM} vermerkt.
@@ -60,22 +60,25 @@ Abbildung~\ref{subfig:fassung} zeigt die Fassung an der Rückwand innerhalb des 
 Abbildung~\ref{subfig:oberseite} und \ref{subfig:unterseite} visualisieren die Platine, an der leicht von außen mittels Krokodilklemmen die Kontakte im Inneren kurzgeschlossen werden konnten.
 Am schwierigsten sind komplexe Abläufe, wie die Zubereitung eines Kaffees.
 Hier konnte nur mehrfach zu gezielt gleichen oder ungleichen Zeitabständen der zweite Speicherauszug angestoßen werden.
-Hier sei schon einmal der Verweis auf Abschnitt~\ref{sec:AussagekraftDerErgebnisse} zur Aussagekraft dieser Ergebnisse genannt worden.
 
 Abschließend war auch für das Display ein kleines Programm nötig um die volle Funktionsvielfalt festzustellen.
 Abschnitt~\ref{subsec:tools} führt dies später aus.
+
+In Abschnitt~\ref{sec:AussagekraftDerErgebnisse} wird die Aussagekraft dieser Ergebnisse noch diskutiert.
 
 \subsection{EEPROM gezielt beschreiben}\label{subsec:Vorgehen2}
 Ziel war es die unbekannte Position bzw. später die Zusammensetzung des Bezüge-Zählers im Einstellungsmenü des Kaffeevollautomaten zu entziffern.
 Dafür wurde die angezeigt Zahl in eine Hexadezimalzahl umgerechnet und im Speicherauszug des \ac{EEPROM} des Kaffeevollautomaten gesucht.
 Da die Zahl eine Stromunterbrechung überstand und eine Änderung des einzigen übereinstimmenden Wertependants in Wort \wort{15} keine Änderung der Ausgabe hervorrief, begann die Suche an weiteren bekannten Speicherstellen im \ac{EEPROM}.
+Bekannte Zähler in Wörtern wie \wort{00}, \wort{01}, \wort{02}, \wort{0D}, \wort{0E} oder mehreren weiteren wurden einzeln auf sehr hohe Werte geändert.
+Manche Änderungen veränderten den Bezüge-Zähler oder lösten Warnmeldungen an dem Kaffeevollautomaten aus.
 
-Der Bezüge-Zähler setzt sich aus mehreren Zählern zusammen.
+Es folgte die Erkenntnis, dass sich der Bezüge-Zähler aus mehreren Zählern zusammen setzt.
 Der Trester Füllstand in der Schale wird nicht gemessen, sondern im Betrieb gezählt um den Füllstand zu erfassen.
 Auch die Reinigungsankündigung beruht auf Zählständen über Kaffee Bezüge und Spülungen.
 Die Wasser Durchflussmenge des Filters wird ebenfalls erfasst und ab einem festen Wert eine Warnmeldung zum Wechseln ausgegeben.
 
-Das gezielte eingreifen in die Zählstände ließ es zu diese Grenzwerte zu bestimmen.
+Das gezielte eingreifen in die Zählstände ließ es zu diese Grenzwerte exakt zu bestimmen.
 Die Ergebnisse befinden sich in Abschnitt~\ref{subsec:ErgebnisKaffeezubereitung}.
 
 \section{Das C++ Programm "`./JuraCoffeeMemory"'}
@@ -95,9 +98,9 @@ Das Listing~\ref{lst:menu-tree} zeigt einmal schematisch all Menüoptionen.
 
 \subfigbox{
   \subfigure[Hauptmenü]{\label{subfig:terminal1-MainMenu}\includegraphics[scale=0.4]{images/chapter_4/JuraCoffeeMemory-1-MainMenu}}\hfill%
-  \subfigure[Optionen $\leadsto$ Log Pfad ändern]{\label{subfig:terminal7-Options-RamLogFilePath}\includegraphics[scale=0.4]{images/chapter_4/JuraCoffeeMemory-7-Options-RamLogFilePath}}\\%
-  \subfigure[RAM Speicherauszug]{\label{subfig:terminal5-RAM-dump}\includegraphics[scale=0.4]{images/chapter_4/JuraCoffeeMemory-5-RAM-dump}}\hfill%
   \subfigure[EEPROM Skript]{\label{subfig:terminal3-EEPROM-NothingChanged}\includegraphics[scale=0.4]{images/chapter_4/JuraCoffeeMemory-3-EEPROM-NothingChanged}}\\%
+  \subfigure[RAM Speicherauszug]{\label{subfig:terminal5-RAM-dump}\includegraphics[scale=0.4]{images/chapter_4/JuraCoffeeMemory-5-RAM-dump}}\hfill%
+  \subfigure[Optionen $\leadsto$ Log Pfad ändern]{\label{subfig:terminal7-Options-RamLogFilePath}\includegraphics[scale=0.4]{images/chapter_4/JuraCoffeeMemory-7-Options-RamLogFilePath}}\\%
 %  \subfigure[Befehl senden]{\label{subfig:terminal4-Send-TY}\includegraphics[scale=0.4]{images/chapter_4/JuraCoffeeMemory-4-Send-TY}}%
   \subfigure[Auswertungen]{\label{subfig:terminal8-AnalyseDumpsMenu}\includegraphics[scale=0.3]{images/chapter_4/JuraCoffeeMemory-8-AnalyseDumpsMenu}}\hfill%
   \subfigure[Speicherauszug einsehen]{\label{subfig:terminal9-AnalyseFilterDump}\includegraphics[scale=0.3]{images/chapter_4/JuraCoffeeMemory-9-AnalyseFilterDump}}%
@@ -125,15 +128,65 @@ Main Menu
 `-- Q / q / quit / exit: To leave
 \end{lstlisting}
 
-\todo
-Abbildung~\ref{subfig:terminal7-Options-RamLogFilePath}
-Abbildung~\ref{subfig:terminal5-RAM-dump}
-Abbildung~\ref{subfig:terminal3-EEPROM-NothingChanged}
-Abbildung~\ref{subfig:terminal8-AnalyseDumpsMenu}
-Abbildung~\ref{subfig:terminal9-AnalyseFilterDump}
-\todo ...
+\subsubsection{EEPROM / RAM Skript}\label{subsubsec:EEPROM-RAM-Skript}
+Über die Nummer \texttt{1} startet aus dem Hauptmenü das \textit{EEPROM Skript}, über die \texttt{2} das \textit{RAM Skript}.
+Siehe hierfür Abbildung~\ref{subfig:terminal3-EEPROM-NothingChanged}.
+In beiden Fällen wird das Vorgehen in Abschnitt~\ref{sec:Vorgehen} angewendet.
+Das Skript erzeugt initial einen Speicherauszug und merkt sich diesen.
+Der Anwender kann sich diesen über die Eingabe \texttt{S} ausgeben lassen oder an diesem Punkt über \texttt{Q} das Skript beenden.
+Um fortzufahren kann nun eine Aktion vorgenommen oder direkt ein Befehl abgesetzt werden.
+Das Skript erstellt im Anschluss einen weiteren Speicherauszug und fragt nach einem Kommentar zu den vorgenommenen Änderungen.
+Nach einer Texteingabe vergleicht das Programm die Speicherauszüge und hält Unterschiede in der Standardausgabe und der \ac{JSON} Ausgabedatei fest.
+Ebenso werden in der \ac{JSON} Datei jedes Mal beide Speicherauszüge mit Zeitstempel und Kommentar abgelegt.
+Das Skript verwirft den vorletzten Speicherauszug und bietet die Fortführung mit dem Anwender Menü an.
+
+\subsubsection{Einen Befehl abschicken}
+Über die Nummer \texttt{4} startet aus dem Hauptmenü eine immer wiederkehrende Eingabeaufforderung, in der Befehle aus der Tabelle~\ref{tbl:kommandos} an den Kaffeevollautomaten verschickt werden können.
+Hierüber kann schnell eine Funktionstest der Verbindung zum Kaffeevollautomaten vorgenommen werden.
+Über \texttt{Q} kehrt der Anwender in das Hauptmenü zurück.
+
+\subsubsection{Speicherauszug}
+Über die Nummer \texttt{6} bzw. Nummer \texttt{7} kann ein einzelner Speicherauszug des \ac{EEPROM}s bzw. des \ac{RAM}s erstellt werden, der unverzüglich in der Standardausgabe ausgegeben wird.
+Abbildung~\ref{subfig:terminal5-RAM-dump} zeigt einen Speicherauszug des \ac{RAM}s.
+Diese Funktion ist ein Teil des \ac{EEPROM} bzw. \ac{RAM} Skripts.
+Es fragt aber nicht nach einem Kommentar und fungiert rein lesend.
+Mithilfe des Hilfsprogramms zum Formatieren eines Speicherauszugs aus Abschnitt~\ref{subsec:formate-dump} kann man den Speicherauszug um Positionsangaben aufwerten und Speicherwerte dadurch kontrollieren.
+
+\subsubsection{Optionen}
+Über die Nummer \texttt{9} gelangt der Anwender in das Optionsmenü, wie in Abbildung~\ref{subfig:terminal7-Options-RamLogFilePath} dargestellt.
+Es können für den aktuellen Prozess der Pfad zum Gerätelaufwerk des Arduinos und die Ausgabedateien für das \ac{EEPROM} und \ac{RAM} Skript angepasst werden.
+Nach der Eingabe eines neuen Pfades wird dieser sofort übernommen und angezeigt.
+Über die Nummer \texttt{4} kehrt der Anwender in das Hauptmenü zurück.
+
+\subsubsection{Analyse aufgenommener Speicherauszüge}
+In der \ac{JSON} Datei werden im Knoten \texttt{"data"} die Wertänderungen hinter jedem entsprechenden Byte inklusive Kommentar festgehalten.
+Nach mehreren Durchläufen des \ac{EEPROM} / \ac{RAM} Skripts können hier schon direkt einige Zugehörigkeiten abgelesen werden.
+
+Das C++ Programm bietet aber über die Nummer \texttt{0} auch die Option Unterschiede einzelner Aufnahmen über das Skript erneut auszugeben.
+Zuerst werden sämtliche \ac{JSON} Dateien im Unterordner \texttt{data/} aufgelistet, siehe Abbildung~\ref{subfig:terminal8-AnalyseDumpsMenu}.
+Nach der Wahl einer Datei werden sämtliche aufgenommene Speicherauszüge aufgelistet.
+Durch die Wahl der entsprechenden Nummer werden der Kommentar und die veränderten Werte pro Byte aufgeschlüsselt.
+In Abbildung~\ref{subfig:terminal9-AnalyseFilterDump} ist dies für zwei Speicherauszüge zu sehen, die jeweils nur eine Änderung beinhalten.
+
+\subsubsection{Angaben in der Aufschlüsselung der Veränderungen}
+Sowohl im \ac{EEPROM} / \ac{RAM} Skript als auch in der Analyse aufgenommener Speicherauszüge können Veränderungen eingesehen werden.
+Das erste Beispiel aus Abbildung~\ref{subfig:terminal9-AnalyseFilterDump} lautet:
+\begin{lstlisting}[label=lst:dumpChanges,caption={Beispiel einer Abweichung zweier Speicherauszüge}]
+Your choice is: 2018-10-29 09-13-34: turned on
+old value: 28  new value:29  at position: 251 / FB  in 2 byte word no.: 125 / 7D
+\end{lstlisting}
+Diese Ausgabe ist für den \ac{EEPROM} und \ac{RAM} prinzipiell gleich, die relevanten Stellen sind aber leicht verschieden.
+Zu Beginn erscheint die Uhrzeit und der bei der Aufnahme eingegebene Kommentar.
+Pro Zeile folgt danach eine Änderung.
+In diesem Fall änderte sich der Wert von \texttt{28} auf \texttt{29}.
+Diese Aufnahme kommt aus dem \ac{EEPROM}, für den die Befehle auf den 2 Byte \textit{Wort} Adressen beruhen.
+Möchte man diesen Wert verändern ist die letzte Spalte mit der hexadezimalen Zahl von Bedeutung, zum Beispiel \texttt{WE:7D,xxxx}.
+
+Für den \ac{RAM} ist die normale Position eines Bytes von Bedeutung, hier würde sich der dezimale Wert \texttt{29} an der Position \texttt{FB} befinden.
+Über den Befehl \texttt{RR:FB} bekäme man die \texttt{29} zu Beginn als Hexadezimalzahl zurück gegeben.
 
 \subsubsection{Farbcodierungen}
+Die verwendeten Farben sollen dem Anwender Orientierung und Struktur bei der Benutzung verschaffen.
 Normale Ausgaben sowie Benutzer Eingaben erscheinen in weißer Schrift.
 Weiße Schrift auf blauem Grund stellt Menü Überschriften dar.
 In blauer Schrift sind Menüs dargestellt.
@@ -192,20 +245,48 @@ Die Assoziation einer Bezeichnung mit ihrer Speicherposition geschieht in \textt
 Hier wird ein Byte und ggf. mehrere zusammenhängende Bits als ein Eintrag abgelegt.
 Als Ausgabe erfolgt ein kompaktes \ac{JSON} Objekt.
 
+\subsection{Technische Umsetzung}
+Die Hauptdatei ist die \texttt{JuraCoffeeMemory.cpp} aus der später auch das ausführbare Programm \texttt{./JuraCoffeeMemory} gebaut wird.
+Die \texttt{main}-Funktion fängt die Argumente vom Programm Aufruf ab und übergibt entsprechend an die \texttt{EEPROM\_Status} bzw. \texttt{RAM\_Status} für die \ac{API} oder leitet den Anwender durch das interaktive Menü.
 
+Beim Aufruf des \ac{EEPROM} Skripts wird die \texttt{eeprom}-Funktion betreten, für den \ac{RAM} analog die \texttt{ram}-Funktion.
+Diese Funktionen bauen zu Beginn eine serielle Verbindung zum Arduino auf und blockieren damit alle anderen Prozesse.
+Danach wird eine Instanz der gleichnamigen Klasse erzeugt.
+Der Konstruktor liest dabei den Speicher aus und füllt Zeile für Zeile den \texttt{raw} Vektor in der Elternklasse \texttt{Storage}.
+Abschließend veranlasst der Konstruktor die Umrechnung der hexadezimalen Zeichenketten in einen langen Vektor aus einzelnen Werten, die in \texttt{bytes} abgelegt werden.
+Die Instanz wird mit den Präfix \texttt{old} in der Ursprungsfunktion abgespeichert.
 
+Dem Anwender wird, wie in Abschnitt~\ref{subsubsec:EEPROM-RAM-Skript} beschrieben, ein Menü präsentiert.
+Im Falle einer Eingabe in Form eines Befehls, wird diese über die serielle Verbindung gesendet und blockierend eine Antwort abgewartet, die dem Anwender ausgegeben wird.
+Gemäß dem Vorgehen in Abschnitt~\ref{sec:Vorgehen} wird ein weiterer Speicherauszug erstellt und die neue Instanz mit dem Präfix \texttt{new} abgespeichert.
 
+Die Klasse \texttt{Storage} bietet zum byteweisen Abgleich eine Methode mit dem Namen \texttt{diffBytesWith}.
+Argumente sind eine weitere Instanz mit der verglichen wird, ein Vektor mit ausgeschlossenen Bytes, ein Merker ob in die \ac{JSON} Datei geschrieben werden soll und ob bereits ein Kommentar vorliegt.
+Das \ac{EEPROM} / \ac{RAM} Skript nutzt ausschließlich das erste obligatorische Argument, indem die \texttt{new} Instanz die Methode und im Argument die \texttt{old} Instanz aufruft.
+Die \texttt{ram}-Funktion nutzt an dieser Stelle zusätzlich das erste optionale Argument und exkludiert die im Vorgehen in Abschnitt~\ref{sec:Vorgehen} angesprochenen schwankenden Bytes, die in den Ergebnissen in Abschnitt~\ref{sec:ErgebnisseRAM} explizit genannt werden.
+Die nachträgliche Analyse wertet die Unterschiede erneut aus, nutzt aber die letzten beiden optionalen Argumente, um ein erneutes Beschreiben der \ac{JSON} Datei mit den bereits vorliegenden Ergebnissen zu unterdrücken.
+Der Kommentar als letztes Argument wird in diesem Fall einfach nur ausgegeben, statt den Anwender nach einem Neuen zu fragen.
 
+Zurück in der \texttt{eeprom}- / \texttt{ram}-Funktion der \texttt{JuraCoffeeMemory.cpp} wird die \texttt{old} Instanz freigegeben und die aktuelle \texttt{new} Instanz zur neuen \texttt{old} Instanz umbenannt, damit der Anwender das Verfahren wiederholen kann.
 
+\subsubsection{Zugrunde liegende Klassenstruktur}
+Abbildung~\ref{fig:storage_inherit_graph} zeigt die Klasse \texttt{Storage} mit ihren Kindern \texttt{EEPROM}, \texttt{RAM}, \texttt{EEPROM\_Status} und \texttt{RAM\_Status}.
 
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.65]{images/chapter_4/class-structure}
+    \caption{Schematischer Zusammenhang und Gruppierung der C++ Klassen}
+    \label{fig:storage_inherit_graph}
+  \end{center}
+\end{figure}
 
+% alle Abhängigkeiten!!!
 
+% EEPROM und RAM Klasse unterscheiden sich durch Größe und Kaffee Komando in der *.hpp.
 
-\subsection{Zugrunde liegende Klassenstruktur}
+% Hauptdatei AnalyseFileDumpsMenu-Funktion: An JSON Datei nicht ersichtlich ob EEPROM oder RAM, daher von Hand in Zeile 192 für den RAM die Zeilen zum exkludieren setzen
 
-\subsection{...}\todo
-
-
+% serial connection: blocken aller anderen Prozesse
 
 % $ ll *.cpp
 % EEPROM.cpp
@@ -252,7 +333,7 @@ Als Ausgabe erfolgt ein kompaktes \ac{JSON} Objekt.
 \section{Weitere kleine Tools}\label{subsec:tools}
 Im Unterordner \texttt{./tools/} befinden sich nach dem Aufruf von \texttt{make} drei kleine Programme.
 
-\subsection{Formatieren eines Speicherauszugs}
+\subsection{Formatieren eines Speicherauszugs}\label{subsec:formate-dump}
 Ruf man \texttt{./tools/formate-dump} auf, kann man dem Programm eine Zeichenkette aus $1024$ oder $512$ Hexadezimalzeichen übergeben.
 Das Programm erkennt an der Größe \ac{EEPROM} und \ac{RAM} Eingaben und wertet den Speicherauszug um Angaben wie die Speicherposition und Dezimal-/Hexadezimalzahlen Formate auf.
 
@@ -308,12 +389,12 @@ Ganz rechts in der Ecke kann eine Tour durch die Bedienung der Seite gestartet w
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.25]{images/chapter_4/Webseite}
-    \caption{Die Webseite}
+    \caption{Webseite zur Kontrolle und Steuerung des Kaffeevollautomaten als Visualisierung der API.}
     \label{fig:website}
   \end{center}
 \end{figure}
 
-\subsection{Die technische Umsetzung}
+\subsection{Technische Umsetzung}
 Die Webseite befindet sich im Projektunterordner \texttt{./website/}.
 Die Datei \texttt{data.php} nimmt Parameter entgegen und ruft damit das C++ Programm mit evtl. Datenübergaben auf.
 Die Antwort des C++ Programms wird in einem \ac{JSON}-Objekt verpackt und der Webseite zurück gegeben.

@@ -1,4 +1,5 @@
 digraph G {
+	margin=0; // for the pdf output
 	rankdir=LR;
 
 	read1 -> change -> read2 -> compare;

@@ -1,0 +1,7 @@
+https://academia.stackexchange.com/questions/14010/how-do-you-cite-a-github-repository
+https://scholar.google.de/scholar?hl=de&q=reverse+engineering
+https://katalog.tub.tuhh.de/Primo/Search?lookfor=uart+9600&type=AllFields&limit=20&sort=relevance
+
+https://dx.doi.org/
+https://www.doi2bib.org/
+

@@ -1,2 +1,7 @@
+dot -Tpdf -o class-structure.pdf class-structure.dot
 dot -Tpdf -o workflow.pdf workflow.dot
+
+# nano class-structure.dot && `head -n 1 command.txt`
+# nano workflow.dot && `head -n 2 command.txt | tail -n 1`
+
 # dot graphviz
