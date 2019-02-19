@@ -1,16 +1,16 @@
 \chapter{Grundlagen}\label{ch:Grundlagen}
-Dieses Kapitel differenziert den Begriff des \textit{Reverse Engineering} und zeigt weitere Arbeiten zu Kaffee Maschinen sowie intelligenten Geräten auf.
+Dieses Kapitel differenziert den Begriff des \textit{Reverse Engineering} und zeigt weitere Arbeiten zu Kaffeemaschinen sowie intelligenten Geräten auf.
 
 % Sektion {Literatur: was gibt es schon}
 \section{Begrifflichkeiten}\label{sec:Begrifflichkeiten}
-Der Titel dieser Arbeit lautet \texttt{Reverse Engineering eines Kaffeevoll-\\automaten}, aber hinter der Terminologie des Begriffs \textit{Reverse Engineering} steckt ein ganzes Spektrum an Bedeutungen.
+Der Titel dieser Arbeit lautet \texttt{Reverse Engineering eines Kaffeevoll-\\automaten}, aber hinter der Terminologie des Begriffs \textit{Reverse Engineering} steckt ein weites Spektrum an Bedeutungen.
 E. J. Chikofsky und J. H. Cross differenzieren in ihrem Paper~\cite{43044} die Begriffe \textit{Forward Engineering}, \textit{Reverse Engineering}, \textit{Redocumentation}, \textit{Design Recovery}, \textit{Restructuring}, und \textit{Reengineering}.
 
 Zugrunde liegt ein Produkt, welches während seiner Entwicklung mehrere Lebenszyklen durchlaufen hat.
 Kassem A. Saleh beschreibt in seinem Buch~\cite{Solr-599853700} ausführlicher Entwicklungsaktivitäten, wie die Anforderungsanalyse, das Design, die Implementation, die Tests, die Installation und den Einsatz.
-Während der Implementation nennt er Vorgehensmodelle der Softwareentwicklung, wie das Wasserfallmodell, den Prototypenbau, das Spiralmodell, den Objektorientierten Ansatz, das inkrementelle und iterative Modell, sowie das agile Modell.
+Während der Implementation nennt er Vorgehensmodelle der Softwareentwicklung, wie das Wasserfallmodell, den Prototypenbau, das Spiralmodell, den objektorientierten Ansatz, das inkrementelle und iterative Modell, sowie das agile Modell.
 Jede (Hardware- und) Softwareentwicklung durchläuft dabei, unabhängig vom Modell, die verschiedenen Entwicklungsaktivitäten.
-Das voranschreiten zur nächsten Stufe, bis zur Fertigstellung des Produkts, stellt das \textit{Forward Engineering} dar.
+Das Voranschreiten zur nächsten Stufe, bis zur Fertigstellung des Produkts, stellt das \textit{Forward Engineering} dar.
 
 Der zweite Begriff des \textit{Reverse Engineering} führt in die Gegenrichtung.
 Aus dem implementierten Produkt wird auf das Design, bzw. aus dem Design auf die Spezifikationen geschlossen.
@@ -27,7 +27,7 @@ Breiter angelegt ist das \textit{Design Recovery}, das für die Designwiederhers
 \textit{Restructuring} umfasst das Nachbauen einer Darstellung innerhalb einer Ebene.
 Funktionalität und Semantik bleiben erhalten, während die Darstellung umgestaltet wird.
 Als Beispiel wird die Umstellung von unstrukturiertem Spaghetti Code zu strukturiertem "`goto"' freien Code genannt.
-Der Begriff umfasst aber auch Datenmodelle, Entwurfsmuster und Anforderungsstrukturen.
+Der Begriff umfasst auch Datenmodelle, Entwurfsmuster und Anforderungsstrukturen.
 Dabei genügt das Wissen über die Struktur, ohne die Bedeutung dahinter zu verstehen, beispielsweise können "`if"' und "`case"' Ausdrücke ineinander überführt werden, ohne zu verstehen wann welcher Fall eintritt.
 Normalerweise werden daher ohne Anpassung der Spezifikation keine Veränderungen vorgenommen.
 \textit{Restructuring} ist oft eine Form der präventiven Instandhaltung.
@@ -35,7 +35,7 @@ Normalerweise werden daher ohne Anpassung der Spezifikation keine Veränderungen
 Zuletzt wird der Begriff \textit{Reengineering} oder auch "`Renovation and Reclamation"' als nachträgliche, neu erstellte Form beschrieben.
 Dafür geht \textit{Reverse Engineering} zum abstrakten Verständnis dem \textit{Forward Engineering} oder \textit{Restructuring} voraus.
 Beim \textit{Reengineering} sind Anpassung der Spezifikation und Veränderungen durchaus möglich.
-Ähnlich zum \textit{Restructuring} verändert das \textit{Reengineering} die unterliegende Struktur ohne die Funktionalität zu beeinträchtigen.
+Ähnlich zum \textit{Restructuring} verändert das \textit{Reengineering} die unterliegende Struktur, ohne die Funktionalität zu beeinträchtigen.
 Jedoch passiert es selten, dass beim \textit{Reengineering} keine weiteren Funktionalitäten hinzugefügt werden.
 Damit ist der Begriff \textit{Reengineering} allgemeiner gefasst als das \textit{Restructuring}.
 Aber \textit{Reengineering} ist kein Überbegriff für \textit{Reverse Engineering} und \textit{Forward Engineering}, nur weil es beides beinhaltet.
@@ -47,27 +47,27 @@ Diese Beschreibung passt zum dem Begriff des \textit{Restructuring} aus dem Pape
 
 Beim \textit{Simultaneous Engineering} greifen während einer Produktentwicklung mehrere Arbeitsabläufe frühzeitig verzahnt ineinander, um einen Zeitgewinn gegenüber eines traditionellen Projektablaufs zu erzielen.
 Die schnelle und einfache Reproduzierbarkeit sei beispielsweise nicht das direkte Ziel des \textit{Reverse Engineering}, sondern ein Ziel des \textit{Simultaneous Engineering}, schreibt K. A. Ingle.
-Nichts desto trotz könne aber die Idee des \textit{Simultaneous Engineering} in das \textit{Reverse Engineering} aufgenommen werden.
+Dennoch könne aber die Idee des \textit{Simultaneous Engineering} in das \textit{Reverse Engineering} aufgenommen werden.
 
 Eine weitere Differenzierung findet zwischen dem \textit{Hardware-} und dem \textit{Software Reverse Engineering} statt.
-\textit{Software Reverse Engineeging} verfolge das Ziel aus dem Programm Code ein übergeordnetes Design oder Spezifikationsangaben zu extrahieren.
+\textit{Software Reverse Engineeging} verfolgt das Ziel aus dem Programm Code ein übergeordnetes Design oder Spezifikationsangaben zu extrahieren.
 \textit{Hardware Reverse Engineeging} hingegen befasst sich mit dem Fertigungs- oder Produktionssystem.
 Das Buch von 1994 sah aber schon ein Zusammenwachsen beider Bereiche durch den Einsatz und die Einbettung von immer mehr Software in Hardwaresystemen kommen.
-Die Relevanz des Reverse Engineering würde hoffentlich weiter steigen um keine vorhandenen Softwaresysteme neu bauen zu müssen.
+Die Relevanz des Reverse Engineering würde hoffentlich weiter steigen, um keine vorhandenen Softwaresysteme neu bauen zu müssen.
 K. A. Ingle schreibt: "`The aim of reverse engineering is to increase productivity through improved documentation."'\cite{Solr-153077417}
 
 Diese Arbeit greift den Gedanken auf und versucht den Einfluss und die Bedeutung einzelner Speicherstellen für weitere Arbeiten zu dokumentieren.
 
 \section{Stand der Technik}
 % Sektion (related work)
-Eine Bachelorarbeit der Universität Magdeburg zum Thema "`Reverse-engineering a De'Longhi Coffee Maker to precisely bill Coffee Consumption"'\cite{BachelorarbeitDeLonghi} behandelt eine De'Longhi Caffee Maschine.
-Das Ziel ist es den Verbrauch exakt zu bestimmen und das System damit um ein Abrechnungssystem zu erweitern.
-Dafür wird eine \ac{MCU} über das \ac{SPI} zwischen Master und Slave Einheiten geschaltet und Informationen aus dem prorietären De'Longhi Protokoll ausgelesen.
+Eine Bachelorarbeit der Universität Magdeburg zum Thema "`Reverse-engineering a De'Longhi Coffee Maker to precisely bill Coffee Consumption"'\cite{BachelorarbeitDeLonghi} behandelt eine De'Longhi Kaffeemaschine.
+Das Ziel ist es, den Verbrauch exakt zu bestimmen und das System damit um ein Abrechnungssystem zu erweitern.
+Dafür wird eine \ac{MCU} über das \ac{SPI} zwischen Master und Slave Einheiten geschaltet und Informationen werden aus dem prorietären De'Longhi Protokoll ausgelesen.
 Das Ergebnis der Arbeit ist unter anderem ein Verständnis über das interne Bus Protokoll der Maschine.
 % ?! \todo https://www.cl.cam.ac.uk/coffee/qsf/coffee.html ?!
 
 Ein Buch von Eldad Eilam~\cite{Solr-480966761} stellt den Begriff des Reverse Engineering ähnlich wie zu Beginn in Abschnitt~\ref{sec:Begrifflichkeiten} dar, geht aber im Folgenden tiefer auf das Reverse Engineering von Low-Level Software ein.
-Ein Hauptaugenmerk des Buches liegt auf auf der sicherheitsrelevanten Seite, sowie die Vorgänge und Lücken im Low-Level Bereich.
+Ein Hauptaugenmerk des Buches liegt auf auf der sicherheitsrelevanten Seite sowie den Vorgänge und Lücken im Low-Level Bereich.
 
 Diese Arbeit hingegen nutzt als Ansatz eine gegebene serielle Schnittstelle des Jura Kaffeevollautomaten mit einem ebenfalls proprietären \ac{UART} Protokoll.
 Dabei wird aber nicht die Hardware geöffnet und beispielsweise die Firmware disassembliert und analysiert.
@@ -75,4 +75,3 @@ Dabei wird aber nicht die Hardware geöffnet und beispielsweise die Firmware dis
 Soucek, Russ und Tamarit haben sich in ihrem Paper \cite{soucek2000smart} mit dem Aufbau eines Feldbusses befasst, um mehrere Küchengeräte zu vernetzen und über ein Gateway in das Internet zu bringen.
 
 Diese Arbeit erstellt auf der Basis der Ergebnisse in Kapitel~\ref{ch:Ergebnisse} eine Schnittstelle für einen Computer, der wiederum als Server mehrere Endgeräte anbinden kann.
-

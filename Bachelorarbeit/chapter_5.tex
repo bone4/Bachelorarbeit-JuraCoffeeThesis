@@ -1,5 +1,5 @@
 \chapter{Ergebnisse}\label{ch:Ergebnisse} % Speicher / Analyse / Zusammenfassung / Ergebnisse
-Die "`Jura Impressa S9"' besitzt einen \ac{RAM} für die Status, Messwerte und Zwischenberechnungen im Betrieb und einen \ac{EEPROM} für Einstellungen und Zählstände, die auch nach einer Stromunterbrechung erhalten bleiben.
+Die "`Jura Impressa S9"' besitzt einen \ac{RAM} für Status, Messwerte und Zwischenberechnungen im Betrieb und einen \ac{EEPROM} für Einstellungen und Zählerstände, die auch nach einer Stromunterbrechung erhalten bleiben.
 Durch die Anwendung des Vorgehens in Abschnitt~\ref{sec:Vorgehen} können Aussagen zu 40 von 255 Wörtern im \ac{EEPROM} und 43 von 255 Bytes im \ac{RAM} getroffen werden.
 Für den \ac{RAM} bedeutet dies 19 Statusinformationen und die Position mehrerer Zähler.
 
@@ -22,7 +22,7 @@ Erreicht der Wert in \wort{0F} eine Anzahl von \wert{220} Bezügen erscheint ein
 Darüber hinaus gibt es zwei \bezeichnung{partielle Zähler} in den Worten \wort{0D} und \wort{10}, die ungefähr bei jeder dritten Zubereitung oder Spülung um \wert{einen inkrementiert} werden.
 Der genaue Grund dafür ist bisher unbekannt.
 
-Der \bezeichnung{Trester} Stand in der Schale dieses Kaffeevollautomaten wird nicht gemessen, sondern bei jeder Zubereitung in \bezeichnung{zwei Zählern} vermerkt.
+Der \bezeichnung{Trester}-Stand in der Schale dieses Kaffeevollautomaten wird nicht gemessen, sondern bei jeder Zubereitung in \bezeichnung{zwei Zählern} vermerkt.
 In Wort \wort{0E} ist nicht genau bekannt, wann um einen inkrementiert wird.
 Ab einem Wert von \wert{16} folgt dann aber die Meldung "`Trester leeren"'.\\
 Ein zweiter Trester Zähler befindet sich hinter Wort \wort{34}.
@@ -50,7 +50,7 @@ In Wort \wort{BB} wird die Größe einer \bezeichnung{Dampfportion} in Sekunden 
 Nach der eingestellten Zeit endet automatisch die Dampfausgabe am Kaffeevollautomaten beim Bezug einer Dampfportion.
 
 In Wort \wort{BC} wird die Größe einer \bezeichnung{Teeportion} abgespeichert.
-Die Einheit ist hier nicht bekannte, es könnte sich aber um die Größenordnung von $0.1$ Sekunden handeln.
+Die Einheit ist hier nicht bekannt, es könnte sich aber um die Größenordnung von $0.1$ Sekunden handeln.
 Wird das Drehrad von der Position "`Kaffeetasse"' auf "`Teeauslass"' gestellt wird eine Teeportion an heißem Wasser ausgegeben und automatisch beendet.
 
 \subsection{Weitere Maschinen Einstellungen}
@@ -87,7 +87,7 @@ Die folgenden Werte repräsentieren folgende Sprachen:
 
 In Wort \wort{B0} wird im zweiten Byte mit einem Wert von \wert{16} der \bezeichnung{Inkasso Modus} aktiviert und mit einem Wert von \wert{0} deaktiviert.
 Bei eingeschaltetem Inkasso Modus erfolgt kein Bezug mehr über die Bezugstasten an der Vorderseite des Gehäuses, jedoch wird die gedrückte Taste über die \ac{UART} Schnittstelle weitergeleitet.
-Mit dem entsprechenden Befehl kann über die serielle Schnittstelle dann aber die Zubereitung angestoßen werden.\\
+Mit dem entsprechenden Befehl kann über die serielle Schnittstelle dann die Zubereitung angestoßen werden.\\
 Man erhält von dem Kaffeevollautomaten auf Knopfdruck
 \texttt{?PAE} für einen kleinen Kaffe,
 \texttt{?PAF} für zwei kleine Kaffees,
@@ -123,9 +123,9 @@ Im ersten Fall sind 220 Bezüge erfolgt, im zweiten Fall waren es 180 Spülungen
 In den Worten \wort{07} (Anzahl an Spülungen), \wort{08} (Bedeutung unbekannt), \wort{7C} (Bedeutung unbekannt) und am Ende nach der abschließenden Spülung bei eingelegtem Filter in \wort{B1} und \wort{B3} wird der Wert um \wert{1} inkrementiert.
 In den Worten \wort{10} und \wort{B3} wird der Wert um \wert{10} inkrementiert.
 Die Werte in den Worten \wort{0E}, \wort{0F}, \wort{11} und \wort{34} werden zurück auf \wert{0} gesetzt.
-Wort \wort{11} wird jedoch anschließend an die abschließende Spülung gleich wider um \wert{1} inkrementiert.
+Wort \wort{11} wird jedoch anschließend an die abschließende Spülung gleich wieder um \wert{1} inkrementiert.
 
-Wort \wort{29} Byte eins wird zu Beginn einer Reinigung auf \wert{65} gesetzt und am Ende auf \wert{0} zurück gesetzt.
+Wort \wort{29} Byte 1 wird zu Beginn einer Reinigung auf \wert{65} gesetzt und am Ende auf \wert{0} zurück gesetzt.
 
 \section{RAM}\label{sec:ErgebnisseRAM}
 In Abschnitt~\ref{subsubsec:SpeicherDesKaffeevollautomatenRAM} wurde der vorhandene \acf{RAM} Speicher mit seinen 256 Bytes aufgeführt.
@@ -141,7 +141,7 @@ Unterstrichene und hervorgehobene Zellen sind "`immer"' abfragbar.
 Die einzige Voraussetzung ist die in Abschnitt \ref{subsec:AufbauUndVerkabelung} beschriebene Verkabelung, sowie eine angelegte Netzspannung an den Kaffeevollautomaten.
 Der Kaffeevollautomat \underline{muss} sich dann \underline{nicht} im eingeschalteten Zustand befinden.
 
-Eingeklammerte Zellen haben sind nicht exklusiv für die genannte Rubrik, sie teilen sich den Wert mit weiteren Funktionen.
+Eingeklammerte Zellen sind nicht exklusiv für die genannte Rubrik, sie teilen sich den Wert mit weiteren Funktionen.
 
 \subsection{Maschine an}
 Sobald der Kaffeevollautomat eingeschaltet wird ändern sich die Werte mehrerer Speicherstellen im \ac{RAM}.
@@ -152,13 +152,13 @@ Eine Änderung nach der Aufwärmphase konnte nicht festgestellt werden.
 Beim Ausschaltet geschehen die Änderungen umgekehrt.
 
 \subsection{Schale fehlt}
-Die beiden linken Kontakte, die eine eingesetzte Schale verbindet, sind voneinander getrennt.
+Die beiden linken Kontakte, die eine eingesetzte Schale verbinden, sind voneinander getrennt.
 Ohne eine eingesetzte Schale schaltet der Kaffeevollautomat sicherheitshalber alle Tätigkeiten ab.
 Dies wird auch im ausgeschalteten Zustand vermerkt.
 
 Die Änderungen sind in Tabelle~\ref{tbl:RAM1} in der zweiten Spalte dargestellt.
 In \bytebit{16}{0} und in \bytebit{69}{0} steht nur eine \wert{0}, wenn der Kaffeevollautomat eingeschaltet ist.
-Die an anderen beiden Bits enthalten zu jeder Zeit den aktuellen Status.
+Die anderen beiden Bits enthalten zu jeder Zeit den aktuellen Status.
 
 \subsection{Schale leeren}
 Die linken beiden und der rechte Kontakt sind kurzgeschlossen.
@@ -192,7 +192,7 @@ Die Änderungen sind in Tabelle~\ref{tbl:RAM1} in der siebten Spalte dargestellt
 \subsection{Maschine vor dem Ausschalten spülen}
 Der Kaffeevollautomat erzwingt eine Spülung vor dem Ausschalten, wenn während der Betriebszeit ein Kaffeebezug erfolgte, ohne eine abschließende Spülung vorgenommen zu haben.
 In \bytebits{0D}{3}{2} steht in diesem Fall mal an dem einen und mal an dem anderen Bit eine \wert{1}.
-Dieser Merker befindet sich sehr wahrscheinlich hier, auch wenn die genau Bedeutung der einzelnen Bits nicht sicher bekannt ist.
+Dieser Merker befindet sich sehr wahrscheinlich hier, auch wenn die genaue Bedeutung der einzelnen Bits nicht sicher bekannt ist.
 
 \subsection{Tassenbeleuchtung}
 Bei einer Zubereitung oder laut Benutzerhandbuch auch durch das Drücken einer beliebigen Taste im ausgeschalteten Zustand wird die Tassenbeleuchtung eingeschaltet.
@@ -230,7 +230,8 @@ In \bytebit{04}{0} befindet sich dann eine \wert{1}, die nach dem nächsten Bezu
 
 \subsection{Bohnen füllen}
 In \bytebit{0E}{7} steht eine \wert{1} im Falle fehlender oder verklemmter Bohnen.
-Die Meldung verschwindet mit ausreichend Bohnen im Steinchen losen Bohnenfach beim nächsten Bezug.
+Die Meldung verschwindet mit ausreichend Bohnen im Bohnenfach beim nächsten Bezug.
+Zusätzlich darf dabei kein Stein das Mahlwerk blockieren.
 
 \subsection{Zubereitung}\label{subsec:RAM:Zubereitung} % -> Aktionsauswirkungen?!
 Für eine Kaffeezubereitung werden im \bezeichnung{ersten Schritt} die Bohnen gemahlen.
@@ -245,10 +246,10 @@ Darüber hinaus steht in \bytebitss{0A}{2}{0} die gewählte Portion kodiert.
 \wert{1} steht für einen kleinen Kaffee, \wert{2} steht für 2 kleine Kaffees, \wert{3} steht für einen großen Kaffee, \wert{4} steht für 2 große Kaffees und \wert{5} steht für einen Spezialkaffee.
 
 \subsection{Geteilte Bits}
-In Tabelle~\ref{tbl:RAM1} und Tabelle~\ref{tbl:RAM2} sind mehrere Einträge eingeklammerte.
+In Tabelle~\ref{tbl:RAM1} und Tabelle~\ref{tbl:RAM2} sind mehrere Einträge eingeklammert.
 Im Folgenden sollen einige Zusammenhänge gegenüber gestellt werden:
 
-In \bytebits{03}{6}{1} steht der Wert auf \wert{1}, wenn der Kaffeevollautomat eine Spülung vornimmt, eine Teeportion ausschenkt oder sich manchmal in der Zubereitung eines Kaffees befindet.
+In \bytebits{03}{6}{1} steht der Wert auf \wert{1}, wenn der Kaffeevollautomat eine Spülung vornimmt, eine Teeportion ausschenkt oder manchmal, wenn eine Zubereitung eines Kaffees erfolgt.
 In \bytebit{03}{6} war gerade die Zubereitung unregelmäßig, während sich \bytebit{03}{1} reproduzierbar verhielt.
 Auch in \bytebit{62}{1} steht eine \wert{1} und in \bytebit{68}{5} steht eine \wert{0} wenn die Maschine spült oder sich im zweiten Schritt der Zubereitung befindet.
 In \bytebit{68}{6} steht eine \wert{1}, wenn eine Teeportion ausgegeben wird oder die Maschine spült.
@@ -266,11 +267,11 @@ In \bytebit{16}{0} und \bytebit{69}{0} steht eine \wert{0}, wenn die Schale fehl
 \subsection{Deutung und Zähler}
 Im \ac{RAM} könnte \bytebitss{13}{2}{0} für eine interne Wasserschaltung stehen.
 
-In den Bytes \wort{37} bis \wort{3C}, in Byte \wort{43}, sowie in den Bytes \wort{71} bis \wort{75} befinden sich sehr wahrscheinlich interne Zählstände, die während einer Kaffeezubereitung oder allgemeiner beim Pumpen von Wasser rauf zählen.
+In den Bytes \wort{37} bis \wort{3C}, in Byte \wort{43}, sowie in den Bytes \wort{71} bis \wort{75} befinden sich sehr wahrscheinlich interne Zählerstände, die während einer Kaffeezubereitung oder allgemeiner beim Pumpen von Wasser inkrementiert werden.
 In dem Byte \wort{8B} sowie bis in das davor liegende Byte \wort{8A} reicht eine Zähler für primär den Dampfbezug oder eine Wasserdampfportion, aber auch bei einer Kaffeezubereitung oder Spülung bewegt sich der Zähler.
 
 \section{Alleinstellungsmerkmal für die API und die Webseite}
-Tabelle~\ref{tbl:RAM1} und Tabelle~\ref{tbl:RAM2} machen deutlich, dass es mehrfach redundante Speicherstellen im \ac{RAM} gibt an potentiell denen die gleiche Information steht.
+Tabelle~\ref{tbl:RAM1} und Tabelle~\ref{tbl:RAM2} machen deutlich, dass es mehrfach redundante Speicherstellen im \ac{RAM} gibt an denen potentiell die gleiche Information steht.
 Da die serielle Übertragung abgefragter Speicherstellen Zeit benötigt, versucht die \ac{API} nur die wirklich nötigen Speicherstellen abzufragen und dadurch Zeit einzusparen.
 
 Abbildung~\ref{fig:API-EEPROM} zeigt die abgefragte Speicherstellen für die \ac{API} im \ac{EEPROM}.

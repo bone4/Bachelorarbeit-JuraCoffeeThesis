@@ -4,7 +4,7 @@ Am Ende dieses Kapitels kann der Kaffeevollautomat bereits angesteuert werden.
 
 \section{Der Kaffeevollautomat}
 Der "`Jura Impressa S9"', siehe Abbildung~\ref{subfig:Kaffeevollautomat}, ist ein Kaffeevollautomat mit fünf Kaffeebezugstasten: Spezialkaffee, 1 große Tasse Kaffee, 2 große Tassen Kaffee, 1 kleine Tasse Kaffee und 2 kleine Tassen Kaffee.
-Auf der rechten Seite befinden sich Bedienelemente für heißes (Tee-)Wasser und Wasserdampf zum Milch Aufschäumen.
+Auf der rechten Seite befinden sich Bedienelemente für heißes (Tee-)Wasser und Wasserdampf zum Milchaufschäumen.
 Der Kaffeevollautomat wird für seinen Betrieb direkt mit der Netzspannung versorgt.
 
 \subfigbox{
@@ -33,11 +33,11 @@ Aus Sicht des Computers ist der Arduino ein Gerätelaufwerk unter \texttt{/dev/t
 Diese Zahl findet sich zu Beginn des Arduino Uno Skripts wieder.
 
 \subsection{Serielle Kommunikation}
-Diese Arbeit baut auf das "`CoffeeMachine"' Projekt~\cite{GitCoffeeMachine} auf und nutzt das Arduino Skript als Grundlage der Kommunikation weiter, ebenso werden Kommandos und erste Speicherstellen aus der Weboberfläche aufgegriffen.
+Diese Arbeit baut auf das "`CoffeeMachine"' Projekt~\cite{GitCoffeeMachine} auf und nutzt das Arduino Skript als Grundlage der Kommunikation, ebenso werden Kommandos und erste Speicherstellen aus der Weboberfläche aufgegriffen.
 Das Arduino Skript kodiert die \ac{UART} Kommandos von und zu dem Kaffeevollautomaten.
 
-Die Kommandos werden zeichenweise \ac{ASCII} Zeichen für Zeichen übertragen.
-Dafür wird ein an den Kaffeevollautomaten adressiertes Byte (ein \ac{ASCII}-Zeichen), bestehend aus acht Bits, in je vier Bytes aufgeteilt.
+Die Kommandos werden zeichenweise \acs{ASCII} Zeichen für Zeichen übertragen.
+Dafür wird ein an den Kaffeevollautomaten adressiertes Byte (ein \acs{ASCII}-Zeichen), bestehend aus acht Bits, in je vier Bytes aufgeteilt.
 Die dritte und sechste Stelle der neuen Bytes repräsentieren je zwei Bits des ursprünglichen Bytes.
 Bei der Übertragung an den Kaffeevollautomaten werden die restlichen Bits mit Nullen aufgefüllt.
 Abbildung~\ref{fig:uart} veranschaulicht dies an dem ersten Byte des Einschaltbefehls, die entsprechende \ac{ASCII}-Kodierung ist in Abbildung~\ref{tbl:Displaysymbole} der zweiten und dritten Spalte zu entnehmen.
@@ -60,12 +60,12 @@ Diese Verzögerung begrenzt hauptsächlich die Übertragungsgeschwindigkeit, was
 Die Tabelle~\ref{tbl:kommandos} zeigt die Befehlsgruppen, sowie ausgewählte Befehle, die der Kaffeevollautomat versteht.
 Diese Befehle stammen aus dem "`CoffeeMachine"' Projekt~\cite{GitCoffeeMachine}.
 
-Befehle beginnen entweder mit zwei Großbuchstaben gefolgt von einem Doppelpunkt und i.d.R. einer zweistelligen Hexadezimalzahl, oder sie beginnen mit einem Fragezeichen gefolgt von i.d.R. zwei \ac{ASCII}-Zeichen.
+Befehle beginnen entweder mit zwei Großbuchstaben, gefolgt von einem Doppelpunkt und i.d.R. einer zweistelligen Hexadezimalzahl, oder sie beginnen mit einem Fragezeichen gefolgt von i.d.R. zwei \ac{ASCII}-Zeichen.
 Positionsnummern, egal ob Speicherposition, \mbox{Betriebszustands-,} Bezugstasten- oder Steuerungskomponenten-Nummer, werden durch zweistellige Hexadezimalzahlen repräsentiert und reichen von $0_{16}=0_{10}$ bis FF$_{16}=255_{10}$.
 
 Zwei Ausnahmen des ersten Typs sind z.B. \texttt{TY:} zum Abfragen des Maschinen Typs und \texttt{WE:00,01FF} zum Schreiben des Wertes $01$FF$_{16} = 511_{10}$ an die Position $00$.
 Eine Ausnahme des zweiten Typs ist z.B. \texttt{?D1DISPLAY}\textvisiblespace\ und \texttt{?D2}\textvisiblespace\textvisiblespace\texttt{TEST}\textvisiblespace\textvisiblespace.
-Der volle Umfang möglicher Displayzeichen, sowie deren Benutzung wird in Abschnitt~\ref{sec:Display} ausgeführt.
+Der volle Umfang möglicher Displayzeichen, sowie deren Benutzung, wird in Abschnitt~\ref{sec:Display} ausgeführt.
 
 Einige Befehle, die aus weiteren Projekten mit Maschinen der S-Reihe bekannt sind, sind in dieser "`Jura Impressa S9"' leider nicht implementiert.
 Dazu zählen \texttt{IC:} zum Auslesen aller Eingaben, \texttt{FA:0A} eine unbelegte Bezugstaste, \texttt{CM:} für weitere Status Informationen, \texttt{CS:} für Sensor Informationen und \texttt{PM:} ein Befehl um Musik abzuspielen.
@@ -80,7 +80,7 @@ Die jetzt vorhandene Umgebung kann bereits über den seriellen Monitor der Ardui
 Über den Befehl \texttt{RT:<address>}, siehe Tabelle~\ref{tbl:kommandos}, lässt sich eine Zeile \ac{EEPROM} Speicher abfragen.
 Die Adresse reicht von \texttt{0x00} bis \texttt{0xF0} in sechzehner Sprüngen.\footnote{Man ist daran aber nicht gebunden und kann wie im Folgenden beim \ac{RAM} erklärt die Adressen von \texttt{0x00} bis \texttt{0xFF} nutzen. Dies wird in dieser Arbeit auf den \ac{EEPROM} aber \textbf{nicht angewendet}.}
 Als Antwort erhält man hinter dem kleingeschriebenen Kommando eine Zeichenkette bestehend aus 64 Hexadezimalzahlen.
-Da immer zwei Hexadezimalzahlen ein Byte\footnote{Ein Byte besteht aus 8 Bits mit einem Wertebereich von $0_{10}-255_{10} = 00_{16}-\text{FF}_{16} = $ 0x00 -- 0xFF.} repräsentieren umfasst eine \ac{EEPROM} Zeile \textbf{32} Bytes.
+Da immer zwei Hexadezimalzahlen ein Byte\footnote{Ein Byte besteht aus 8 Bits mit einem Wertebereich von $0_{10}-255_{10} = 00_{16}-\text{FF}_{16} = $ 0x00 -- 0xFF.} repräsentieren, umfasst eine \ac{EEPROM} Zeile \textbf{32} Bytes.
 Der gesamte \ac{EEPROM} umfasst damit insgesamt \textbf{512} Bytes.
 
 Über den Befehl \texttt{RE:<address>} können direkt Einheiten im \ac{EEPROM} abgefragt werden. Die Adresse reicht von \texttt{0x00} bis \texttt{0xFF}.
@@ -89,7 +89,7 @@ Abbildung~\ref{subfig:EEPROM} zeigt das Speicherschema des \ac{EEPROM}.
 
 \subsubsection{RAM}\label{subsubsec:SpeicherDesKaffeevollautomatenRAM}
 Der Lesebefehl für eine \ac{RAM} Zeile lautet: \texttt{RR:<address>}.
-Man ist aber nicht gezwungen am Zeilenanfang zu starten.
+Man ist aber nicht gezwungen, am Zeilenanfang zu starten.
 Die Adresse reicht hier von \texttt{0x00} bis \texttt{0xFF}.
 Als Antwort erhält man hinter dem kleingeschriebenen Kommando eine Zeichenkette bestehend aus 32 Hexadezimalzahlen, also \textbf{16} Bytes.
 Bei einer Adresse größer als \texttt{0xF0} gibt es einen Zählerüberlauf und es werden wieder die ersten Bytes zurück gegeben.
@@ -101,11 +101,11 @@ Abbildung~\ref{subfig:RAM} zeigt das Speicherschema des \ac{RAM}.
 
 \section{Libraries und Frameworks}
 Diese Arbeit nutzt "`libraries"' und "`frameworks"'.
-"`libraries"' sind thematisch gebündelte Funktionen und Routinen. Sie bieten eine \ac{API}, die das eigene Programm ansprechen kann.
+"`Libraries"' sind thematisch gebündelte Funktionen und Routinen. Sie bieten eine \ac{API}, die das eigene Programm ansprechen kann.
 
-"`frameworks"' sind noch mehr und bieten ganze Programmiergerüste und Routinen. Sie rufen wenn nötig selbst vorgesehene Funktionen auf und folgen damit dem Paradigma des "`Inversion of Control"'.
+"`Frameworks"' bieten daneben ganze Programmiergerüste und Routinen. Sie rufen, wenn nötig, selbst vorgesehene Funktionen auf und folgen damit dem Paradigma des "`Inversion of Control"'.
 
-In der aktuellen Version bieten beide nicht nur leicht zugängliche Aufrufe, sondern sind auch sicher und robust in ihrem Gebiet.
+Auf dem aktuellen Stand bieten beide nicht nur leicht zugängliche Aufrufe, sondern sind auch sicher und robust in ihrem Einsatzgebiet.
 
 \subsection{Serielle Kommunikation}
 Bei dem Versuch die Grätedatei direkt anzusprechen kam es zu Problemen, die in Abschnitt~\ref{subsec:kommunikationGeraetedateiLibserialLibrary} erörtert werden. Für die zuverlässige serielle Kommunikation kommt daher eine geeignete Library zum Einsatz.
@@ -124,28 +124,28 @@ Darüber hinaus kann es leicht vom C++ Programm, der Webseite, oder auch für vi
 Kamilaris, Pitsillides und Trifa nennen in ihrem Paper \cite{Kamilaris2011} alternativ noch \ac{XML} als oft verwendetes, aber recht langatmiges maschinenlesbares Dateiformat.
 
 \subsubsection{libjsoncpp}
-Die "`libjsoncpp"'\footnote{\url{https://en.wikibooks.org/wiki/JsonCpp}} bietet dem C++ Programm eine Lese- und Syntaxanalyse-Funktion zum Aufnehmen eines \ac{JSON} Ausdrucks, sowie eine Möglichkeit ein \ac{JSON} Objekt kompakt zusammengefasst oder leserfreundlich aufgefächert in einen Ausgabestrom zu schreiben.
-Als Ausgabestrom sind reine \ac{JSON} Dateien nach einer Speicherauszugs Aufnahme oder die Standardausgabe im Gebrauch als API vorstellbar.
+Die "`libjsoncpp"'\footnote{\url{https://en.wikibooks.org/wiki/JsonCpp}} bietet dem C++ Programm eine Lese- und Syntaxanalyse-Funktion zum Aufnehmen eines \ac{JSON} Ausdrucks und eine Möglichkeit, ein \ac{JSON} Objekt kompakt zusammengefasst oder leserfreundlich aufgefächert in einen Ausgabestrom zu schreiben.
+Als Ausgabestrom sind reine \ac{JSON} Dateien nach einer Speicherauszugs-Aufnahme oder die Standardausgabe im Gebrauch als API vorstellbar.
 
 
 \subsection{Webseite}
 Eine kleine Webseite soll am Ende die ausgelesenen Werte visuell anschaulich präsentieren.
-Die JavaScript-Bibliothek jQuery und das Framework Bootstrap helfen dabei dies zügig und ansprechend umzusetzen.
+Die JavaScript-Bibliothek jQuery und das Framework Bootstrap helfen dabei, dies zügig und ansprechend umzusetzen.
 
 \subsubsection{Bootstrap}
-Bootstrap\footnote{\url{https://getbootstrap.com/}} ist ein von den Twitter Entwicklern begonnenes Projekt um ursprünglich intern die Verwaltungswerkzeuge zu vereinheitlichen.
-Daraus ist aber ein ganzes System an Design Elementen geworden, welches heute sehr populär ist.
+Bootstrap\footnote{\url{https://getbootstrap.com/}} ist ein von den Twitter Entwicklern begonnenes Projekt, um ursprünglich intern die Verwaltungswerkzeuge zu vereinheitlichen.
+Daraus ist ein ganzes System an Design-Elementen geworden, welches heute sehr populär ist.
 \ac{HTML}, \ac{CSS} und \ac{JS} werden zusammen eingesetzt und bieten Entwicklern eine Gitteranordnung für eine Mobile- und die Desktop-Ansicht, Inhaltselemente wie Tabellen und Abbildungen oder auch einzelne Komponenten wie Steckkarten, Prozentanzeigen und Knöpfe.
 
 \subsubsection{jQuery}
 jQuery\footnote{\url{https://jquery.com/}} ist eine freie \ac{JS}-Bibliothek, die in der "`slim"'-Variante bereits über Bootstrap eingebunden ist.
 Um später wirklich mit dem Kaffeevollautomaten interagieren zu können, wird unter anderem \ac{AJAX} aus dem vollständigen jQuery Paket benötigt (auch wenn daraus später ein synchrones JavaScript mit \acs{JSON} wird).
 
-Über das \ac{CDN} eingebundene Packet stehen ab jetzt einfache \aclp{API} zum modifizieren der \acs{HTML} Elemente, ein erweitertes Event-System, sowie \acs{AJAX}-Funktionalitäten bereit.
+Über das \ac{CDN} eingebundene Paket stehen ab jetzt einfache \aclp{API} zum Modifizieren der \acs{HTML} Elemente, ein erweitertes Event-System, sowie \acs{AJAX}-Funktionalitäten bereit.
 
 \subsubsection{JavaScript Cookie}
 JavaScript Cookie\footnote{\url{https://github.com/js-cookie/js-cookie/}} ist eine kleine \acl{JS}-\ac{API}.
-Sie vereinfacht es Webbrowser-Kekse (Cookies), zum Ablegen persönlicher Einstellungen, zu erzeugen, zu bearbeiten und zu entfernen.
+Sie vereinfacht es, Webbrowser-Kekse (Cookies) zum Ablegen persönlicher Einstellungen zu erzeugen, zu bearbeiten und zu entfernen.
 
 \subsubsection{Intro.js}
 Zu guter Letzt folgt mit Into.js\footnote{\url{https://introjs.com/}} noch eine Schritt-für-Schritt-Anleitung, die dem Seitenbenutzer eine kurze Einführung in den Aufbau und die Bedienung der Webseite geben soll.
