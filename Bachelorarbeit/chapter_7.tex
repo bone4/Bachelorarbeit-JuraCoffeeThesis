@@ -1,27 +1,41 @@
 \chapter{Zusammenfassung}\label{ch:Zusammenfassung}
 Im Rahmen dieser Arbeit wurde der Speicher des Kaffeevollautomaten "`Jura Impressa S9"' reverse engineered.
-Dafür wurde eine strukturierte Vorgehensweise in Abschnitt~\ref{sec:Vorgehen} entwickelt.
-Einstellung für Einstellung und Funktion für Funktion ergab sich die Bedeutung immer neuer Speicherstellen.
-Neu gebündelt wurden diese über eine leicht zugängliche \ac{API} nach außen offen gelegt und abschließend auf einer kleinen Webseite visuell präsentiert.
-Dabei wurde die Vorgehensweise und die Aussagekraft der Ergebnisse kritisch hinterfragt und in den Kontext des Reverse Engineering eingeordnet.
+Für den Aufbau und die Verkabelung ist auf das Arduino Skript und die Dokumentation aus dem Projekt~\cite{GitCoffeeMachine} zurückgegriffen worden.
+Viele der dort gebündelten Informationen stammen wiederum aus der Community\footnote{\url{http://protocoljura.wiki-site.com/}}.
+Darauf aufbauend folgte bereits in Kapitel~\ref{ch:HardwareUndSoftware} die Definition der \textit{UART Gruppe} und des Speicheraufbaus mit der Definition des \textit{EEPROM Wortes}.
+
+Zur Untersuchung des Speichers und der darin enthaltenen Informationen zur Überwachung und Steuerung des Kaffeevollautomaten, wurde eine strukturierte Vorgehensweise in Abschnitt~\ref{sec:Vorgehen} entwickelt.
+Mit einem C++ Programm sind Speicherauszüge vor und nach einer Veränderung an der Maschine aufgenommen und verglichen worden.
+Die Ergebnisse mit den Speicherpositionen bestimmter Einstellungen oder Funktionen listet Kapitel~\ref{ch:Ergebnisse} auf.
+
+Neu gebündelt wurden diese über eine leicht zugängliche \ac{API} nach außen offengelegt.
+\ac{EEPROM} und \ac{RAM} können dadurch schneller abgefragt werden.
+Die Erstellung eines vollständigen Speicherauszugs bräuchte wesentlich mehr Zeit.
+Abschließend wird die \ac{API} auf einer kleinen Webseite visuell präsentiert.
+Im Abschnitt~\ref{sec:AussagekraftDerErgebnisse} dieser Arbeit sind die Vorgehensweise und die Aussagekraft der Ergebnisse kritisch hinterfragt.
+
+Das Reverse Engineering besitzt mit seinen benachbarten Disziplinen aus Abschnitt~\ref{sec:Begrifflichkeiten} ein weites Spektrum an Möglichkeiten, alltägliche Gegenstände zu erhalten und weiterzuentwickeln.
+In dieser Bachelorarbeit wurde deutlich, dass die Erarbeitung an Wissen über den internen Speicher des Kaffeevollautomaten als \textit{Reverse Engineering} oder \textit{Design Recovery} bezeichnet werden kann.
+Die darauf aufbauende \ac{API} kann wiederum als \textit{Redocumentation} oder \textit{Restructuring} bezeichnet werden.
+Die Webseite ist schlussendlich als neue Oberfläche der Ertrag des \textit{Reengineering} und zeigt eine smatere Nutzbarkeit des Gerätes.
 
 \section{Ausblick}
 Die in dieser Arbeit aufgeführten Ergebnisse sind noch nicht vollständig, zum Beispiel nennt das Benutzerhandbuch weitere Meldungen wie:\label{FehlendeMeldungen}
-\texttt{Gerät verkalkt}, \texttt{Störung 2} oder \texttt{Störung 8}, sowie etliche Menümeldungen während der internen Programmabläufe.
+\texttt{Gerät verkalkt}, \texttt{Störung 2} oder \texttt{Störung 8} sowie etliche Menümeldungen während der internen Programmabläufe.
 Die Speicherpositionen der Displaymeldungen sind unbekannt, evtl. sogar für alle Sprachen fest im Programmablauf hinterlegt.
 Die \ac{RAM} Position für die Wahl der Display Meldung ist ebenfalls unbekannt, siehe Abschnitt~\ref{subsec:UnbekannteSpeicherorte}. 
 Die verbleibenden drei Meldungen konnten während dieser Arbeit nicht gezielt ausgelöst werden.
 
 Mit entsprechendem zeitlichen und finanziellen Budget könnte die Arbeit weiter fortgeführt werden.
-Man könnte eine Umgebung schaffen, in der die drei Störungsmeldungen ausgegeben werden um deren Ursprung im \ac{RAM} zu lokalisieren.
-Ebenso wäre es interessant fehlende Einheiten zu bestimmen.
+Man könnte eine Umgebung schaffen, in der die drei Störungsmeldungen ausgegeben werden, um deren Ursprung im \ac{RAM} zu lokalisieren.
+Ebenso wäre es interessant, fehlende Einheiten zu bestimmen.
 Zeit-, Gewichts- oder Durchflusseinheiten würden dem Anwender die Konfiguration vereinfachen.
 
-Es wäre ebenfalls lohnenswert die Firmware aus dem \ac{ROM} der Maschine auszulesen und zu disassemblieren.
+Es wäre ebenfalls lohnenswert, die Firmware aus dem \ac{ROM} der Maschine auszulesen und zu disassemblieren.
 Dadurch kann die Erkenntnis, welche Speicherstellen überhaupt vorgesehen und angesprochen werden, erlangt werden.
 Ebenso würden Vorgänge bei Funktionsabläufen verständlicher.
 % Ghidra (NSA) -> heise online Artikel
 
-Kamilaris, Pitsillides und Trifa nennen in ihrem Paper \cite{Kamilaris2011} als eine Grundanforderung für das intelligente Zuhause den echten Mehrbenutzer Betrieb.
+A. Kamilaris, A. Pitsillides und V. Trifa nennen in ihrem Paper \cite{Kamilaris2011} als eine Grundanforderung für das intelligente Zuhause den echten Mehrbenutzer Betrieb.
 Die Aufbereitung der Webseite könnte durch Crossbar.io\footnote{\url{https://crossbar.io/}} mithilfe von AutobahnC++\footnote{\url{https://github.com/crossbario/autobahn-cpp}} erweitert werden.
 Über das \ac{WAMP} könnte regelmäßig der Zustand des Kaffeevollautomaten an alle verbundenen Endgeräte weitergegeben werden, ohne dass ein Endgerät tätig werden muss und während der Kommunikation die Ressource bindet.

@@ -37,15 +37,15 @@ Diese Arbeit baut auf das "`CoffeeMachine"' Projekt~\cite{GitCoffeeMachine} auf 
 Das Arduino Skript kodiert die \ac{UART} Kommandos von und zu dem Kaffeevollautomaten.
 
 Die Kommandos werden zeichenweise \acs{ASCII} Zeichen für Zeichen übertragen.
-Dafür wird ein an den Kaffeevollautomaten adressiertes Byte (ein \acs{ASCII}-Zeichen), bestehend aus acht Bits, in je vier Bytes aufgeteilt.
+Dafür wird ein an den Kaffeevollautomaten adressiertes Byte (ein \acs{ASCII}-Zeichen), bestehend aus 8 Bits, in je 4 Bytes aufgeteilt.
 Die dritte und sechste Stelle der neuen Bytes repräsentieren je zwei Bits des ursprünglichen Bytes.
 Bei der Übertragung an den Kaffeevollautomaten werden die restlichen Bits mit Nullen aufgefüllt.
 Abbildung~\ref{fig:uart} veranschaulicht dies an dem ersten Byte des Einschaltbefehls, die entsprechende \ac{ASCII}-Kodierung ist in Abbildung~\ref{tbl:Displaysymbole} der zweiten und dritten Spalte zu entnehmen.
 Die Kodierung der, von dem Kaffeevollautomaten kommenden, Bytes erfolgt analog.
 Laut "`Protocoljura"'\footnote{\url{http://protocoljura.wiki-site.com/index.php/Protocol_to_coffeemaker}} bestehen die irrelevanten Bits der ankommenden Bytes aus einer Null und weiteren fünf Einsen pro Byte.
 
-Vier Bytes kodieren auf diese Weise ein \ac{ASCII} Zeichen und werden fortan als Gruppe bezeichnet.
-Zwischen jeder Gruppe gibt es eine Verzögerung von 8ms.
+Vier Bytes kodieren auf diese Weise ein \ac{ASCII} Zeichen und werden fortan als \textit{Gruppe} bezeichnet.
+Zwischen jeder \textit{Gruppe} gibt es eine Verzögerung von 8ms.
 Diese Verzögerung begrenzt hauptsächlich die Übertragungsgeschwindigkeit, was in Abschnitt~\ref{subsec:zugangSeriellDirekt} diskutiert wird.
 
 \begin{figure}
@@ -73,7 +73,7 @@ Weitere Befehlsgruppen werden in der \texttt{README.rst} eines Github Repositori
 
 Die jetzt vorhandene Umgebung kann bereits über den seriellen Monitor der Arduino \ac{IDE} genutzt werden.
 
-\subsection{Speicher}
+\subsection{Speicher}\label{subsec:SpeicherDesKaffeevollautomaten}
 Über die Befehle \texttt{RE:<address>}, \texttt{RT:<address>} und \texttt{RR:<address>} sind Lesebefehle zu zwei Speichereinheiten des Kaffeevollautomaten bekannt: dem \acf{EEPROM} und dem \acf{RAM}.
 
 \subsubsection{EEPROM}\label{subsubsec:SpeicherDesKaffeevollautomatenEEPROM}
@@ -84,7 +84,7 @@ Da immer zwei Hexadezimalzahlen ein Byte\footnote{Ein Byte besteht aus 8 Bits mi
 Der gesamte \ac{EEPROM} umfasst damit insgesamt \textbf{512} Bytes.
 
 Über den Befehl \texttt{RE:<address>} können direkt Einheiten im \ac{EEPROM} abgefragt werden. Die Adresse reicht von \texttt{0x00} bis \texttt{0xFF}.
-Die kleinste adressierbare Einheit, \underline{das Wort}, besteht daher aus vier Hexadezimalzahlen, also \textbf{2} Bytes\footnote{Zwei Bytes bestehen aus 16 Bits mit einem Wertebereich von $0_{10}-65\:535_{10} = 00_{16}-\text{FFFF}_{16}$.}.\\
+Die kleinste adressierbare Einheit, \textit{das Wort}, besteht daher aus 4 Hexadezimalzahlen, also \textbf{2} Bytes\footnote{Zwei Bytes bestehen aus 16 Bits mit einem Wertebereich von $0_{10}-65\:535_{10} = 00_{16}-\text{FFFF}_{16}$.}.\\
 Abbildung~\ref{subfig:EEPROM} zeigt das Speicherschema des \ac{EEPROM}.
 
 \subsubsection{RAM}\label{subsubsec:SpeicherDesKaffeevollautomatenRAM}
@@ -93,7 +93,7 @@ Man ist aber nicht gezwungen, am Zeilenanfang zu starten.
 Die Adresse reicht hier von \texttt{0x00} bis \texttt{0xFF}.
 Als Antwort erhält man hinter dem kleingeschriebenen Kommando eine Zeichenkette bestehend aus 32 Hexadezimalzahlen, also \textbf{16} Bytes.
 Bei einer Adresse größer als \texttt{0xF0} gibt es einen Zählerüberlauf und es werden wieder die ersten Bytes zurück gegeben.
-Der gesamte \ac{RAM} Speicher verfügt, ähnlich zu \texttt{RT} im \ac{EEPROM}, über sechzehn Zeilen mit je 16 Bytes, also insgesamt \textbf{256} Bytes.
+Der gesamte \ac{RAM} Speicher verfügt, ähnlich zu \texttt{RT} im \ac{EEPROM}, über 16 Zeilen mit je 16 Bytes, also insgesamt \textbf{256} Bytes.
 Daraus ergibt sich, dass die kleinste Einheit, ein Byte, aus zwei Hexadezimalzahlen besteht.\\
 Abbildung~\ref{subfig:RAM} zeigt das Speicherschema des \ac{RAM}.
 
@@ -121,7 +121,7 @@ Es bietet viele Datenformate und ist unbegrenzt verschachtelbar.
 In dieser Arbeit werden hauptsächlich Zeichenketten, Zahlen, Unter-Objekte und -Arrays verwendet.
 Darüber hinaus kann es leicht vom C++ Programm, der Webseite, oder auch für viele weitere Projekte genutzt werden.
 
-Kamilaris, Pitsillides und Trifa nennen in ihrem Paper \cite{Kamilaris2011} alternativ noch \ac{XML} als oft verwendetes, aber recht langatmiges maschinenlesbares Dateiformat.
+A. Kamilaris, A. Pitsillides und V. Trifa nennen in ihrem Paper \cite{Kamilaris2011} alternativ noch \ac{XML} als oft verwendetes, aber recht langatmiges maschinenlesbares Dateiformat.
 
 \subsubsection{libjsoncpp}
 Die "`libjsoncpp"'\footnote{\url{https://en.wikibooks.org/wiki/JsonCpp}} bietet dem C++ Programm eine Lese- und Syntaxanalyse-Funktion zum Aufnehmen eines \ac{JSON} Ausdrucks und eine Möglichkeit, ein \ac{JSON} Objekt kompakt zusammengefasst oder leserfreundlich aufgefächert in einen Ausgabestrom zu schreiben.
@@ -135,7 +135,7 @@ Die JavaScript-Bibliothek jQuery und das Framework Bootstrap helfen dabei, dies 
 \subsubsection{Bootstrap}
 Bootstrap\footnote{\url{https://getbootstrap.com/}} ist ein von den Twitter Entwicklern begonnenes Projekt, um ursprünglich intern die Verwaltungswerkzeuge zu vereinheitlichen.
 Daraus ist ein ganzes System an Design-Elementen geworden, welches heute sehr populär ist.
-\ac{HTML}, \ac{CSS} und \ac{JS} werden zusammen eingesetzt und bieten Entwicklern eine Gitteranordnung für eine Mobile- und die Desktop-Ansicht, Inhaltselemente wie Tabellen und Abbildungen oder auch einzelne Komponenten wie Steckkarten, Prozentanzeigen und Knöpfe.
+\ac{HTML}, \ac{CSS} und \ac{JS} werden zusammen eingesetzt und bieten Entwicklern eine Gitteranordnung für eine Mobil- / Desktop-Ansicht, Inhaltselemente wie Tabellen und Abbildungen oder auch Komponenten wie Steckkarten und Knöpfe.
 
 \subsubsection{jQuery}
 jQuery\footnote{\url{https://jquery.com/}} ist eine freie \ac{JS}-Bibliothek, die in der "`slim"'-Variante bereits über Bootstrap eingebunden ist.
@@ -145,7 +145,7 @@ Um später wirklich mit dem Kaffeevollautomaten interagieren zu können, wird un
 
 \subsubsection{JavaScript Cookie}
 JavaScript Cookie\footnote{\url{https://github.com/js-cookie/js-cookie/}} ist eine kleine \acl{JS}-\ac{API}.
-Sie vereinfacht es, Webbrowser-Kekse (Cookies) zum Ablegen persönlicher Einstellungen zu erzeugen, zu bearbeiten und zu entfernen.
+Sie vereinfacht es, Webbrowser-Kekse (Cookies) zum Ablegen persönlicher Einstellungen zu erzeugen, zu bearbeiten und zu löschen.
 
 \subsubsection{Intro.js}
 Zu guter Letzt folgt mit Into.js\footnote{\url{https://introjs.com/}} noch eine Schritt-für-Schritt-Anleitung, die dem Seitenbenutzer eine kurze Einführung in den Aufbau und die Bedienung der Webseite geben soll.

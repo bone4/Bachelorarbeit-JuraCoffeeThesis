@@ -1,39 +1,41 @@
 \chapter{Einführung}
-Heutige Geräte versprechen viel Komfort und eine einfache Handhabung. Über das Internet werden die Geräte zunehmend vernetzt und smart.
-Dabei sind Dinge erst einmal \textit{Objekte} in der realen Welt, wie Menschen, Tiere, Pflanzen, Autos oder eben auch Kaffeemaschinen, die von Madakam \cite{Madakam2015} unter anderem aufgezählt werden.
-Intelligente Dinge (engl. "`Smart Things"') machen unsere Welt smart.
-Sie setzen sich aus einer Gruppe kontrollierbarer und steuerbarer Dinge mit einigen Sensorfunktionen zusammen, die an das Internet angebunden sind.
-Dies ermöglicht es jeder Zeit von überall auf reale Dinge zuzugreifen.
+Heutige elektronisch gesteuerte Geräte versprechen viel Komfort und eine einfache Handhabung im Alltag.
+Über das Internet werden die Geräte zunehmend vernetzt und smart.
+Dabei sind diese Geräte als Gegenstände erst einmal \textit{Objekte} in der realen Welt, wie Menschen, Tiere, Pflanzen oder Produkte wie Autos oder eben auch Kaffeemaschinen, die von S. Madakam \cite{Madakam2015} unter anderem aufgezählt werden.
+
+Intelligente Dinge (engl. "`Smart Things"') machen unsere Welt nutzerfreundlicher im oben angeführten und versprochenen Sinne.
+Sie setzen sich aus einer Gruppe kontrollierbarer und steuerbarer Gegenstände mit einigen Sensorfunktionen zusammen, die an das Internet angebunden sind.
+Dies ermöglicht es, jeder Zeit von überall her auf die Produkte zuzugreifen.
 Dabei ist der Begriff "`Smart Things"' ein Schlagwort des \ac{IoT}. \cite{Madakam2015}
 
-Diese Welt benötigt jedoch nicht nur neue und bessere Dinge, sondern auch wiederverwertbare und reparierbare Dinge.
-Diese Bachelorarbeit möchte eine seit Jahren gut arbeitende Maschine smart machen und um eine neue Schnittstelle erweitern.
+Unsere Welt benötigt jedoch nicht nur neue und bessere Produkte, sondern auch wiederverwertbare und reparierbare Dinge.
+Nun möchte diese Bachelorarbeit eine seit Jahren gut arbeitende Maschine smart machen und sie um eine neue Schnittstelle erweitern.
 
-Daher befasst sich diese Arbeit mit einer Kaffeemaschine und in erster Linie mit ihrem Speicher. Dieser merkt sich nicht nur Betriebszustände, sondern auch Einstellungen, Zählerstände und evtl. vieles mehr.
+Daher befasst sich diese Arbeit mit einer eingangs schon erwähnten Kaffeemaschine und in erster Linie mit ihrem Speicher.
+Der merkt sich nicht nur Betriebszustände, sondern auch Einstellungen, Zählerstände und evtl. manches mehr.
 Die vorhandenen Informationen können nicht nur gelesen, sondern zum Teil auch verändert werden.
-Moderne Funktionen sind bereits ohne eine entsprechende graphische Schnittstelle in älteren Maschinen vorhanden.
+Einige weiterführende, smarte Funktionen sind in Maschinen dieser Art bereits ohne eine entsprechende graphische Schnittstelle vorhanden.
 Sie müssen nur nutzbar gemacht werden.
 
-Kamilaris, Pitsillides und Trifa stellen in ihrem Paper von 2011 \cite{Kamilaris2011} dar, dass in naher Zukunft beispielsweise Kaffeemaschinen automatisch einen Kaffee nach Benutzerpräferenzen zubereiten können.
-Die Möglichkeit eigene Geräte nun über das Netzwerk verwalten zu können, führe zum \textit{Web-enabled Smart Home}.
+A. Kamilaris, A. Pitsillides und V. Trifa stellen in ihrem Paper von 2011 \cite{Kamilaris2011} beispielsweise dar, dass in naher Zukunft Kaffeemaschinen automatisch einen Kaffee nach Benutzerpräferenzen zubereiten können.
+Die Möglichkeit, eigene Geräte nun über das Netzwerk zu verwalten, führe zum \textit{Web-enabled Smart Home}.
 
 \section{Aufgabenstellung}
-Diese Arbeit reverse engineered ein \textit{Objekt} unseres Alltags.
+Diese Arbeit reverse engineered ein erhaltenswertes \textit{Objekt} unseres Alltags.
 Dafür werden die Funktionen und Abläufe eines \textit{Jura Impressa S9 Kaffeevollautomaten} untersucht.
-Der Kaffeevollautomat wird um eine neue Schnittstelle zur Interaktion mit dem Gerät erweitert, nachdem dessen Speicher untersucht worden ist.
-Welches Wort / Byte / Bit speichert welche Information? Welche Bedeutung haben diese auf den Betrieb?
-Hierfür sollen Skripte erstellt werden und der Speicher systematisch untersucht werden.
+Das Gerät soll um eine neue Schnittstelle zur Interaktion erweitert werden, nachdem dessen Speicher entschlüsselt ist.
+Welches Wort / Byte / Bit speichert welche Information? Welche Bedeutung haben diese für den Betrieb?
+Hierfür sollen Skripte erstellt und der Speicher systematisch untersucht werden.
 
-Wenn die Denkweise der Kaffeemaschine bekannt ist, sollen Werte im \ac{EEPROM} abgefragt, aber auch gezielt verändert werden sowie Statusinformationen aus dem \ac{RAM} ausgelesen werden.
+Wenn "`die Denkweise"' der Kaffeemaschine bekannt ist, sollen Werte im \ac{EEPROM} abgefragt, aber auch gezielt verändert sowie Statusinformationen aus dem \ac{RAM} ausgelesen werden.
 Die erhaltenen Rohinformationen werden nach den gewonnenen Erkenntnissen aufbereitet und stehen so für weitere Projekte zur Verfügung.
 
-Als kleine Demonstration entsteht am Ende ein Programm, welches Profile anlegen kann, sodass jeder Nutzer auf Knopfdruck einen Kaffee nach seinen Lieblings-Präferenzen zubereitet bekommt.
+Als praktische Demonstration des Nutzwerts smarter Programmierung, soll am Ende eine Webseite, mit der Profile anlegen werden können, sodass der Nutzer auf Knopfdruck einen Kaffee nach seinen Lieblings-Präferenzen zubereitet bekommt, entstehen.
 
 \section{Aufbau der Arbeit}
-Kapitel~\ref{ch:Grundlagen} erörtert den Begriff \textit{Reverse Engineering} und zeigt weitere Arbeiten auf.
+Das nächste Kapitel erörtert den Begriff \textit{Reverse Engineering} und zeigt weitere Arbeiten auf.
 In Kapitel~\ref{ch:HardwareUndSoftware} werden der reale Kaffeevollautomat, dessen Verkabelung und weitere Abhängigkeiten aufgeführt.
-Darauf aufbauend werden in Kapitel~\ref{ch:MethodikUndImplementierung} das strategische Vorgehen und die nötigen Skripte entwickelt.
+Darauf aufbauend werden in Kapitel~\ref{ch:MethodikUndImplementierung} das strategische Vorgehen und die nötigen Skripte in Form eines größeren C++ Programms entwickelt.
 Im Anschluss werden die Ergebnisse in Kapitel~\ref{ch:Ergebnisse} aufbereitet.
-Kapitel~\ref{ch:Diskussion} diskutiert aufgetretene Probleme und zeigt die Grenzen dieser Arbeit auf.
-Ebenso wird die Arbeit in das Feld des \textit{Reverse Engineering} eingegliedert.
+Kapitel~\ref{ch:Diskussion} diskutiert aufgetretene Probleme, zeigt die Grenzen dieser Arbeit auf und gliedert sie in das Feld des \textit{Reverse Engineering} ein.
 Abschließend fasst Kapitel~\ref{ch:Zusammenfassung} die Arbeit zusammen.

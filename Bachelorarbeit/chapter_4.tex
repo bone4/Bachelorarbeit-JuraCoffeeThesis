@@ -10,7 +10,7 @@ Abschnitt~\ref{subsec:zugangSeriellDirekt} diskutiert die Vor- und Nachteile, di
 Dadurch kann die Speicherabfrage als Blackbox Modell, ähnlich zum Blackbox Testing in \cite{Solr-599853700}, betrachtet werden, wo nur mit Ein- und Ausgaben des Kaffeevollautomaten gearbeitet wird, ohne dessen Programm zu kennen.
 
 Unabhängig voneinander wurden beide Speicher untersucht.
-Ein eigens entwickeltes C++ Programm setzt die sechzehn Zeilen einer Speicherabfrage zu einem gesamten Speicherauszug zusammen.
+Ein eigens entwickeltes C++ Programm setzt die 16 Zeilen einer Speicherabfrage zu einem gesamten Speicherauszug zusammen.
 Intern werden dabei je zwei Hexadezimalzahlen in eine ganzzahlige Dezimalzahl umgerechnet und in einem Vektor abgelegt.
 Dadurch sind Position und Wert bekannt.
 
@@ -64,7 +64,7 @@ Hier konnte nur mehrfach zu gezielt gleichen oder ungleichen Zeitabständen der 
 Abschließend war auch für das Display ein kleines Programm nötig, um die volle Funktionsvielfalt festzustellen.
 Abschnitt~\ref{subsec:tools} führt dies später aus.
 
-In Abschnitt~\ref{sec:AussagekraftDerErgebnisse} wird die Aussagekraft dieser Ergebnisse noch diskutiert.
+In Abschnitt~\ref{sec:AussagekraftDerErgebnisse} wird die Aussagekraft dieser Ergebnisse noch thematisiert.
 
 \subsection{EEPROM gezielt beschreiben}\label{subsec:Vorgehen2}
 Ziel war es die unbekannte Position bzw. später die Zusammensetzung des Bezüge-Zählers im Einstellungsmenü des Kaffeevollautomaten zu entziffern.
@@ -149,7 +149,7 @@ Hierüber kann schnell ein Funktionstest der Verbindung zum Kaffeevollautomaten 
 Über die Nummer \texttt{6} bzw. Nummer \texttt{7} kann ein einzelner Speicherauszug des \ac{EEPROM}s bzw. des \ac{RAM}s erstellt werden, der unverzüglich in der Standardausgabe ausgegeben wird.
 Abbildung~\ref{subfig:terminal5-RAM-dump} zeigt einen Speicherauszug des \ac{RAM}s.
 Diese Funktion ist ein Teil des \ac{EEPROM} bzw. \ac{RAM} Skripts.
-Es fragt aber nicht nach einem Kommentar und fungiert rein lesend.
+Es fragt aber nicht nach einem Kommentar und fungiert an dieser Stelle rein lesend.
 Mithilfe des Hilfsprogramms zum Formatieren eines Speicherauszugs aus Abschnitt~\ref{subsec:formate-dump} kann man den Speicherauszug um Positionsangaben aufwerten und Speicherwerte dadurch kontrollieren.
 
 \subsubsection{Optionen}
@@ -233,34 +233,39 @@ ok: powder_quantity_special_coffee###ok: water_quantity_special_coffee###
 \end{lstlisting}
 
 \paragraph{./JuraCoffeeMemory eeprom}
-Nach ungefähr fünf Sekunden erhält man die aktuellen Einstellungen und Zählerstände des \ac{EEPROM} in einem kompakten \ac{JSON} Objekt.
+Nach ungefähr 5 Sekunden erhält man die aktuellen Einstellungen und Zählerstände des \ac{EEPROM} in einem kompakten \ac{JSON} Objekt.
 Im Gegensatz zum EEPROM Skript werden nur die nötigen Speicherstellen abgefragt.
 Die Bezeichnung der Speicherstellen, die auch der Name eines \ac{JSON} Eintrags ist, befindet sich mit der zugehörigen Adresse in \texttt{EEPROM\_Status::getEntriesEEPROM()}.
-Eine Adresse besteht aus der Position eines Wortes sowie einer oder beider Bytes.
-Von Hand sind dort zum Teil weitere Hintergrundinformationen, wie Standardwerte über die \texttt{[N]}-Taste des Kaffeevollautomaten, minimale und maximale Schranken, der Wert für einen deaktivierten Zustand oder überhaupt zulässige Werte hinterlegt.
+Eine Adresse besteht aus der Position eines Wortes sowie einer oder beiden Bytes.
+Von Hand sind dort zum Teil weitere Hintergrundinformationen, wie Standardwerte über die \texttt{[N]}-Taste des Kaffeevollautomaten, minimale und maximale Schranken, der Wert für einen deaktivierten Zustand oder überhaupt zulässige Werte, hinterlegt.
 
 \paragraph{./JuraCoffeeMemory ram}
-Ähnlich zum Abfragen des \ac{EEPROM} wird hier aber der \ac{RAM} in ungefähr drei Sekunden an den entscheidenden Stellen ausgelesen.
+Ähnlich zum Abfragen des \ac{EEPROM} wird hier aber der \ac{RAM} in ungefähr 3 Sekunden an den entscheidenden Stellen ausgelesen.
 Die Assoziation einer Bezeichnung mit ihrer Speicherposition geschieht in \texttt{RAM\_Status::getEntriesRAM()}.
 Hier wird ein Byte und ggf. mehrere zusammenhängende Bits als ein Eintrag abgelegt.
 Als Ausgabe erfolgt ein kompaktes \ac{JSON} Objekt.
 
 \subsection{Technische Umsetzung}
-Die Hauptdatei ist die \texttt{JuraCoffeeMemory.cpp} aus der später auch das ausführbare Programm \texttt{./JuraCoffeeMemory} erzeugt wird.
-Die \texttt{main}-Funktion fängt die Argumente vom Programm Aufruf ab und übergibt entsprechend an die \texttt{EEPROM\_Status} bzw. \texttt{RAM\_Status} für die \ac{API} oder leitet den Anwender durch das interaktive Menü.
+Abbildung~\ref{fig:storage_inherit_graph} zeigt schematisch den Zusammenhang der C++ Klassen.
+Die Hauptdatei ist die \texttt{JuraCoffeeMemory.cpp}, aus der später auch das ausführbare Programm \texttt{./JuraCoffeeMemory} erzeugt wird.
+Sie steht ganz oben in Abbildung~\ref{fig:storage_inherit_graph}.
+Die \texttt{main}-Funktion fängt die Argumente des Programm-Aufrufs ab und übergibt entsprechend an die \texttt{EEPROM\_Status} bzw. \texttt{RAM\_Status} Klasse für die \ac{API} oder leitet den Anwender selber durch das interaktive Menü.
+Die \textit{API}-Box in Abbildung~\ref{fig:storage_inherit_graph} repräsentiert die \ac{API} mit den beiden Klassen.
 
 Beim Aufruf des \ac{EEPROM} Skripts wird die \texttt{eeprom}-Funktion betreten, für den \ac{RAM} analog die \texttt{ram}-Funktion.
 Diese Funktionen bauen zu Beginn eine serielle Verbindung zum Arduino auf und blockieren damit alle anderen Prozesse.
 Danach wird eine Instanz der gleichnamigen Klasse erzeugt.
+Die Klasse ist in der Box namens \textit{memory} in Abbildung~\ref{fig:storage_inherit_graph} aufgeführt.
 Der Konstruktor liest dabei den Speicher aus und füllt Zeile für Zeile den \texttt{raw} Vektor in der Elternklasse \texttt{Storage}.
-Abschließend veranlasst der Konstruktor die Umrechnung der hexadezimalen Zeichenketten in einen langen Vektor aus einzelnen Werten, die in \texttt{bytes} abgelegt werden.
+Abschließend veranlasst der Konstruktor die Umrechnung der hexadezimalen Zeichenketten in einen langen Vektor aus einzelnen Zahlen-Werten, die in \texttt{bytes} abgelegt werden.
 Die Instanz wird mit dem Präfix \texttt{old} in der Ursprungsfunktion abgespeichert.
 
 Dem Anwender wird, wie in Abschnitt~\ref{subsubsec:EEPROM-RAM-Skript} beschrieben, ein Menü präsentiert.
 Im Falle einer Eingabe in Form eines Befehls, wird diese über die serielle Verbindung gesendet und blockierend eine Antwort abgewartet, die dem Anwender ausgegeben wird.
-Gemäß dem Vorgehen in Abschnitt~\ref{sec:Vorgehen} wird ein weiterer Speicherauszug erstellt und die neue Instanz mit dem Präfix \texttt{new} abgespeichert.
+Gemäß dem Vorgehen in Abschnitt~\ref{sec:Vorgehen} wird dann ein weiterer Speicherauszug erstellt und die neue Instanz mit dem Präfix \texttt{new} abgespeichert.
+Abbildung~\ref{fig:storage_inherit_graph} veranschaulicht, dass \texttt{JuraCoffeeMemory.cpp} und die Speicherinstanz gemeinsam auf die serielle Verbindung über die \texttt{SerialConnection} Klasse zugreifen können.
 
-Die Klasse \texttt{Storage} bietet zum byteweisen Abgleich eine Methode mit dem Namen \texttt{diffBytesWith}.
+Die Klasse \texttt{Storage} bietet zum byteweisen Abgleich eine Methode mit dem Namen \texttt{diffBytesWith()}.
 Argumente sind eine weitere Instanz mit der verglichen wird, ein Vektor mit ausgeschlossenen Bytes, ein Merker ob in die \ac{JSON} Datei geschrieben werden soll und ob bereits ein Kommentar vorliegt.
 Das \ac{EEPROM} / \ac{RAM} Skript nutzt ausschließlich das erste obligatorische Argument, indem die \texttt{new} Instanz die Methode und im Argument die \texttt{old} Instanz aufruft.
 Die \texttt{ram}-Funktion nutzt an dieser Stelle zusätzlich das erste optionale Argument und exkludiert die im Vorgehen in Abschnitt~\ref{sec:Vorgehen} angesprochenen schwankenden Bytes, die in den Ergebnissen in Abschnitt~\ref{sec:ErgebnisseRAM} explizit genannt werden.
@@ -269,66 +274,36 @@ Der Kommentar als letztes Argument wird in diesem Fall einfach nur ausgegeben, s
 
 Zurück in der \texttt{eeprom}- / \texttt{ram}-Funktion der \texttt{JuraCoffeeMemory.cpp} wird die \texttt{old} Instanz freigegeben und die aktuelle \texttt{new} Instanz zur neuen \texttt{old} Instanz umbenannt, damit der Anwender das Verfahren wiederholen kann.
 
-\subsubsection{Zugrunde liegende Klassenstruktur}
-Abbildung~\ref{fig:storage_inherit_graph} zeigt die Klasse \texttt{Storage} mit ihren Kindern \texttt{EEPROM}, \texttt{RAM}, \texttt{EEPROM\_Status} und \texttt{RAM\_Status}.
+Die Klasse \texttt{JsonFile}, zu sehen in Abbildung~\ref{fig:storage_inherit_graph}, steht zum Einlesen von \ac{JSON}-Dateien und -Zeichenketten, zum Bearbeiten des Objekts und der Ausgabe in einen Ausgabestrom bereit.
+Sie wird ebenfalls zur Aufbereitung der \ac{JSON}-Speicherauszüge in eine geordnete Struktur zur Weiterverarbeitung verwendet.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[scale=0.65]{images/chapter_4/class-structure}
+    \includegraphics[scale=0.74]{images/chapter_4/class-structure}
     \caption{Schematischer Zusammenhang und Gruppierung der C++ Klassen}
     \label{fig:storage_inherit_graph}
   \end{center}
 \end{figure}
 
-% alle Abhängigkeiten!!!
+\subsubsection{Besonderheiten der technischen Umsetzung / Implementierung}
+Die \texttt{EEPROM}- und die \texttt{RAM}-Klasse unterscheiden sich durch die Größenangaben zum Speicher und dem zum Abfragen benötigten Kommando in der entsprechenden \texttt{hpp}-Datei.
+Vieles wurde in die gemeinsame Elternklasse \texttt{Storage} ausgegliedert.
 
-% EEPROM und RAM Klasse unterscheiden sich durch Größe und Kaffee Komando in der *.hpp.
+Die \texttt{SerialConnection} Klasse setzt das \textit{Singleton-Entwurfsmuster} um\footnote{Die \texttt{JsonFile} Klasse folgt ebenfalls dem Singleton-Entwurfsmuster.}.
+Es wird automatisch eine Instanz der Klasse erstellt und ist über eine statische Methode abrufbar.
+Dies stellt sicher, dass es nur eine serielle Verbindung zur Zeit gibt.
+Darüber hinaus wird beim \texttt{connect()} Methodenaufruf eine Dateisperre auf die serielle Gerätedatei erzeugt.
+Dies wiederum garantiert, dass nur eine Prozessinstanz des Programms zur Zeit die Verbindung hält und ungestört bleibt.
+Bis zum Aufruf von \texttt{disconnect()} bleibt die Sperre aufrecht erhalten.
+Zusätzlich prüft die \texttt{connect()} Methode die Übertragung nach dem Verbindungsaufbau mit dem Testkommando \texttt{TY:} und erwartet von dem Kaffeevollautomaten die eingestellte Antwort \texttt{ty:E1300 CAPU 3\textbackslash r}.
+Beim Senden und Empfangen übernehmen die entsprechenden Methoden die Handhabung des Wagenrücklaufs und des Zeilenumbruchs am Ende der Kommandos.
+Der Anwender oder Entwickler kann dadurch die Kommandos aus Tabelle~\ref{tbl:kommandos} direkt anwenden.
 
-% Hauptdatei AnalyseFileDumpsMenu-Funktion: An JSON Datei nicht ersichtlich ob EEPROM oder RAM, daher von Hand in Zeile 192 für den RAM die Zeilen zum exkludieren setzen
-
-% serial connection: blocken aller anderen Prozesse
-
-% $ ll *.cpp
-% EEPROM.cpp
-% EEPROM_Status.cpp
-% JsonFile.cpp
-% JuraCoffeeMemory.cpp
-% RAM.cpp
-% RAM_Status.cpp
-% SerialConnection.cpp
-% Storage.cpp
-
-% $ ll *.h*
-% color-definitions.h
-% EEPROM.hpp
-% EEPROM\_Status.hpp
-% JsonFile.hpp
-% RAM.hpp
-% RAM\_Status.hpp
-% SerialConnection.hpp
-% Storage.hpp
-
-\todo
-
-% ./RAM.cpp
-% ./JsonFile.cpp
-% ./Storage.cpp
-% ./JuraCoffeeMemory.cpp
-% ./tools/libserial-test/main.cpp
-% ./tools/display.cpp
-% ./tools/formate-dump.cpp
-% ./tools/jsoncpp-test/main.cpp
-% ./tools/display-screen-saver.cpp
-% ./tools/Ideen/Ctrl-D\_stop.cpp
-% ./tools/Ideen/byte-bit.cpp
-% ./tools/Ideen/progressbar.cpp
-% ./tools/Ideen/byte-bit-2.cpp
-% ./tools/Ideen/lock-file.cpp
-% ./RAM\_Status.cpp
-% ./EEPROM.cpp
-% ./EEPROM\_Status.cpp
-% ./SerialConnection.cpp
-
+Die Klassen \texttt{EEPROM\_Status} und \texttt{RAM\_Status} besitzen auch eine Besonderheit.
+Die gleich lautende \texttt{scan()} Methode fragt nicht nur die nötigen Speicherstellen ab, sondern vermerkt in dem Vektor \texttt{known\_bytes} ebenfalls deren Position.
+Wenn die Methode \texttt{getEntriesEEPROM()} bzw. \texttt{getEntriesRAM()} um weitere Speicherstellen ergänzt wird, ist dadurch sichergestellt, dass auch nur tatsächlich abgefragte Speicherstellen und keine konstanten Nullen zurückgegeben werden.
+Andernfalls erhält der Entwickler eine Fehlermeldung.
+Weitere Einzelheiten sind in der \texttt{Readme.md} im Projektordner festgehalten.
 
 \section{Weitere kleine Tools}\label{subsec:tools}
 Im Unterordner \texttt{./tools/} befinden sich nach dem Aufruf von \texttt{make} drei kleine Programme.
@@ -388,7 +363,7 @@ Ganz rechts in der Ecke kann eine Tour durch die Bedienung der Seite gestartet w
 
 \begin{figure}
   \begin{center}
-    \includegraphics[scale=0.25]{images/chapter_4/Webseite}
+    \includegraphics[scale=0.3]{images/chapter_4/Webseite}
     \caption{Webseite zur Kontrolle und Steuerung des Kaffeevollautomaten als Visualisierung der API.}
     \label{fig:website}
   \end{center}
@@ -401,7 +376,8 @@ Die Antwort des C++ Programms wird in einem \ac{JSON}-Objekt verpackt und der We
 Bei Problemen wird auch die Fehlernummer (der Rückgabewert des Programms) einschließlich der Meldung leicht zugänglich in einem \ac{JSON}-Objekt zurück gegeben.
 
 Die für den Benutzer ersichtliche Webseite besteht primär aus den Dateien \texttt{index.html}, \texttt{script.js} für die Interaktion und \texttt{style.css} für das individuelle Layout.
-Weitere eingebundene Dateien sind das Favicon im Unterordner \texttt{favicon/}, Bilder im Unterordner \texttt{img/}, \texttt{intro.min.js} und \texttt{intro.min.css} für die Tour durch die Webseite, \texttt{offline\_eeprom.json} und \texttt{offline\_ram.json} für die Offline-Funktion, in der die Webseite ersichtlich ist, ohne eine Verbindung zu dem Kaffeevollautomaten zu haben.
+Weitere eingebundene Dateien sind das Favicon im Unterordner \texttt{favicon/}, Bilder im Unterordner \texttt{img/}, \texttt{intro.min.js} und \texttt{intro.min.css} für die Tour durch die Webseite.
+\texttt{offline\_eeprom.json} und \texttt{offline\_ram.json} bieten Beispielwerte für eine Offline-Funktion, in der die Webseite ersichtlich wird, ohne eine Verbindung zu dem Kaffeevollautomaten zu haben.
 
 Das \ac{HTML} Dokument der Webseite besteht aus vielen leeren Inhaltselementen, die im Attribut \texttt{id="..."} Einträge haben, die mit den Bezeichnungen der \ac{JSON} Elemente der Ausgabe von der API des C++ Programms übereinstimmen.
 Beim Seitenaufbau wird der \ac{EEPROM} abgefragt.

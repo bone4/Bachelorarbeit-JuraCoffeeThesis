@@ -1,14 +1,15 @@
 \chapter{Diskussion}\label{ch:Diskussion}
 Dieses Kapitel benennt aufgetretene Probleme während der Arbeit und hinterfragt die Ergebnisse aus dem vorherigen Kapitel.
+Auch der Begriff des \textit{Reverse Engineering} wird hier wieder aufgegriffen.
 
 \section{Probleme}
-Nicht nur die Kommunikation mit dem Kaffeevollautomaten, sondern auch das Verständnis der Vorgänge in der Maschine erfordert Arbeit.
+Nicht nur die Kommunikation mit dem Kaffeevollautomaten, sondern auch das Verständnis der Vorgänge in der Maschine erfordern Zeit und Arbeit.
 
 \subsection{Kommunikation mit dem Kaffeevollautomaten} \label{subsec:zugangSeriellDirekt}
-Der direkte Zugang ist wahrscheinlich am schnellsten, im laufenden Betrieb aber schlecht möglich, da die Speicheradressen aktiv abgefragt werden müssten und damit Kurzschlüsse in der Elektronik produziert werden.
+Der direkte Zugang ist wahrscheinlich am schnellsten, im laufenden Betrieb aber schlecht möglich, da die Speicheradressen aktiv abgefragt werden müssten und damit Kurzschlüsse in der Elektronik produziert werden würden.
 Die serielle \ac{UART} Schnittstelle ermöglicht das Abfragen im laufenden Betrieb, also auch im \ac{RAM}.
-Jedoch benötigt das Auslesen seine Zeit, ungefähr 9 Sekunden für den gesamten \ac{RAM} und ungefähr 15 Sekunden für den gesamten \ac{EEPROM}.
-Gerade im \ac{RAM} gibt es viele Veränderungen im Ruhezustand, sodass auf diesem Weg nie ein zusammenhängender Speicherauszug zu einem festen Zeitpunkt auslesen werden kann.
+Das Auslesen benötigt jedoch seine Zeit, ungefähr 9 Sekunden für den gesamten \ac{RAM} und ungefähr 15 Sekunden für den gesamten \ac{EEPROM}.
+Gerade im \ac{RAM} gibt es viele Veränderungen im Ruhezustand, sodass auf diesem Weg nie ein zusammenhängender Speicherauszug zu einem festen Zeitpunkt ausgelesen werden kann.
 
 Ein weiterer Nachteil ist, dass während einer Übertragung das interne Bus System gehemmt ist.
 Eingaben an der Maschine, wie die Navigation durch das Menü, werden während der Erstellung eines Speicherauszugs verzögert umgesetzt.
@@ -19,14 +20,14 @@ Abbildung~\ref{fig:API-EEPROM} und Abbildung~\ref{fig:API-RAM} zeigen die dabei 
 
 \subsection{Serielle Kommunikation} \label{subsec:kommunikationGeraetedateiLibserialLibrary}
 \paragraph{Gerätedatei direkt ansprechen}
-Um mit dem Arduino und letztlich dem Kaffeevollautomaten zu kommunizieren war der erste Versuch den Dateideskriptor \texttt{/dev/ttyACM0} sowohl lesend als auch schreibend zu nutzen.
+Um mit dem Arduino und letztlich dem Kaffeevollautomaten zu kommunizieren, war der erste Versuch den Dateideskriptor \texttt{/dev/ttyACM0} sowohl lesend als auch schreibend zu nutzen.
 Zunächst funktionierte dies sehr gut, bis nach wenigen Tagen kaum reproduzierbares Fehlverhalten auftrat.
 Gerade Antworten der Kaffeemaschine kamen nur noch in Bruchstücken an.
 Dies wurde bei der Einrichtung bereits im Projekt "`CoffeeMachine"'\cite{GitCoffeeMachine} in der \texttt{Readme.md} für die Ausführung auf einem Raspberry Pi beschrieben.
 
-Versuche dies direkt zu lösen, in dem eine funktionierende Umgebung nachgebaut wurde, schlugen fehl.
+Versuche, dies direkt zu lösen, indem eine funktionierende Umgebung nachgebaut wurde, schlugen fehl.
 Dabei konnte über \texttt{screen /dev/ttyACM0 9600} und \texttt{exit} die serielle Verbindung initiiert werden.
-Die Einstellungen können dann über \texttt{stty -F /dev/ttyACM0} eingesehen werden, jedoch hatte es nicht den selben Effekt, nur diese Einstellungen gezielt über den Befehl
+Die Einstellungen können dann über \texttt{stty -F /dev/ttyACM0} eingesehen werden, jedoch hatte es nicht denselben Effekt, nur diese Einstellungen gezielt über den Befehl
 \begin{lstlisting}[label=lst:stty,caption={stty zum setzen der Verbindungseinstellungen}]
 stty -F /dev/ttyACM0 9600 raw \
 ignbrk -brkint -icrnl -imaxbel \
@@ -42,35 +43,36 @@ Hier werden der Gerätepfad, die Baudrate und eine erwartete Mindestlänge festg
 
 Kommandos gehen zuverlässig an den Arduino raus und ausgelesene Antworten kommen nun im Ganzen an.
 Der \textit{read} Befehl ist ein blockierender Aufruf, der das Programm anhält bis eine Antwort vorliegt.
-Dies stellt für die Speicherauslesung kein Problem da, da die ordnungsgemäßen Befehle immer ein \texttt{ok:} oder \texttt{xx:0-F} Speicherauszug zurück geben.
+Dies stellt für die Speicherauslesung kein Problem dar, da die ordnungsgemäßen Befehle immer ein \texttt{ok:} oder \texttt{xx:0-F} Speicherauszug zurückgeben.
 
 \subsection{Unbekannte Speicherorte}\label{subsec:UnbekannteSpeicherorte}
 Bis auf den Speicherort des veränderbaren Standardtextes konnten alle Einstellungen und Grenzwerte sowie ein paar Funktionsabläufe festen Speicherstellen zugeordnet werden.
 Da der Standardtext eine Stromunterbrechung nicht übersteht, liegt er sehr wahrscheinlich im \ac{RAM} oder einem weiteren flüchtigen Speicher der Maschine.
 Selbst unter der Annahme, dass die Maschine vielleicht nur die halbe \ac{ASCII}-Tabelle pro Zeichen benutzt und dadurch zwei Displayzeichen pro Byte kodiert, konnten einfache und monotone Texte wie \texttt{AAAAAAAA} nicht in einem Speicherauszug wiedergefunden werden.
 
-Um dies weiter zu ergründen muss künftig ein Blick in die Maschine erfolgen um die vorhandenen Speicher und deren Größen zu bestimmen.
+Um dies weiter zu ergründen, muss künftig ein Blick in die Maschine erfolgen, um die vorhandenen Speicher und deren Größen zu bestimmen.
 Nach dem Datenblatt des Mikrocontrollers \cite{JuraMicrocontroller} gibt es vier Ausführungen, von der aber keine den 256 Byte \ac{RAM} und 512 Byte (256 Wörter) \ac{EEPROM}, die über die seriellen Befehle adressierbar sind, entspricht.
 
 Es wäre vorstellbar, dass die gegebenen Befehle aus Tabelle~\ref{tbl:kommandos} nicht den insgesamt zur Verfügung stehenden Speicher adressieren und nach außen kommunizieren.
-Andererseits ist es ebenfalls möglich dass viele unbekannte Speicherstellen gar keine Funktion besitzen;
+Andererseits ist es ebenfalls möglich, dass viele unbekannte Speicherstellen gar keine Funktion besitzen;
 der vorhandene Speicher dieses Standard Mikrocontrollers würde von dem Programm dann nicht voll ausgenutzt werden.
 
 \subsection{Weitere Automatisierung durch das C++ Programm}
-Für den \ac{EEPROM} ist es ein vertretbarer Aufwand Einstellungen am Gerät vorzunehmen, das Skript anzustoßen und einen Kommentar zu hinterlegen.
+Für den \ac{EEPROM} ist es ein vertretbarer Aufwand, Einstellungen am Gerät vorzunehmen, das Skript anzustoßen und einen Kommentar zu hinterlegen.
 Die Ergebnisse können aus der \ac{JSON} Datei abgelesen werden.
 
 Die wechselhaften Sprünge im \ac{RAM} erforderten ein wiederholtes Anwenden des Skripts, wie in Abschnitt~\ref{sec:Vorgehen} beschrieben.
-Hier könnte das C++ Programm dahingehend ausgebaut werden $n=3$ Durchläufe mit dem selben Kommentar zu versehen.
+Hier könnte das C++ Programm dahingehend ausgebaut werden, $n=3$ Durchläufe mit dem selben Kommentar zu versehen.
 Die Auswertung sollte aber von Hand erfolgen und es sollten Ergebnisse aus variierenden Umgebungsbedingungen einbezogen werden.
 Zum Beispiel den Wasserfilter einmal aktivieren und einmal deaktivieren.
-Es bedürfte einer sehr guten künstlichen Intelligenz diese Umgebungen vorzuschlagen und die Ergebnisse zusammenzuführen.
+Es bedürfte einer sehr guten künstlichen Intelligenz, diese Umgebungen vorzuschlagen und die Ergebnisse zusammenzuführen.
 
 Mit dem in Abschnitt~\ref{sec:Vorgehen} beschrieben ersten Vorgehen lassen sich Statusinformationen und Einstellmöglichkeiten sehr gut auslesen.
 Bedingte Abhängigkeiten, wie die Zusammensetzung eines Bezüge-Zählers aus mehreren Zählern, oder Abläufe, wie die zwei Schritte einer Kaffeezubereitung, wären durch ein starr hochgezogenes Computerprogramm unentdeckt geblieben.
 
 Ausbaufähig ist die wieder bessere Trennung des \ac{EEPROM}s und des \ac{RAM}s.
 In den gefundenen Unterschieden des Skripts können weniger relevante Spalten ausgeblendet werden und es könnten die \ac{JSON} Dateien mit einem Merker versehen werden, um der nachträglichen \textit{Aufschlüsselung der Veränderungen} im C++ Programm eine bessere Differenzierung zu ermöglichen.
+Zur Zeit muss für den \ac{RAM} von Hand die Zeile 192 der \texttt{JuraCoffeeMemory.cpp} einkommentiert werden.
 
 \section{Aussagekraft der Ergebnisse}\label{sec:AussagekraftDerErgebnisse}
 Die \ac{EEPROM} Einstellmöglichkeiten können recht sicher festen Speicherstellen zugeordnet werden.
@@ -78,17 +80,17 @@ Bei einigen partiellen Zubereitungszählern ist aber nicht bekannt, wann sie zä
 Die Firmware fehlt an dieser Stelle.
 
 Im \ac{RAM} sind mehrere Status Bits einigermaßen aussagekräftig, vor allem aber die im ausgeschalteten Betriebszustand, die auch in Tabelle~\ref{tbl:RAM1} und Tabelle~\ref{tbl:RAM2} hervorgehoben sind.
-Durch viele unregelmäßige Veränderungen wurden aber mehrere Bytes außer acht gelassen, die an bestimmten Bit Positionen wichtige Merker enthalten könnten.
+Durch viele unregelmäßige Veränderungen wurden aber mehrere Bytes außer Acht gelassen, die an bestimmten Bit Positionen wichtige Merker enthalten könnten.
 
-Unsicherheit besteht durch mehrere Speicherpositionen für ein und die selbe Funktion.
+Unsicherheit besteht durch mehrere Speicherpositionen für ein und dieselbe Funktion.
 Entweder verbirgt sich hinter einzelnen Positionen noch eine andere Bedeutung oder eine bisher unbekannte Abhängigkeit für weitere Funktionen.
 Zustände könnten im \ac{RAM} tatsächlich mehrfach erfasst werden.
 
 \section{Einordnung zur Terminologie des Reverse Engineerings}\label{sec:DiskussionBegriffReverseEngineering}
-Diese Arbeit besteht im wesentlichen aus den zwei Teilen, den Speicher zu analysieren und zu verstehen, bzw. das Wissen darüber in einer neuen Oberfläche einfach zur Verfügung zu stellen.
-Ein kurzer Rückblick in Abschnitt~\ref{sec:Begrifflichkeiten} erinnert an die Begriffe \textit{Forward Engineering}, \textit{Reverse Engineering}, \textit{Redocumentation}, \textit{Design Recovery}, \textit{Restructuring}, und \textit{Reengineering}.
+Diese Arbeit besteht im Wesentlichen aus den zwei Teilen, den Speicher zu analysieren und zu verstehen, bzw. das Wissen darüber in einer neuen Oberfläche einfach zur Verfügung zu stellen.
+Ein kurzer Rückblick in Abschnitt~\ref{sec:Begrifflichkeiten} erinnert an die Begriffe \textit{Forward Engineering}, \textit{Reverse Engineering}, \textit{Redocumentation}, \textit{Design Recovery}, \textit{Restructuring} und \textit{Reengineering}.
 
-Für den ersten Teil wurden eine gegebene serielle Schnittstelle, sowie bereits implementierte Befehle ausgenutzt, um den Speicher auszulesen.
+Für den ersten Teil wurden eine gegebene serielle Schnittstelle und bereits implementierte Befehle ausgenutzt, um den Speicher auszulesen.
 Viele Aufnahmen, mit kleinen Veränderungen zwischendurch, ließen Rückschlüsse auf die Bedeutung der Werte an bestimmten Speicherstellen zu.
 Gerade mit den Überlegungen, was während einer Aktion am Kaffeevollautomaten alles im Speicher passiert, lässt sich diese Tätigkeit dem Begriff \textit{Reverse Engineering} zuordnen.
 Aus dem fertig implementierten und gegebenen System werden Rückschlüsse auf das Design der Maschine gezogen.
@@ -102,10 +104,10 @@ Ein eigenes Gerät ist zur Alternative (Ausnahmen siehe~\ref{FehlendeMeldungen})
 Ohne eine präventive Instandhaltung beabsichtigt zu haben ist \textit{Restructuring} aber auch zutreffend, da Wissen aus dem ersten Teil hier eingeflossen ist.
 Wenn die Bedeutung bestimmter Speicherstellen nicht bekannt gewesen wäre, hätten die eingestellten Werte keine Bedeutung gehabt, was für den Begriff \textit{Restructuring} spricht.
 
-Für eine individuelle Zubereitung, wird nur die Datengrundlage kurz zuvor mit einem Impuls von außen verändert, der Kaffee wird dabei nach wie vor von den Standard Abläufen der Kaffeemaschine zubereitet.
-Die neue Oberfläche kann man als \textit{Restructuring} oder dem allgemeineren \textit{Reengineering} angesehen werden.
-Da die neue Oberfläche, über die serielle Schnittstelle in Verbindung mit einem eigenen Endgerät, aber sehr von den Bordmitteln der Maschine abweicht passt vielleicht das \textit{Reengineering} etwas besser.
-Die Funktionalitäten der Maschine sind aber immer noch die Gleichen, das Programmmenü muss nun jedoch nicht mehr verwendet werden, um die allgemeinen Geräte Einstellungen für den eigenen Kaffee anzupassen.
+Für eine individuelle Zubereitung wird nur die Datengrundlage kurz zuvor mit einem Impuls von außen verändert, der Kaffee wird dabei nach wie vor von den Standard Abläufen der Kaffeemaschine zubereitet.
+Die neue Oberfläche kann als \textit{Restructuring} oder dem allgemeineren \textit{Reengineering} angesehen werden.
+Da die neue Oberfläche über die serielle Schnittstelle in Verbindung mit einem eigenen Endgerät aber sehr von den Bordmitteln der Maschine abweicht, passt vielleicht das \textit{Reengineering} etwas besser.
+Die Funktionalitäten der Maschine sind aber immer noch die Gleichen, das Programmmenü muss nun jedoch nicht mehr verwendet werden, um die allgemeinen Geräteeinstellungen für den eigenen Kaffee anzupassen.
 
 Im Detail ist die genaue Zuordnung der Begrifflichkeiten immer eine persönliche Auslegung dieser Begriffe.
-Sehr zutreffend ist das Zitat aus Abschnitt~\ref{sec:Begrifflichkeiten}, denn diese Arbeit hat den Speicher intensiv betrachtet und mittels der Ergebnisse aus dem zweiten Teil um neue Perspektiven bereichert, ohne das Ziel verfolgt zu haben die Maschine zu klonen oder umzubauen.
+Sehr zutreffend ist das Zitat aus Abschnitt~\ref{sec:Begrifflichkeiten}, denn diese Arbeit hat den Speicher intensiv betrachtet und mittels der Ergebnisse aus dem zweiten Teil um neue Perspektiven bereichert, ohne das Ziel verfolgt zu haben, die Maschine zu klonen oder umzubauen.

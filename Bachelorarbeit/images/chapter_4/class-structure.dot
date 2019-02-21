@@ -3,16 +3,13 @@ digraph G {
 	rankdir=TB;
 	compound=true;
 
-	JuraCoffeeMemory;
+// color-definitions.h
 
-	subgraph cluster0 { // API
-		EEPROM_Status -> RAM_Status [style=invis]; // top to bottom
-		label = "API";
-		labelloc = "b";
-	}
+	"JuraCoffeeMemory.cpp";
 
 	JsonFile;
 	subgraph cluster1 { // JSON
+		margin=5;
 		"*.json" [shape=Mdiamond];
 		label = "JSON files";
 		labelloc = "b";
@@ -21,19 +18,29 @@ digraph G {
 
 	SerialConnection;
 
-	subgraph cluster2 { // Storage
-		edge [arrowtail=onormal dir=back];
-		Storage -> EEPROM;
-		Storage -> RAM;
-		label = "memory processing";
+	Storage;
+	subgraph cluster2 { // memory processing
+		margin=5;
+		EEPROM -> RAM [style=invis]; // top to bottom
+		label = "memory";
+		labelloc = "b";
+	}
+	subgraph cluster0 { // API
+		margin=5;
+		EEPROM_Status -> RAM_Status [style=invis]; // top to bottom
+		label = "API";
 		labelloc = "b";
 	}
 
-	JuraCoffeeMemory -> EEPROM_Status [lhead=cluster0];
-	JuraCoffeeMemory -> JsonFile;
-	JuraCoffeeMemory -> SerialConnection;
-	JuraCoffeeMemory -> Storage [lhead=cluster2];
+	"JuraCoffeeMemory.cpp" -> EEPROM_Status [lhead=cluster0];
+	"JuraCoffeeMemory.cpp" -> JsonFile;
+	"JuraCoffeeMemory.cpp" -> SerialConnection;
+	"JuraCoffeeMemory.cpp" -> EEPROM [lhead=cluster2];
 
+	EEPROM -> SerialConnection [ltail=cluster2];
 	EEPROM_Status -> SerialConnection [ltail=cluster0];
-	Storage -> SerialConnection [ltail=cluster2];
+
+	edge [arrowtail=onormal dir=back];
+	Storage -> EEPROM [lhead=cluster2];
+	Storage -> EEPROM_Status [lhead=cluster0];
 }
