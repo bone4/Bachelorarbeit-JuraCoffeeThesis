@@ -10,5 +10,5 @@ all:
 
 .PHONY: clean
 clean:
-	rm -f *.aux *.bak *~ *.bbl *.blg *.fdb_latexmk *.fls *.log *.nav *.out *.snm *.synctex.gz *.toc *.upa *.vrb
+	rm -f *~ *.aux *.bak *.bbl *.blg *.brf *.fdb_latexmk *.fls *.ilg *.ind *.lof *.lot *.log *.nav *.out *.snm *.synctex.gz *.toc *.upa *.vrb
 
