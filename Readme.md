@@ -14,3 +14,6 @@ Dieses Repository enthält die schriftliche Ausarbeitung.
 **Reverse Engineering eines Kaffeevollautomaten** von *Niklas Joachim Eberhard Krüger* ist lizenziert unter einer [Creative Commons Namensnennung 4.0 International Lizenz](http://creativecommons.org/licenses/by/4.0/).
 
 Das Template wurde von dem [Institut für Telematik](https://www.ti5.tuhh.de/) zur Verfügung gestellt und unterliegt nicht dieser Creative Commons Lizenz.
+
+## DOI
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6067741.svg)](https://doi.org/10.5281/zenodo.6067741)
