@@ -16,4 +16,5 @@ Dieses Repository enthält die schriftliche Ausarbeitung.
 Das Template wurde von dem [Institut für Telematik](https://www.ti5.tuhh.de/) zur Verfügung gestellt und unterliegt nicht dieser Creative Commons Lizenz.
 
 ## DOI
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6067741.svg)](https://doi.org/10.5281/zenodo.6067741)
+Zenodo: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6067741.svg)](https://doi.org/10.5281/zenodo.6067741)
+TORE:   [![DOI](https://zenodo.org/badge/DOI/10.15480/882.4074.svg)](https://doi.org/10.15480/882.4074)
